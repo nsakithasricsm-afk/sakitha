@@ -104,9 +104,6 @@
 
   /* TOPIC TITLE */
   .topic-header { margin-bottom: 24px; }
-  .topic-header h2 { font-size: 22px; font-weight: 700; letter-spacing: -.02em; }
-  .topic-header h2 span { color: var(--accent); }
-  .topic-header p { color: var(--muted); font-size: 13px; margin-top: 4px; }
 
   /* QUIZ */
   .quiz-wrap { display: none; }
@@ -190,6 +187,47 @@
   .info-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
   .info-chip { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px; font-size: 12px; color: var(--muted); }
   .info-chip span { color: var(--text); font-weight: 600; }
+
+  /* SEARCH */
+  .search-wrap { padding: 8px 12px; border-bottom: 1px solid var(--border); background: var(--bg2); }
+  .search-input { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 7px; padding: 8px 14px 8px 36px; color: var(--text); font-size: 13px; font-family: var(--font); outline: none; transition: border-color .15s; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238b949e' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: 12px center; }
+  .search-input:focus { border-color: var(--accent); }
+  .search-results { margin: 12px 0; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .search-hit { padding: 10px 16px; cursor: pointer; border-bottom: 1px solid var(--border); font-size: 13px; transition: background .12s; }
+  .search-hit:last-child { border-bottom: none; }
+  .search-hit:hover { background: rgba(124,106,247,0.08); }
+  .search-hit-topic { font-size: 11px; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 2px; }
+  .search-hit-text { color: var(--muted); line-height: 1.5; }
+  .search-hit-text mark { background: rgba(210,153,34,0.3); color: var(--text); border-radius: 2px; padding: 0 1px; }
+  .no-results { padding: 16px; text-align: center; color: var(--muted); font-size: 13px; }
+
+  /* PROGRESS */
+  .progress-header { display: flex; align-items: center; gap: 10px; margin-top: 14px; justify-content: center; flex-wrap: wrap; }
+  .overall-progress { font-size: 12px; color: var(--muted); }
+  .overall-progress span { color: var(--green); font-weight: 700; }
+  .progress-pill-wrap { height: 4px; background: var(--bg3); border-radius: 4px; width: 120px; }
+  .progress-pill { height: 4px; background: var(--green); border-radius: 4px; transition: width .4s; }
+  .studied-btn { margin-left: auto; padding: 6px 14px; border-radius: 7px; border: 1px solid var(--border); background: var(--bg3); color: var(--muted); font-size: 12px; font-weight: 600; cursor: pointer; font-family: var(--font); transition: all .15s; display: flex; align-items: center; gap: 6px; }
+  .studied-btn:hover { border-color: var(--green); color: var(--green); }
+  .studied-btn.done { background: rgba(63,185,80,0.1); border-color: var(--green); color: var(--green); }
+  .topic-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .topic-header-text h2 { font-size: 22px; font-weight: 700; letter-spacing: -.02em; }
+  .topic-header-text h2 span { color: var(--accent); }
+  .topic-header-text p { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+  /* NOTES */
+  .notes-section { margin-top: 28px; }
+  .notes-toggle { display: flex; align-items: center; gap: 8px; background: none; border: 1px dashed var(--border); border-radius: 8px; padding: 10px 16px; width: 100%; cursor: pointer; color: var(--muted); font-size: 13px; font-family: var(--font); transition: border-color .15s, color .15s; text-align: left; }
+  .notes-toggle:hover { border-color: var(--accent2); color: var(--accent2); }
+  .notes-body { display: none; margin-top: 8px; }
+  .notes-body.open { display: block; }
+  .notes-area { width: 100%; min-height: 100px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: var(--font); font-size: 13px; line-height: 1.65; padding: 12px 14px; resize: vertical; outline: none; transition: border-color .15s; }
+  .notes-area:focus { border-color: var(--accent2); }
+  .notes-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; }
+  .notes-saved { font-size: 11px; color: var(--green); opacity: 0; transition: opacity .3s; }
+  .notes-saved.show { opacity: 1; }
+  .notes-clear { font-size: 11px; color: var(--muted); background: none; border: none; cursor: pointer; font-family: var(--font); padding: 0; }
+  .notes-clear:hover { color: var(--red); }
 </style>
 </head>
 <body>
@@ -208,7 +246,17 @@
     <div class="pill">Design & Impl.</div>
     <div class="pill">Shell Programming</div>
   </div>
+  <div class="progress-header">
+    <div class="overall-progress">Topics studied: <span id="studiedCount">0</span>/8</div>
+    <div class="progress-pill-wrap"><div class="progress-pill" id="overallBar" style="width:0%"></div></div>
+  </div>
 </div>
+
+<div class="search-wrap">
+  <input class="search-input" id="searchInput" type="text" placeholder="Search notes… (e.g. fork, microkernel, cron)" oninput="handleSearch(this.value)">
+</div>
+
+<div id="searchResultsBox" style="max-width:860px;margin:0 auto;padding:0 20px;display:none"></div>
 
 <div class="nav-wrap">
   <div class="nav" id="mainNav">
@@ -229,8 +277,11 @@
 <!-- ═══════════════ OS OVERVIEW ═══════════════ -->
 <div class="topic active" id="topic-overview">
   <div class="topic-header">
-    <h2>Overview of <span>Operating Systems</span></h2>
-    <p>The foundational concepts every OS exam begins with</p>
+    <div class="topic-header-text">
+      <h2>Overview of <span>Operating Systems</span></h2>
+      <p>The foundational concepts every OS exam begins with</p>
+    </div>
+    <button class="studied-btn" id="studied-overview" onclick="toggleStudied('overview')">☐ Mark as studied</button>
   </div>
 
   <div class="section-block">
@@ -311,13 +362,27 @@ bakes (I/O wait), the chef chops vegetables for guest B. No idle time.</pre>
       <div class="pitfall-item"><div class="pitfall-icon">✕</div><div><strong>Interrupts are how the OS regains CPU control</strong> from running processes — not periodic checks or polling.</div></div>
     </div>
   </div>
+
+  <div class="notes-section">
+    <button class="notes-toggle" onclick="toggleNotes('overview')">📝 My Notes <span style="margin-left:auto;font-size:11px" id="notes-arrow-overview">▼ expand</span></button>
+    <div class="notes-body" id="notes-body-overview">
+      <textarea class="notes-area" id="notes-overview" placeholder="Write your own notes, mnemonics, or reminders here…" oninput="saveNote('overview')"></textarea>
+      <div class="notes-footer">
+        <span class="notes-saved" id="notes-saved-overview">✓ saved</span>
+        <button class="notes-clear" onclick="clearNote('overview')">clear</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ═══════════════ TYPES OF OS ═══════════════ -->
 <div class="topic" id="topic-types">
   <div class="topic-header">
-    <h2>Types of <span>Operating Systems</span></h2>
-    <p>Classification by resource management strategy and use-case</p>
+    <div class="topic-header-text">
+      <h2>Types of <span>Operating Systems</span></h2>
+      <p>Classification by resource management strategy and use-case</p>
+    </div>
+    <button class="studied-btn" id="studied-types" onclick="toggleStudied('types')">☐ Mark as studied</button>
   </div>
 
   <div class="section-block">
@@ -399,13 +464,27 @@ Mobile OS:
       <div class="pitfall-item"><div class="pitfall-icon">✕</div><div><strong>Batch OS has ZERO user interaction</strong> during job execution. If a question says "user can give input while running," it is NOT a batch OS.</div></div>
     </div>
   </div>
+
+  <div class="notes-section">
+    <button class="notes-toggle" onclick="toggleNotes('types')">📝 My Notes <span style="margin-left:auto;font-size:11px" id="notes-arrow-types">▼ expand</span></button>
+    <div class="notes-body" id="notes-body-types">
+      <textarea class="notes-area" id="notes-types" placeholder="Write your own notes, mnemonics, or reminders here…" oninput="saveNote('types')"></textarea>
+      <div class="notes-footer">
+        <span class="notes-saved" id="notes-saved-types">✓ saved</span>
+        <button class="notes-clear" onclick="clearNote('types')">clear</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ═══════════════ OS STRUCTURES ═══════════════ -->
 <div class="topic" id="topic-structures">
   <div class="topic-header">
-    <h2>OS <span>Structures</span></h2>
-    <p>How the OS organises its internal components</p>
+    <div class="topic-header-text">
+      <h2>OS <span>Structures</span></h2>
+      <p>How the OS organises its internal components</p>
+    </div>
+    <button class="studied-btn" id="studied-structures" onclick="toggleStudied('structures')">☐ Mark as studied</button>
   </div>
 
   <div class="section-block">
@@ -482,13 +561,27 @@ Minix 3 = True Microkernel
       <div class="pitfall-item"><div class="pitfall-icon">✕</div><div><strong>Windows NT is hybrid, not monolithic.</strong> It uses a HAL and runs some subsystems outside the core kernel executive.</div></div>
     </div>
   </div>
+
+  <div class="notes-section">
+    <button class="notes-toggle" onclick="toggleNotes('structures')">📝 My Notes <span style="margin-left:auto;font-size:11px" id="notes-arrow-structures">▼ expand</span></button>
+    <div class="notes-body" id="notes-body-structures">
+      <textarea class="notes-area" id="notes-structures" placeholder="Write your own notes, mnemonics, or reminders here…" oninput="saveNote('structures')"></textarea>
+      <div class="notes-footer">
+        <span class="notes-saved" id="notes-saved-structures">✓ saved</span>
+        <button class="notes-clear" onclick="clearNote('structures')">clear</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ═══════════════ OS SERVICES ═══════════════ -->
 <div class="topic" id="topic-services">
   <div class="topic-header">
-    <h2>OS <span>Services</span></h2>
-    <p>What the OS provides to programs and users</p>
+    <div class="topic-header-text">
+      <h2>OS <span>Services</span></h2>
+      <p>What the OS provides to programs and users</p>
+    </div>
+    <button class="studied-btn" id="studied-services" onclick="toggleStudied('services')">☐ Mark as studied</button>
   </div>
 
   <div class="section-block">
@@ -549,13 +642,27 @@ Minix 3 = True Microkernel
       <div class="pitfall-item"><div class="pitfall-icon">✕</div><div><strong>Error detection ≠ error correction.</strong> The OS detects errors and reports or terminates the offending process — it does not necessarily fix the underlying hardware error.</div></div>
     </div>
   </div>
+
+  <div class="notes-section">
+    <button class="notes-toggle" onclick="toggleNotes('services')">📝 My Notes <span style="margin-left:auto;font-size:11px" id="notes-arrow-services">▼ expand</span></button>
+    <div class="notes-body" id="notes-body-services">
+      <textarea class="notes-area" id="notes-services" placeholder="Write your own notes, mnemonics, or reminders here…" oninput="saveNote('services')"></textarea>
+      <div class="notes-footer">
+        <span class="notes-saved" id="notes-saved-services">✓ saved</span>
+        <button class="notes-clear" onclick="clearNote('services')">clear</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ═══════════════ SYSTEM CALLS ═══════════════ -->
 <div class="topic" id="topic-syscalls">
   <div class="topic-header">
-    <h2><span>System Calls</span></h2>
-    <p>The API between user programs and the OS kernel</p>
+    <div class="topic-header-text">
+      <h2><span>System Calls</span></h2>
+      <p>The API between user programs and the OS kernel</p>
+    </div>
+    <button class="studied-btn" id="studied-syscalls" onclick="toggleStudied('syscalls')">☐ Mark as studied</button>
   </div>
 
   <div class="section-block">
@@ -636,13 +743,27 @@ The user never sees the mode switches — libc handles them transparently.</pre>
       <div class="pitfall-item"><div class="pitfall-icon">✕</div><div><strong>POSIX is a standard, not an OS.</strong> Linux, macOS, and others implement POSIX. Windows does not natively comply with POSIX.</div></div>
     </div>
   </div>
+
+  <div class="notes-section">
+    <button class="notes-toggle" onclick="toggleNotes('syscalls')">📝 My Notes <span style="margin-left:auto;font-size:11px" id="notes-arrow-syscalls">▼ expand</span></button>
+    <div class="notes-body" id="notes-body-syscalls">
+      <textarea class="notes-area" id="notes-syscalls" placeholder="Write your own notes, mnemonics, or reminders here…" oninput="saveNote('syscalls')"></textarea>
+      <div class="notes-footer">
+        <span class="notes-saved" id="notes-saved-syscalls">✓ saved</span>
+        <button class="notes-clear" onclick="clearNote('syscalls')">clear</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ═══════════════ VIRTUAL MACHINES ═══════════════ -->
 <div class="topic" id="topic-vm">
   <div class="topic-header">
-    <h2><span>Virtual Machines</span></h2>
-    <p>Running multiple OS instances on one physical host</p>
+    <div class="topic-header-text">
+      <h2><span>Virtual Machines</span></h2>
+      <p>Running multiple OS instances on one physical host</p>
+    </div>
+    <button class="studied-btn" id="studied-vm" onclick="toggleStudied('vm')">☐ Mark as studied</button>
   </div>
 
   <div class="section-block">
@@ -722,13 +843,27 @@ Docker Container (NOT a VM):
       <div class="pitfall-item"><div class="pitfall-icon">✕</div><div><strong>Type 1 ≠ always more secure than Type 2.</strong> Type 1 has fewer software layers but a larger, more complex attack surface on the hypervisor itself.</div></div>
     </div>
   </div>
+
+  <div class="notes-section">
+    <button class="notes-toggle" onclick="toggleNotes('vm')">📝 My Notes <span style="margin-left:auto;font-size:11px" id="notes-arrow-vm">▼ expand</span></button>
+    <div class="notes-body" id="notes-body-vm">
+      <textarea class="notes-area" id="notes-vm" placeholder="Write your own notes, mnemonics, or reminders here…" oninput="saveNote('vm')"></textarea>
+      <div class="notes-footer">
+        <span class="notes-saved" id="notes-saved-vm">✓ saved</span>
+        <button class="notes-clear" onclick="clearNote('vm')">clear</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ═══════════════ DESIGN & IMPLEMENTATION ═══════════════ -->
 <div class="topic" id="topic-design">
   <div class="topic-header">
-    <h2>OS Design &amp; <span>Implementation</span></h2>
-    <p>Goals, principles, and how modern OSes are actually built</p>
+    <div class="topic-header-text">
+      <h2>OS Design &amp; <span>Implementation</span></h2>
+      <p>Goals, principles, and how modern OSes are actually built</p>
+    </div>
+    <button class="studied-btn" id="studied-design" onclick="toggleStudied('design')">☐ Mark as studied</button>
   </div>
 
   <div class="section-block">
@@ -809,13 +944,27 @@ Key policy/mechanism example:
       <div class="pitfall-item"><div class="pitfall-icon">✕</div><div><strong>Efficiency and user-friendliness CONFLICT.</strong> An OS optimised for maximum performance is harder to use. This trade-off must be acknowledged in design questions.</div></div>
     </div>
   </div>
+
+  <div class="notes-section">
+    <button class="notes-toggle" onclick="toggleNotes('design')">📝 My Notes <span style="margin-left:auto;font-size:11px" id="notes-arrow-design">▼ expand</span></button>
+    <div class="notes-body" id="notes-body-design">
+      <textarea class="notes-area" id="notes-design" placeholder="Write your own notes, mnemonics, or reminders here…" oninput="saveNote('design')"></textarea>
+      <div class="notes-footer">
+        <span class="notes-saved" id="notes-saved-design">✓ saved</span>
+        <button class="notes-clear" onclick="clearNote('design')">clear</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ═══════════════ SHELL PROGRAMMING ═══════════════ -->
 <div class="topic" id="topic-shell">
   <div class="topic-header">
-    <h2><span>Shell Programming</span></h2>
-    <p>Commands, scripts, and automation on Unix/Linux systems</p>
+    <div class="topic-header-text">
+      <h2><span>Shell Programming</span></h2>
+      <p>Commands, scripts, and automation on Unix/Linux systems</p>
+    </div>
+    <button class="studied-btn" id="studied-shell" onclick="toggleStudied('shell')">☐ Mark as studied</button>
   </div>
 
   <div class="section-block">
@@ -928,6 +1077,17 @@ echo "Old backups cleaned. Done."</pre>
       <div class="pitfall-item"><div class="pitfall-icon">✕</div><div><strong>$() is preferred over backticks</strong> for command substitution — it nests cleanly and is more readable: <code>DIR=$(dirname $(which bash))</code> works; nested backticks do not.</div></div>
     </div>
   </div>
+
+  <div class="notes-section">
+    <button class="notes-toggle" onclick="toggleNotes('shell')">📝 My Notes <span style="margin-left:auto;font-size:11px" id="notes-arrow-shell">▼ expand</span></button>
+    <div class="notes-body" id="notes-body-shell">
+      <textarea class="notes-area" id="notes-shell" placeholder="Write your own notes, mnemonics, or reminders here…" oninput="saveNote('shell')"></textarea>
+      <div class="notes-footer">
+        <span class="notes-saved" id="notes-saved-shell">✓ saved</span>
+        <button class="notes-clear" onclick="clearNote('shell')">clear</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ═══════════════ QUIZ ═══════════════ -->
@@ -944,6 +1104,130 @@ echo "Old backups cleaned. Done."</pre>
 </div><!-- /main -->
 
 <script>
+/* ═══════════ SEARCH ═══════════ */
+const TOPIC_LABELS = {
+  overview: 'OS Overview', types: 'Types of OS', structures: 'OS Structures',
+  services: 'OS Services', syscalls: 'System Calls', vm: 'Virtual Machines',
+  design: 'Design & Impl.', shell: 'Shell Programming'
+};
+
+function handleSearch(query) {
+  const box = document.getElementById('searchResultsBox');
+  const q = query.trim();
+  if (!q) { box.style.display = 'none'; box.innerHTML = ''; return; }
+
+  const re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'gi');
+  const hits = [];
+
+  Object.keys(TOPIC_LABELS).forEach(id => {
+    const el = document.getElementById('topic-' + id);
+    if (!el) return;
+    const sentences = el.innerText.split(/[.\n]/).map(s => s.trim()).filter(s => s.length > 20);
+    sentences.forEach(s => {
+      if (re.test(s)) {
+        const hl = s.replace(re, m => `<mark>${m}</mark>`);
+        hits.push({ id, label: TOPIC_LABELS[id], text: hl });
+        re.lastIndex = 0;
+      }
+      re.lastIndex = 0;
+    });
+  });
+
+  if (!hits.length) {
+    box.innerHTML = '<div class="search-results"><div class="no-results">No results for "' + q + '"</div></div>';
+  } else {
+    const deduped = [];
+    const seen = new Set();
+    hits.forEach(h => { const k = h.id + h.text.slice(0,40); if (!seen.has(k)) { seen.add(k); deduped.push(h); } });
+    const rows = deduped.slice(0,12).map(h =>
+      `<div class="search-hit" onclick="showTopic('${h.id}',document.querySelector('[onclick*=\\'${h.id}\\']'));document.getElementById('searchResultsBox').style.display='none';document.getElementById('searchInput').value=''">
+        <div class="search-hit-topic">${h.label}</div>
+        <div class="search-hit-text">${h.text.length > 160 ? h.text.slice(0,157)+'…' : h.text}</div>
+      </div>`).join('');
+    box.innerHTML = '<div class="search-results">' + rows + '</div>';
+  }
+  box.style.display = 'block';
+}
+
+/* ═══════════ PROGRESS TRACKER ═══════════ */
+const ALL_TOPICS = ['overview','types','structures','services','syscalls','vm','design','shell'];
+
+function loadStudied() {
+  try { return JSON.parse(localStorage.getItem('os_studied') || '{}'); } catch { return {}; }
+}
+function saveStudied(data) { try { localStorage.setItem('os_studied', JSON.stringify(data)); } catch {} }
+
+function toggleStudied(id) {
+  const data = loadStudied();
+  data[id] = !data[id];
+  saveStudied(data);
+  renderStudied();
+}
+
+function renderStudied() {
+  const data = loadStudied();
+  let count = 0;
+  ALL_TOPICS.forEach(id => {
+    const btn = document.getElementById('studied-' + id);
+    if (!btn) return;
+    if (data[id]) {
+      btn.textContent = '✓ Studied';
+      btn.classList.add('done');
+      count++;
+    } else {
+      btn.textContent = '☐ Mark as studied';
+      btn.classList.remove('done');
+    }
+  });
+  document.getElementById('studiedCount').textContent = count;
+  document.getElementById('overallBar').style.width = (count / ALL_TOPICS.length * 100) + '%';
+
+  // green checkmark on nav buttons
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    const match = b.getAttribute('onclick') && b.getAttribute('onclick').match(/'([a-z]+)'/);
+    if (match && data[match[1]]) {
+      if (!b.textContent.startsWith('✓ ')) b.textContent = '✓ ' + b.textContent;
+    } else if (match && b.textContent.startsWith('✓ ')) {
+      b.textContent = b.textContent.slice(2);
+    }
+  });
+}
+
+/* ═══════════ PERSONAL NOTES ═══════════ */
+const NOTE_KEY = id => 'os_note_' + id;
+
+function loadNote(id) { try { return localStorage.getItem(NOTE_KEY(id)) || ''; } catch { return ''; } }
+function saveNote(id) {
+  const val = document.getElementById('notes-' + id).value;
+  try { localStorage.setItem(NOTE_KEY(id), val); } catch {}
+  const savedEl = document.getElementById('notes-saved-' + id);
+  savedEl.classList.add('show');
+  setTimeout(() => savedEl.classList.remove('show'), 1500);
+}
+function clearNote(id) {
+  if (!confirm('Clear your notes for this topic?')) return;
+  try { localStorage.removeItem(NOTE_KEY(id)); } catch {}
+  document.getElementById('notes-' + id).value = '';
+}
+function toggleNotes(id) {
+  const body = document.getElementById('notes-body-' + id);
+  const arrow = document.getElementById('notes-arrow-' + id);
+  const open = body.classList.toggle('open');
+  arrow.textContent = open ? '▲ collapse' : '▼ expand';
+  if (open) {
+    const ta = document.getElementById('notes-' + id);
+    ta.value = loadNote(id);
+  }
+}
+
+function initNotes() {
+  ALL_TOPICS.forEach(id => {
+    const ta = document.getElementById('notes-' + id);
+    if (ta) ta.value = loadNote(id);
+  });
+}
+
+/* ═══════════ QUIZ ═══════════ */
 const questions = [
   { q: "Which component of the OS is ALWAYS kept in memory?", opts: ["Shell","Kernel","GUI","Bootloader"], ans: 1, exp: "Only the <strong>kernel</strong> is always resident in memory. The shell and GUI run as user-mode processes and can be terminated. The bootloader runs only during startup from disk." },
   { q: "What is the primary difference between multiprogramming and multiprocessing?", opts: ["Multiprogramming uses multiple CPUs; multiprocessing uses one","Multiprogramming = many programs on one CPU; multiprocessing = multiple CPUs","They are identical concepts","Multiprocessing is only for batch jobs"], ans: 1, exp: "<strong>Multiprogramming</strong> keeps multiple programs in memory and switches the single CPU between them when a job does I/O. <strong>Multiprocessing</strong> means the system has multiple physical CPUs running programs truly simultaneously." },
@@ -1080,6 +1364,16 @@ function showTopic(id, btn) {
 }
 
 renderQuiz();
+renderStudied();
+initNotes();
+
+// Close search on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.getElementById('searchResultsBox').style.display = 'none';
+    document.getElementById('searchInput').value = '';
+  }
+});
 </script>
 </body>
 </html>
