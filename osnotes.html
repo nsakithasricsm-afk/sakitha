@@ -1363,6 +1363,16 @@ function showTopic(id, btn) {
   window.scrollTo(0, 0);
 }
 
+/* ── auto-open topic from index.html link ── */
+(function() {
+  const t = sessionStorage.getItem('os_open_topic');
+  if (t) {
+    sessionStorage.removeItem('os_open_topic');
+    const btn = document.querySelector(`.nav-btn[onclick*="'${t}'"]`);
+    if (btn) showTopic(t, btn);
+  }
+})();
+
 renderQuiz();
 renderStudied();
 initNotes();
