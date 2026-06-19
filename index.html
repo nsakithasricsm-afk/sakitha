@@ -6,19 +6,19 @@
 <title>Operating Systems — Course Page</title>
 <style>
   :root {
-    --bg: #0a1628;
-    --bg2: #0e1e35;
-    --bg3: #132843;
-    --border: #1e3a55;
-    --text: #e0f2f1;
-    --muted: #6aaeaa;
-    --accent: #00c896;
-    --accent2: #00b4d8;
-    --green: #00e5a0;
-    --amber: #f5c518;
-    --red: #ff4f6b;
-    --coral: #ff7b72;
-    --purple: #00c896;
+    --bg: #f5f7fa;
+    --bg2: #ffffff;
+    --bg3: #eef1f6;
+    --border: #d8dde8;
+    --text: #1a2233;
+    --muted: #5a6a85;
+    --accent: #1a6fbe;
+    --accent2: #0e8f7a;
+    --green: #0e8f7a;
+    --amber: #c48a00;
+    --red: #c0392b;
+    --coral: #d35400;
+    --purple: #1a6fbe;
     --radius: 10px;
     --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
   }
@@ -27,8 +27,8 @@
 
   /* ── HEADER ── */
   .header {
-    background: linear-gradient(135deg, #0a1628 0%, #0d2a3a 60%, #0a1628 100%);
-    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, #1a3a6b 0%, #1a5fa0 60%, #1a3a6b 100%);
+    border-bottom: 1px solid #1a3a6b;
     padding: 36px 40px;
     display: flex;
     align-items: center;
@@ -40,7 +40,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse 70% 80% at 0% 50%, rgba(0,200,150,0.10) 0%, transparent 70%);
+    background: radial-gradient(ellipse 70% 80% at 0% 50%, rgba(255,255,255,0.08) 0%, transparent 70%);
     pointer-events: none;
   }
 
@@ -49,15 +49,15 @@
     width: 90px;
     height: 90px;
     border-radius: 50%;
-    border: 3px solid rgba(0,200,150,0.5);
+    border: 3px solid rgba(255,255,255,0.6);
     object-fit: cover;
     flex-shrink: 0;
-    background: var(--bg3);
+    background: rgba(255,255,255,0.2);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 36px;
-    color: var(--accent);
+    color: #ffffff;
     overflow: hidden;
     position: relative;
     z-index: 1;
@@ -74,21 +74,24 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,200,150,0.1);
+    background: rgba(255,255,255,0.2);
     border-radius: 50%;
     font-size: 36px;
   }
 
   .header-info { flex: 1; position: relative; z-index: 1; }
-  .dept-label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 6px; }
-  .course-title { font-size: clamp(20px, 3vw, 32px); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; margin-bottom: 6px; }
-  .course-title span { color: var(--accent); }
-  .faculty-name { font-size: 15px; color: var(--muted); }
-  .faculty-name strong { color: var(--text); font-weight: 600; }
+  .anits-emblem { width: 80px; height: 80px; object-fit: contain; flex-shrink: 0; filter: brightness(0) invert(1); position: relative; z-index: 1; }
+  .college-name { font-size: 20px; font-weight: 800; color: #ffffff; letter-spacing: .01em; margin-bottom: 2px; line-height: 1.2; }
+  .college-location { font-size: 12px; color: rgba(255,255,255,0.65); margin-bottom: 8px; letter-spacing: .02em; }
+  .dept-label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,0.75); font-weight: 600; margin-bottom: 6px; }
+  .course-title { font-size: clamp(20px, 3vw, 32px); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; margin-bottom: 6px; color: #ffffff; }
+  .course-title span { color: #7ecfff; }
+  .faculty-name { font-size: 15px; color: rgba(255,255,255,0.7); }
+  .faculty-name strong { color: #ffffff; font-weight: 600; }
 
   .header-badges { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; position: relative; z-index: 1; }
-  .badge { background: rgba(0,200,150,0.12); border: 1px solid rgba(0,200,150,0.3); color: var(--accent); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; white-space: nowrap; }
-  .badge.green { background: rgba(0,229,160,0.12); border-color: rgba(0,229,160,0.35); color: var(--green); }
+  .badge { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.35); color: #ffffff; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .badge.green { background: rgba(0,220,150,0.25); border-color: rgba(0,220,150,0.5); color: #b3ffec; }
 
   /* ── MAIN ── */
   .main { max-width: 900px; margin: 0 auto; padding: 36px 24px 60px; }
@@ -99,8 +102,8 @@
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background: linear-gradient(90deg, rgba(0,200,150,0.12), rgba(0,180,216,0.08));
-    border: 1px solid rgba(0,200,150,0.3);
+    background: linear-gradient(90deg, rgba(26,111,190,0.10), rgba(14,143,122,0.07));
+    border: 1px solid rgba(26,111,190,0.25);
     border-radius: 8px;
     padding: 8px 18px;
     font-size: 13px;
@@ -129,7 +132,7 @@
     user-select: none;
     transition: background .15s;
   }
-  .section-header:hover { background: rgba(0,200,150,0.05); }
+  .section-header:hover { background: rgba(26,111,190,0.05); }
   .section-title {
     display: flex;
     align-items: center;
@@ -171,7 +174,7 @@
     transition: background .12s;
   }
   .topic-item:last-child { border-bottom: none; }
-  .topic-item:hover { background: rgba(0,200,150,0.05); }
+  .topic-item:hover { background: rgba(26,111,190,0.05); }
   .topic-num {
     min-width: 24px; height: 24px;
     background: var(--bg3); border: 1px solid var(--border);
@@ -187,15 +190,15 @@
   }
   .topic-btn:active { transform: scale(.97); }
   .btn-notes {
-    background: rgba(0,200,150,0.1); border-color: rgba(0,200,150,0.35);
+    background: rgba(26,111,190,0.08); border-color: rgba(26,111,190,0.35);
     color: var(--accent);
   }
-  .btn-notes:hover { background: rgba(0,200,150,0.22); }
+  .btn-notes:hover { background: rgba(26,111,190,0.18); }
   .btn-quiz {
-    background: rgba(0,180,216,0.1); border-color: rgba(0,180,216,0.35);
+    background: rgba(14,143,122,0.08); border-color: rgba(14,143,122,0.35);
     color: var(--accent2);
   }
-  .btn-quiz:hover { background: rgba(0,180,216,0.22); }
+  .btn-quiz:hover { background: rgba(14,143,122,0.18); }
 
   /* ── NOTE FORMAT LEGEND ── */
   .format-card {
@@ -221,6 +224,54 @@
   }
   .info-chip span { color: var(--text); font-weight: 600; }
 
+  /* ── SUBJECTS ── */
+  .subjects-heading {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 14px;
+    letter-spacing: -.01em;
+  }
+  .subjects-row {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .subject-card {
+    flex: 1;
+    min-width: 200px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    transition: box-shadow .15s, border-color .15s;
+  }
+  .subject-card:hover { box-shadow: 0 2px 10px rgba(26,111,190,0.1); border-color: rgba(26,111,190,0.3); }
+  .subject-card.active { border-color: rgba(26,111,190,0.45); background: rgba(26,111,190,0.04); }
+  .subject-num {
+    width: 34px; height: 34px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; color: var(--accent);
+    flex-shrink: 0;
+  }
+  .subject-card.active .subject-num { background: rgba(26,111,190,0.1); border-color: rgba(26,111,190,0.3); }
+  .subject-name { font-size: 14px; font-weight: 600; color: var(--text); }
+  .subject-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .subject-badge {
+    position: absolute; top: 10px; right: 12px;
+    background: rgba(26,111,190,0.12); border: 1px solid rgba(26,111,190,0.3);
+    color: var(--accent); font-size: 11px; font-weight: 600;
+    padding: 2px 9px; border-radius: 20px;
+  }
+
   @media (max-width: 600px) {
     .header { padding: 20px; flex-wrap: wrap; }
     .header-badges { flex-direction: row; flex-wrap: wrap; justify-content: flex-start; }
@@ -235,19 +286,24 @@
 <!-- ══════════════════════ HEADER ══════════════════════ -->
 <div class="header">
 
-  <!-- PHOTO — place a file named "photo.jpg" in this folder to display it -->
-  <div class="faculty-photo" id="photoWrap">
-    <div class="photo-placeholder" id="photoPlaceholder">👩‍🏫</div>
-  </div>
+  <!-- ANITS Emblem -->
+  <img src="https://anits.edu.in/assets/images/icon/logo-Anits.png" alt="ANITS Emblem" class="anits-emblem" onerror="this.style.display='none'">
 
   <div class="header-info">
-    <div class="dept-label">Department of Computer Science &amp; Engineering</div>
+    <div class="college-name">Anil Neerukonda Institute of Technology &amp; Sciences</div>
+    <div class="college-location">Sangivalasa, Visakhapatnam</div>
+    <div class="dept-label">Department of CSE — AI &amp; ML</div>
     <div class="course-title">Operating <span>Systems</span></div>
     <div class="faculty-name">Faculty: <strong>Sakita Sri Nimmala</strong></div>
   </div>
 
+  <!-- PHOTO -->
+  <div class="faculty-photo" id="photoWrap">
+    <div class="photo-placeholder" id="photoPlaceholder">👩‍🏫</div>
+  </div>
+
   <div class="header-badges">
-    <div class="badge">B.Tech CSE</div>
+    <div class="badge">B.Tech CSE AI&amp;ML</div>
     <div class="badge green">UNIT-I Active</div>
   </div>
 </div>
@@ -255,12 +311,32 @@
 <!-- ══════════════════════ MAIN ══════════════════════ -->
 <div class="main">
 
+  <!-- Subjects -->
+  <h2 class="subjects-heading">Subjects</h2>
+  <div class="subjects-row">
+    <div class="subject-card">
+      <div class="subject-num">1</div>
+      <div class="subject-info">
+        <div class="subject-name">Theory of Computation</div>
+        <div class="subject-desc">Automata, Languages &amp; Computability</div>
+      </div>
+    </div>
+    <div class="subject-card active">
+      <div class="subject-num">2</div>
+      <div class="subject-info">
+        <div class="subject-name">Operating Systems</div>
+        <div class="subject-desc">Process, Memory &amp; File Management</div>
+      </div>
+      <span class="subject-badge">Current</span>
+    </div>
+  </div>
+
   <!-- Quick info chips -->
   <div class="info-row">
+    <div class="info-chip">🏛️ College: <span>ANITS, Sangivalasa</span></div>
     <div class="info-chip">📘 Course: <span>Operating Systems</span></div>
     <div class="info-chip">👩‍🏫 Faculty: <span>Sakita Sri Nimmala</span></div>
     <div class="info-chip">📚 Units: <span>5</span></div>
-    <div class="info-chip">🎯 Topics (UNIT-I): <span>9</span></div>
   </div>
 
   <!-- Note format legend -->
