@@ -303,6 +303,17 @@
   .sub-tab-panel .co-row:last-child { border-bottom: none; }
   .sub-tab-panel .co-badge { min-width: 38px; font-size: 11px; font-weight: 800; color: #fff; background: var(--accent); border-radius: 5px; padding: 2px 7px; text-align: center; flex-shrink: 0; margin-top: 2px; }
   .sub-tab-panel .co-badge.toc { background: #0e6b4a; }
+  .rm-co-tag { cursor: pointer; }
+  .rm-co-tag:hover { opacity: .8; }
+  /* CO popup */
+  .co-popup { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:3000; align-items:center; justify-content:center; }
+  .co-popup.show { display:flex; }
+  .co-popup-box { background:#fff; border-radius:12px; width:340px; overflow:hidden; box-shadow:0 12px 40px rgba(0,0,0,.25); animation:popIn .18s ease; }
+  .co-popup-header { padding:14px 18px 12px; color:#fff; position:relative; }
+  .co-popup-header h3 { font-size:15px; font-weight:800; margin-bottom:2px; }
+  .co-popup-header p { font-size:11px; opacity:.85; }
+  .co-popup-close { position:absolute; top:10px; right:12px; background:rgba(255,255,255,.25); border:none; color:#fff; border-radius:50%; width:22px; height:22px; font-size:12px; cursor:pointer; }
+  .co-popup-body { padding:16px 18px; font-size:13px; line-height:1.7; color:#1a2233; }
 
   /* ── OS ROADMAP (embedded) ── */
   .roadmap-wrap { margin-top: 14px; background: #f0f4fa; border-radius: 10px; padding: 16px 10px; overflow-x: auto; }
@@ -360,9 +371,7 @@
     <div class="photo-placeholder" id="photoPlaceholder">👩‍🏫</div>
   </div>
 
-  <div class="header-badges">
-    <div class="badge">B.Tech CSE AI&amp;ML</div>
-  </div>
+  <div class="header-badges"></div>
 </div>
 
 <!-- ══════════════════════ MAIN ══════════════════════ -->
@@ -431,7 +440,7 @@
         <div class="rm-h-bar-wrap"><div class="rm-h-bar"></div></div>
         <div class="rm-units-row">
           <div class="rm-unit-col">
-            <div class="rm-unit-box rm-u1">UNIT I<span class="rm-unit-sub">Finite Automata</span><div class="rm-co-tag">CO1</div></div>
+            <div class="rm-unit-box rm-u1">UNIT I<span class="rm-unit-sub">Finite Automata</span><div class="rm-co-tag" onclick="showCO('toc','CO1')">CO1</div></div>
             <div class="rm-sub-vline"></div>
             <div class="rm-subtopics">
               <div class="rm-sub-box rm-u1b" onclick="rmShow('Intro to TOC','CO1','1a6fbe','CO1 — Understand finite automata and regular languages','2','2','1','1','-','-','-','-','-','-','-','1','2','-')">Intro to TOC</div>
@@ -444,7 +453,7 @@
             </div>
           </div>
           <div class="rm-unit-col">
-            <div class="rm-unit-box rm-u2">UNIT II<span class="rm-unit-sub">Regular Expressions</span><div class="rm-co-tag">CO2</div></div>
+            <div class="rm-unit-box rm-u2">UNIT II<span class="rm-unit-sub">Regular Expressions</span><div class="rm-co-tag" onclick="showCO('toc','CO2')">CO2</div></div>
             <div class="rm-sub-vline"></div>
             <div class="rm-subtopics">
               <div class="rm-sub-box rm-u2b" onclick="rmShow('Regular Expressions','CO2','0e8f7a','CO2 — Apply regular expressions and analyse formal languages','2','2','1','1','-','-','-','-','-','-','-','1','2','-')">Regular Expressions</div>
@@ -457,7 +466,7 @@
             </div>
           </div>
           <div class="rm-unit-col">
-            <div class="rm-unit-box rm-u3">UNIT III<span class="rm-unit-sub">Context Free Grammars</span><div class="rm-co-tag">CO3</div></div>
+            <div class="rm-unit-box rm-u3">UNIT III<span class="rm-unit-sub">Context Free Grammars</span><div class="rm-co-tag" onclick="showCO('toc','CO3')">CO3</div></div>
             <div class="rm-sub-vline"></div>
             <div class="rm-subtopics">
               <div class="rm-sub-box rm-u3b" onclick="rmShow('CFG Definition','CO3','7b3fbf','CO3 — Design context-free grammars and parse trees','2','2','2','1','-','-','-','-','-','-','-','1','2','-')">CFG Definition</div>
@@ -471,7 +480,7 @@
             </div>
           </div>
           <div class="rm-unit-col">
-            <div class="rm-unit-box rm-u4">UNIT IV<span class="rm-unit-sub">Pushdown Automata</span><div class="rm-co-tag">CO4</div></div>
+            <div class="rm-unit-box rm-u4">UNIT IV<span class="rm-unit-sub">Pushdown Automata</span><div class="rm-co-tag" onclick="showCO('toc','CO4')">CO4</div></div>
             <div class="rm-sub-vline"></div>
             <div class="rm-subtopics">
               <div class="rm-sub-box rm-u4b" onclick="rmShow('PDA — 7-tuple Definition','CO4','c07000','CO4 — Understand pushdown automata and relate to CFGs','2','2','2','1','-','-','-','-','-','-','-','1','2','1')">PDA — 7-tuple</div>
@@ -483,7 +492,7 @@
             </div>
           </div>
           <div class="rm-unit-col">
-            <div class="rm-unit-box rm-u5">UNIT V<span class="rm-unit-sub">Turing Machines</span><div class="rm-co-tag">CO5</div></div>
+            <div class="rm-unit-box rm-u5">UNIT V<span class="rm-unit-sub">Turing Machines</span><div class="rm-co-tag" onclick="showCO('toc','CO5')">CO5</div></div>
             <div class="rm-sub-vline"></div>
             <div class="rm-subtopics">
               <div class="rm-sub-box rm-u5b" onclick="rmShow('TM — Definition','CO5','c0392b','CO5 — Analyse Turing machines and computability theory','2','2','1','2','-','-','-','-','-','-','-','1','2','1')">TM — Definition</div>
@@ -568,7 +577,7 @@
         <div class="rm-h-bar-wrap"><div class="rm-h-bar"></div></div>
         <div class="rm-units-row">
           <div class="rm-unit-col">
-            <div class="rm-unit-box rm-u1">UNIT I<span class="rm-unit-sub">Intro to OS &amp; Shell</span><div class="rm-co-tag">CO1</div></div>
+            <div class="rm-unit-box rm-u1">UNIT I<span class="rm-unit-sub">Intro to OS &amp; Shell</span><div class="rm-co-tag" onclick="showCO('os','CO1')">CO1</div></div>
             <div class="rm-sub-vline"></div>
             <div class="rm-subtopics">
               <div class="rm-sub-box rm-u1b" onclick="rmShow('Overview of OS','CO1','1a6fbe','CO1 — Illustrate OS structure, functionality and services','1','1','1','1','-','-','-','-','-','-','-','-','-','1')">Overview of OS</div>
@@ -581,7 +590,7 @@
             </div>
           </div>
           <div class="rm-unit-col">
-            <div class="rm-unit-box rm-u2">UNIT II<span class="rm-unit-sub">Process Management</span><div class="rm-co-tag">CO2</div></div>
+            <div class="rm-unit-box rm-u2">UNIT II<span class="rm-unit-sub">Process Management</span><div class="rm-co-tag" onclick="showCO('os','CO2')">CO2</div></div>
             <div class="rm-sub-vline"></div>
             <div class="rm-subtopics">
               <div class="rm-sub-box rm-u2b" onclick="rmShow('Process Concept &amp; PCB','CO2','0e8f7a','CO2 — Implement CPU Scheduling and Process Synchronization','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Process Concept &amp; PCB</div>
@@ -594,7 +603,7 @@
             </div>
           </div>
           <div class="rm-unit-col">
-            <div class="rm-unit-box rm-u3">UNIT III<span class="rm-unit-sub">Sync &amp; Deadlock</span><div class="rm-co-tag">CO3</div></div>
+            <div class="rm-unit-box rm-u3">UNIT III<span class="rm-unit-sub">Sync &amp; Deadlock</span><div class="rm-co-tag" onclick="showCO('os','CO3')">CO3</div></div>
             <div class="rm-sub-vline"></div>
             <div class="rm-subtopics">
               <div class="rm-sub-box rm-u3b" onclick="rmShow('Critical Section Problem','CO3','7b3fbf','CO3 — Demonstrate Process Synchronization and Deadlocks','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Critical Section Problem</div>
@@ -607,7 +616,7 @@
             </div>
           </div>
           <div class="rm-unit-col">
-            <div class="rm-unit-box rm-u4">UNIT IV<span class="rm-unit-sub">Memory Management</span><div class="rm-co-tag">CO4</div></div>
+            <div class="rm-unit-box rm-u4">UNIT IV<span class="rm-unit-sub">Memory Management</span><div class="rm-co-tag" onclick="showCO('os','CO4')">CO4</div></div>
             <div class="rm-sub-vline"></div>
             <div class="rm-subtopics">
               <div class="rm-sub-box rm-u4b" onclick="rmShow('Logical vs Physical Addr.','CO4','c07000','CO4 — Apply and analyse memory management mechanisms','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Logical vs Physical Addr.</div>
@@ -620,7 +629,7 @@
             </div>
           </div>
           <div class="rm-unit-col">
-            <div class="rm-unit-box rm-u5">UNIT V<span class="rm-unit-sub">File Systems &amp; Protection</span><div class="rm-co-tag">CO5</div></div>
+            <div class="rm-unit-box rm-u5">UNIT V<span class="rm-unit-sub">File Systems &amp; Protection</span><div class="rm-co-tag" onclick="showCO('os','CO5')">CO5</div></div>
             <div class="rm-sub-vline"></div>
             <div class="rm-subtopics">
               <div class="rm-sub-box rm-u5b" onclick="rmShow('File Concepts &amp; Access Methods','CO5','c0392b','CO5 — Demonstrate file system structure and protection','2','2','2','1','-','-','-','-','-','-','-','-','-','1')">File Concepts &amp; Access Methods</div>
@@ -688,6 +697,37 @@ function rmShow(topic, co, color, coDesc, ...levels) {
 }
 function rmClose(e) { if(e.target===document.getElementById('rmOverlay')) document.getElementById('rmOverlay').style.display='none'; }
 
+/* ── CO popup data ── */
+const CO_DATA = {
+  os: {
+    CO1: { label:'CO1', desc:'Illustrate the structure, functionality and services of an Operating System.', detail:'Covers: Overview of OS · Types of OS · OS Structures · OS Services · System Calls · Virtual Machines · Shell Programming', color:'#1a6fbe' },
+    CO2: { label:'CO2', desc:'Implement CPU scheduling algorithms and inter-process communication.', detail:'Covers: Process Concept & PCB · Process Scheduling · Operations on Process · IPC · Client-Server Communication · Threads & Multithreading · CPU Scheduling Algorithms', color:'#0e8f7a' },
+    CO3: { label:'CO3', desc:'Demonstrate process synchronization mechanisms and deadlock handling.', detail:'Covers: Critical Section Problem · Peterson\'s Solution · Sync Hardware · Semaphores · Classical Problems · Monitors · Deadlock — Avoidance, Detection & Recovery', color:'#7b3fbf' },
+    CO4: { label:'CO4', desc:'Apply and analyse memory management and virtual memory mechanisms.', detail:'Covers: Logical vs Physical Address · Contiguous Allocation · Paging & TLBs · Segmentation · Swapping · Virtual Memory · Page Replacement & Thrashing', color:'#c07000' },
+    CO5: { label:'CO5', desc:'Demonstrate file system structure, I/O management and OS protection.', detail:'Covers: File Concepts & Access Methods · Directory Structure · File System Implementation · Disk Scheduling · I/O Systems · Goals of Protection · Access Matrix', color:'#c0392b' }
+  },
+  toc: {
+    CO1: { label:'CO1', desc:'Understand and design finite automata (DFA, NFA, ε-NFA) for regular languages.', detail:'Covers: Intro to TOC · DFA · NFA · ε-NFA · DFA↔NFA Equivalence · Minimization of DFA · Mealy & Moore Machines', color:'#1a6fbe' },
+    CO2: { label:'CO2', desc:'Apply regular expressions, Arden\'s theorem and Pumping Lemma to analyse formal languages.', detail:'Covers: Regular Expressions · RE to FA Conversion · Arden\'s Theorem · Properties of RL · Pumping Lemma for RL · Chomsky Hierarchy · Applications of RL', color:'#0e8f7a' },
+    CO3: { label:'CO3', desc:'Design context-free grammars, construct parse trees and convert to CNF/GNF.', detail:'Covers: CFG Definition · Parse Trees & Derivations · Ambiguous Grammars · Simplification of CFGs · Chomsky Normal Form · Greibach Normal Form · Pumping Lemma for CFLs · Closure Properties', color:'#7b3fbf' },
+    CO4: { label:'CO4', desc:'Understand pushdown automata and establish equivalence with context-free grammars.', detail:'Covers: PDA 7-tuple Definition · Instantaneous Description · Moves of PDA · DPDA vs NPDA · CFG to PDA Conversion · PDA to CFG Conversion', color:'#c07000' },
+    CO5: { label:'CO5', desc:'Analyse Turing machines, decidability, Rice\'s theorem and computational complexity (P vs NP).', detail:'Covers: TM Definition · Variants of TM · Church-Turing Thesis · Halting Problem · Rice\'s Theorem · Decidability & Undecidability · P vs NP Problem', color:'#c0392b' }
+  }
+};
+function showCO(subject, coNum) {
+  const co = CO_DATA[subject][coNum];
+  if (!co) return;
+  document.getElementById('coPopupHeader').style.background = co.color;
+  document.getElementById('coPopupTitle').textContent = coNum + ' — ' + (subject === 'os' ? 'Operating Systems' : 'Theory of Computation');
+  document.getElementById('coPopupDesc').textContent = co.desc;
+  document.getElementById('coPopupDetail').textContent = co.detail;
+  document.getElementById('coPopup').classList.add('show');
+}
+function closeCOPopup(e) {
+  if (!e || e.target === document.getElementById('coPopup'))
+    document.getElementById('coPopup').classList.remove('show');
+}
+
 /* ── subject info tabs ── */
 function showTab(subject, tab, btn) {
   ['prereq','obj','co'].forEach(t => {
@@ -726,6 +766,21 @@ function setTopicQuiz() {
   img.src = 'photo.jpg';
 })();
 </script>
+
+<!-- CO Detail Popup -->
+<div class="co-popup" id="coPopup" onclick="closeCOPopup(event)">
+  <div class="co-popup-box">
+    <div class="co-popup-header" id="coPopupHeader">
+      <h3 id="coPopupTitle"></h3>
+      <p style="font-size:11px;opacity:.85;margin-top:2px;">Course Outcome</p>
+      <button class="co-popup-close" onclick="closeCOPopup()">✕</button>
+    </div>
+    <div class="co-popup-body">
+      <div id="coPopupDesc" style="font-weight:600;margin-bottom:10px;"></div>
+      <div id="coPopupDetail" style="font-size:12px;color:#5a6a85;background:#f5f7fa;border-radius:8px;padding:10px 12px;"></div>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
