@@ -308,7 +308,7 @@
   .rm-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 14px; }
   .rm-legend-item { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #555; }
   .rm-legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
-  .rm-hint { text-align: center; font-size: 10px; color: #999; margin-top: 8px; }
+  .rm-hint { text-align: center; font-size: 14px; font-weight: 800; color: #1a3a6b; background: #fff9c4; border: 2px solid #f9c006; border-radius: 8px; padding: 7px 16px; margin-top: 10px; display: inline-block; width: 100%; }
 
   @media (max-width: 600px) {
     .header { padding: 20px; flex-wrap: wrap; }
@@ -342,7 +342,6 @@
 
   <div class="header-badges">
     <div class="badge">B.Tech CSE AI&amp;ML</div>
-    <div class="badge green">UNIT-I Active</div>
   </div>
 </div>
 
@@ -350,7 +349,7 @@
 <div class="main">
 
   <!-- Subjects -->
-  <h2 class="subjects-heading">Subjects</h2>
+  <h2 class="subjects-heading">Subjects (AY: 2026-2027 Sem -1)</h2>
   <div class="subjects-row">
     <div class="subject-card toc-card">
       <div style="display:flex;align-items:center;gap:14px;width:100%">
@@ -358,40 +357,97 @@
         <div class="subject-info">
           <div class="subject-name">Theory of Computation</div>
           <div class="subject-desc">Automata, Languages &amp; Computability</div>
+          <div style="margin-top:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <a href="TOC_syllabus.pdf" target="_blank" style="display:inline-block;font-size:11.5px;font-weight:600;color:#1a6fbe;text-decoration:none;background:rgba(26,111,190,0.1);border:1px solid rgba(26,111,190,0.35);padding:3px 10px;border-radius:20px;">📄 Click here to view Syllabus</a>
+            <span style="background:#1a6fbe;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;">🟢 UNIT-I Active</span>
+          </div>
         </div>
       </div>
-      <div class="toc-units" style="width:100%">
-        <a class="toc-unit-link" href="tocnotes.html" onclick="sessionStorage.setItem('toc_open_unit','u1')">
-          <div class="toc-unit-num">I</div>
-          <div class="toc-unit-label">Finite Automata</div>
-          <div class="toc-unit-topic">DFA · NFA · ε-NFA · Minimization</div>
-          <span class="toc-arrow-icon">›</span>
-        </a>
-        <a class="toc-unit-link" href="tocnotes.html" onclick="sessionStorage.setItem('toc_open_unit','u2')">
-          <div class="toc-unit-num">II</div>
-          <div class="toc-unit-label">Regular Expressions</div>
-          <div class="toc-unit-topic">RE · Arden's · Pumping Lemma</div>
-          <span class="toc-arrow-icon">›</span>
-        </a>
-        <a class="toc-unit-link" href="tocnotes.html" onclick="sessionStorage.setItem('toc_open_unit','u3')">
-          <div class="toc-unit-num">III</div>
-          <div class="toc-unit-label">Context Free Grammars</div>
-          <div class="toc-unit-topic">CFG · Parse Trees · CNF · GNF</div>
-          <span class="toc-arrow-icon">›</span>
-        </a>
-        <a class="toc-unit-link" href="tocnotes.html" onclick="sessionStorage.setItem('toc_open_unit','u4')">
-          <div class="toc-unit-num">IV</div>
-          <div class="toc-unit-label">Pushdown Automata</div>
-          <div class="toc-unit-topic">PDA · ID &amp; Moves · CFG ↔ PDA</div>
-          <span class="toc-arrow-icon">›</span>
-        </a>
-        <a class="toc-unit-link" href="tocnotes.html" onclick="sessionStorage.setItem('toc_open_unit','u5')">
-          <div class="toc-unit-num">V</div>
-          <div class="toc-unit-label">Turing Machines</div>
-          <div class="toc-unit-topic">TM · Church-Turing · Halting Problem · P vs NP</div>
-          <span class="toc-arrow-icon">›</span>
-        </a>
+      <!-- TOC ROADMAP EMBEDDED -->
+      <div class="roadmap-wrap" style="width:100%">
+        <div class="rm-root-box" style="background:#0e6b4a;">
+          Theory of Computation — A Road Map
+          <small>K.L.P. Mishra &amp; N. Chandrasekaran — Theory of Computer Science, 3rd Ed.</small>
+        </div>
+        <div class="rm-v-line"></div>
+        <div class="rm-h-bar-wrap"><div class="rm-h-bar"></div></div>
+        <div class="rm-units-row">
+          <div class="rm-unit-col">
+            <div class="rm-unit-box rm-u1">UNIT I<span class="rm-unit-sub">Finite Automata</span><div class="rm-co-tag">CO1</div></div>
+            <div class="rm-sub-vline"></div>
+            <div class="rm-subtopics">
+              <div class="rm-sub-box rm-u1b" onclick="rmShow('Intro to TOC','CO1','1a6fbe','CO1 — Understand finite automata and regular languages','2','2','1','1','-','-','-','-','-','-','-','1','2','-')">Intro to TOC</div>
+              <div class="rm-sub-box rm-u1b" onclick="rmShow('DFA','CO1','1a6fbe','CO1 — Understand finite automata and regular languages','2','2','1','1','-','-','-','-','-','-','-','1','2','-')">DFA</div>
+              <div class="rm-sub-box rm-u1b" onclick="rmShow('NFA','CO1','1a6fbe','CO1 — Understand finite automata and regular languages','2','2','1','1','-','-','-','-','-','-','-','1','2','-')">NFA</div>
+              <div class="rm-sub-box rm-u1b" onclick="rmShow('ε-NFA','CO1','1a6fbe','CO1 — Understand finite automata and regular languages','2','2','1','1','-','-','-','-','-','-','-','1','2','-')">ε-NFA</div>
+              <div class="rm-sub-box rm-u1b" onclick="rmShow('DFA ↔ NFA Equivalence','CO1','1a6fbe','CO1 — Understand finite automata and regular languages','2','2','1','1','-','-','-','-','-','-','-','1','2','-')">DFA ↔ NFA Equivalence</div>
+              <div class="rm-sub-box rm-u1b" onclick="rmShow('Minimization of DFA','CO1','1a6fbe','CO1 — Understand finite automata and regular languages','2','2','1','1','-','-','-','-','-','-','-','1','2','-')">Minimization of DFA</div>
+              <div class="rm-sub-box rm-u1b" onclick="rmShow('Mealy &amp; Moore Machines','CO1','1a6fbe','CO1 — Understand finite automata and regular languages','2','2','1','1','-','-','-','-','-','-','-','1','2','-')">Mealy &amp; Moore Machines</div>
+            </div>
+          </div>
+          <div class="rm-unit-col">
+            <div class="rm-unit-box rm-u2">UNIT II<span class="rm-unit-sub">Regular Expressions</span><div class="rm-co-tag">CO2</div></div>
+            <div class="rm-sub-vline"></div>
+            <div class="rm-subtopics">
+              <div class="rm-sub-box rm-u2b" onclick="rmShow('Regular Expressions','CO2','0e8f7a','CO2 — Apply regular expressions and analyse formal languages','2','2','1','1','-','-','-','-','-','-','-','1','2','-')">Regular Expressions</div>
+              <div class="rm-sub-box rm-u2b" onclick="rmShow('RE to FA Conversion','CO2','0e8f7a','CO2 — Apply regular expressions and analyse formal languages','2','2','1','1','-','-','-','-','-','-','-','1','2','-')">RE to FA Conversion</div>
+              <div class="rm-sub-box rm-u2b" onclick="rmShow('Arden\'s Theorem','CO2','0e8f7a','CO2 — Apply regular expressions and analyse formal languages','2','2','1','1','-','-','-','-','-','-','-','1','2','-')">Arden's Theorem</div>
+              <div class="rm-sub-box rm-u2b" onclick="rmShow('Properties of RL','CO2','0e8f7a','CO2 — Apply regular expressions and analyse formal languages','2','2','1','1','-','-','-','-','-','-','-','1','2','-')">Properties of RL</div>
+              <div class="rm-sub-box rm-u2b" onclick="rmShow('Pumping Lemma for RL','CO2','0e8f7a','CO2 — Apply regular expressions and analyse formal languages','2','2','2','1','-','-','-','-','-','-','-','1','2','-')">Pumping Lemma for RL</div>
+              <div class="rm-sub-box rm-u2b" onclick="rmShow('Chomsky Hierarchy','CO2','0e8f7a','CO2 — Apply regular expressions and analyse formal languages','2','2','1','1','-','-','-','-','-','-','-','1','2','-')">Chomsky Hierarchy</div>
+              <div class="rm-sub-box rm-u2b" onclick="rmShow('Applications of RL','CO2','0e8f7a','CO2 — Apply regular expressions and analyse formal languages','2','2','1','1','-','-','-','-','-','-','-','1','2','1')">Applications of RL</div>
+            </div>
+          </div>
+          <div class="rm-unit-col">
+            <div class="rm-unit-box rm-u3">UNIT III<span class="rm-unit-sub">Context Free Grammars</span><div class="rm-co-tag">CO3</div></div>
+            <div class="rm-sub-vline"></div>
+            <div class="rm-subtopics">
+              <div class="rm-sub-box rm-u3b" onclick="rmShow('CFG Definition','CO3','7b3fbf','CO3 — Design context-free grammars and parse trees','2','2','2','1','-','-','-','-','-','-','-','1','2','-')">CFG Definition</div>
+              <div class="rm-sub-box rm-u3b" onclick="rmShow('Parse Trees &amp; Derivations','CO3','7b3fbf','CO3 — Design context-free grammars and parse trees','2','2','2','1','-','-','-','-','-','-','-','1','2','-')">Parse Trees &amp; Derivations</div>
+              <div class="rm-sub-box rm-u3b" onclick="rmShow('Ambiguous Grammars','CO3','7b3fbf','CO3 — Design context-free grammars and parse trees','2','2','2','1','-','-','-','-','-','-','-','1','2','-')">Ambiguous Grammars</div>
+              <div class="rm-sub-box rm-u3b" onclick="rmShow('Simplification of CFGs','CO3','7b3fbf','CO3 — Design context-free grammars and parse trees','2','2','2','1','-','-','-','-','-','-','-','1','2','-')">Simplification of CFGs</div>
+              <div class="rm-sub-box rm-u3b" onclick="rmShow('Chomsky Normal Form','CO3','7b3fbf','CO3 — Design context-free grammars and parse trees','2','2','2','1','-','-','-','-','-','-','-','1','2','-')">Chomsky Normal Form</div>
+              <div class="rm-sub-box rm-u3b" onclick="rmShow('Greibach Normal Form','CO3','7b3fbf','CO3 — Design context-free grammars and parse trees','2','2','2','1','-','-','-','-','-','-','-','1','2','-')">Greibach Normal Form</div>
+              <div class="rm-sub-box rm-u3b" onclick="rmShow('Pumping Lemma for CFLs','CO3','7b3fbf','CO3 — Design context-free grammars and parse trees','2','2','2','1','-','-','-','-','-','-','-','1','2','-')">Pumping Lemma for CFLs</div>
+              <div class="rm-sub-box rm-u3b" onclick="rmShow('Closure Properties CFLs','CO3','7b3fbf','CO3 — Design context-free grammars and parse trees','2','2','2','1','-','-','-','-','-','-','-','1','2','-')">Closure Properties CFLs</div>
+            </div>
+          </div>
+          <div class="rm-unit-col">
+            <div class="rm-unit-box rm-u4">UNIT IV<span class="rm-unit-sub">Pushdown Automata</span><div class="rm-co-tag">CO4</div></div>
+            <div class="rm-sub-vline"></div>
+            <div class="rm-subtopics">
+              <div class="rm-sub-box rm-u4b" onclick="rmShow('PDA — 7-tuple Definition','CO4','c07000','CO4 — Understand pushdown automata and relate to CFGs','2','2','2','1','-','-','-','-','-','-','-','1','2','1')">PDA — 7-tuple</div>
+              <div class="rm-sub-box rm-u4b" onclick="rmShow('Instantaneous Description (ID)','CO4','c07000','CO4 — Understand pushdown automata and relate to CFGs','2','2','2','1','-','-','-','-','-','-','-','1','2','1')">Instantaneous Description</div>
+              <div class="rm-sub-box rm-u4b" onclick="rmShow('Moves of PDA','CO4','c07000','CO4 — Understand pushdown automata and relate to CFGs','2','2','2','1','-','-','-','-','-','-','-','1','2','1')">Moves of PDA</div>
+              <div class="rm-sub-box rm-u4b" onclick="rmShow('DPDA vs NPDA','CO4','c07000','CO4 — Understand pushdown automata and relate to CFGs','2','2','2','1','-','-','-','-','-','-','-','1','2','1')">DPDA vs NPDA</div>
+              <div class="rm-sub-box rm-u4b" onclick="rmShow('CFG to PDA Conversion','CO4','c07000','CO4 — Understand pushdown automata and relate to CFGs','2','2','2','1','-','-','-','-','-','-','-','1','2','1')">CFG to PDA</div>
+              <div class="rm-sub-box rm-u4b" onclick="rmShow('PDA to CFG Conversion','CO4','c07000','CO4 — Understand pushdown automata and relate to CFGs','2','2','2','1','-','-','-','-','-','-','-','1','2','1')">PDA to CFG</div>
+            </div>
+          </div>
+          <div class="rm-unit-col">
+            <div class="rm-unit-box rm-u5">UNIT V<span class="rm-unit-sub">Turing Machines</span><div class="rm-co-tag">CO5</div></div>
+            <div class="rm-sub-vline"></div>
+            <div class="rm-subtopics">
+              <div class="rm-sub-box rm-u5b" onclick="rmShow('TM — Definition','CO5','c0392b','CO5 — Analyse Turing machines and computability theory','2','2','1','2','-','-','-','-','-','-','-','1','2','1')">TM — Definition</div>
+              <div class="rm-sub-box rm-u5b" onclick="rmShow('Variants of TM','CO5','c0392b','CO5 — Analyse Turing machines and computability theory','2','2','1','2','-','-','-','-','-','-','-','1','2','1')">Variants of TM</div>
+              <div class="rm-sub-box rm-u5b" onclick="rmShow('Church-Turing Thesis','CO5','c0392b','CO5 — Analyse Turing machines and computability theory','2','2','1','2','-','-','-','-','-','-','-','1','2','1')">Church-Turing Thesis</div>
+              <div class="rm-sub-box rm-u5b" onclick="rmShow('Halting Problem','CO5','c0392b','CO5 — Analyse Turing machines and computability theory','2','2','1','2','-','-','-','-','-','-','-','1','2','1')">Halting Problem</div>
+              <div class="rm-sub-box rm-u5b" onclick="rmShow('Rice\'s Theorem','CO5','c0392b','CO5 — Analyse Turing machines and computability theory','2','2','1','2','-','-','-','-','-','-','-','1','2','1')">Rice's Theorem</div>
+              <div class="rm-sub-box rm-u5b" onclick="rmShow('Decidability &amp; Undecidability','CO5','c0392b','CO5 — Analyse Turing machines and computability theory','2','2','1','2','-','-','-','-','-','-','-','1','2','1')">Decidability &amp; Undecidability</div>
+              <div class="rm-sub-box rm-u5b" onclick="rmShow('P vs NP Problem','CO5','c0392b','CO5 — Analyse Turing machines and computability theory','2','2','1','2','-','-','-','-','-','-','-','1','2','1')">P vs NP Problem</div>
+            </div>
+          </div>
+        </div>
+        <div class="rm-legend">
+          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#1a6fbe"></div>Unit I (10 Th)</div>
+          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#0e8f7a"></div>Unit II (10 Th)</div>
+          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#7b3fbf"></div>Unit III (12 Th)</div>
+          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#c07000"></div>Unit IV (10 Th)</div>
+          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#c0392b"></div>Unit V (10 Th)</div>
+        </div>
+        <div class="rm-hint">💡 Click any topic to see CO-PO mapping</div>
       </div>
+      <!-- END TOC ROADMAP -->
     </div>
     <div class="subject-card toc-card active" style="order:-1">
       <div style="display:flex;align-items:center;gap:14px;width:100%">
@@ -399,16 +455,18 @@
         <div class="subject-info">
           <div class="subject-name">Operating Systems</div>
           <div class="subject-desc">Process, Memory &amp; File Management</div>
-          <a href="OS_syllabus.pdf" target="_blank" style="display:inline-block;margin-top:6px;font-size:11.5px;font-weight:600;color:#0e8f7a;text-decoration:none;background:rgba(14,143,122,0.1);border:1px solid rgba(14,143,122,0.35);padding:3px 10px;border-radius:20px;">📄 Click here to view Syllabus</a>
+          <div style="margin-top:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <a href="OS_syllabus.pdf" target="_blank" style="display:inline-block;font-size:11.5px;font-weight:600;color:#0e8f7a;text-decoration:none;background:rgba(14,143,122,0.1);border:1px solid rgba(14,143,122,0.35);padding:3px 10px;border-radius:20px;">📄 Click here to view Syllabus</a>
+            <span style="background:#0e8f7a;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;">🟢 UNIT-I Active</span>
+          </div>
         </div>
         <span class="subject-badge">Current</span>
       </div>
       <!-- OS ROADMAP EMBEDDED -->
       <div class="roadmap-wrap" style="width:100%">
         <div class="rm-root-box">
-          Operating System Concepts
+          Operating System Concepts — A Road Map
           <small>Silberschatz, Galvin &amp; Gagne — OS Concepts, 10th Ed.</small>
-          <a href="OS_syllabus.pdf" target="_blank" style="display:inline-block;margin-top:6px;background:rgba(255,255,255,0.2);color:#fff;font-size:10px;font-weight:600;padding:3px 12px;border-radius:20px;text-decoration:none;border:1px solid rgba(255,255,255,0.4);">📄 View Syllabus</a>
         </div>
         <div class="rm-v-line"></div>
         <div class="rm-h-bar-wrap"><div class="rm-h-bar"></div></div>
@@ -489,39 +547,6 @@
         <div class="rm-hint">💡 Click any topic to see CO-PO mapping</div>
       </div>
       <!-- END OS ROADMAP -->
-
-      <div class="toc-units" style="width:100%">
-        <a class="toc-unit-link" href="osnotes.html" onclick="sessionStorage.setItem('os_open_topic','overview')">
-          <div class="toc-unit-num">I</div>
-          <div class="toc-unit-label">Intro to OS &amp; Shell</div>
-          <div class="toc-unit-topic">Overview · Types · Shell Programming</div>
-          <span class="toc-arrow-icon">›</span>
-        </a>
-        <a class="toc-unit-link" href="osnotes.html" onclick="sessionStorage.setItem('os_open_topic','process')">
-          <div class="toc-unit-num">II</div>
-          <div class="toc-unit-label">Process Management</div>
-          <div class="toc-unit-topic">Scheduling · Synchronization · Deadlock</div>
-          <span class="toc-arrow-icon">›</span>
-        </a>
-        <a class="toc-unit-link" href="osnotes.html" onclick="sessionStorage.setItem('os_open_topic','memory')">
-          <div class="toc-unit-num">III</div>
-          <div class="toc-unit-label">Memory Management</div>
-          <div class="toc-unit-topic">Paging · Segmentation · Virtual Memory</div>
-          <span class="toc-arrow-icon">›</span>
-        </a>
-        <a class="toc-unit-link" href="osnotes.html" onclick="sessionStorage.setItem('os_open_topic','file')">
-          <div class="toc-unit-num">IV</div>
-          <div class="toc-unit-label">File System Management</div>
-          <div class="toc-unit-topic">File Structure · Directory · Disk Scheduling</div>
-          <span class="toc-arrow-icon">›</span>
-        </a>
-        <a class="toc-unit-link" href="osnotes.html" onclick="sessionStorage.setItem('os_open_topic','protection')">
-          <div class="toc-unit-num">V</div>
-          <div class="toc-unit-label">Protection &amp; Security</div>
-          <div class="toc-unit-topic">Access Matrix · Authentication · Linux Security</div>
-          <span class="toc-arrow-icon">›</span>
-        </a>
-      </div>
     </div>
   </div>
 
