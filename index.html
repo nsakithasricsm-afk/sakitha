@@ -284,6 +284,26 @@
   .toc-arrow-icon { color: var(--muted); font-size: 14px; margin-left: auto; }
   .subject-card.toc-card { flex-direction: column; align-items: flex-start; }
 
+  /* ── SUBJECT TABS ── */
+  .sub-tabs-wrap { width: 100%; margin-top: 14px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: #eef3fb; }
+  .sub-tab-bar { display: flex; border-bottom: 1px solid var(--border); }
+  .sub-tab-btn {
+    flex: 1; padding: 10px 6px; font-size: 12px; font-weight: 700; color: var(--muted);
+    background: #dce7f7; border: none; cursor: pointer; border-right: 1px solid #c2d2e8;
+    transition: background .15s, color .15s; letter-spacing: .01em;
+  }
+  .sub-tab-btn:last-child { border-right: none; }
+  .sub-tab-btn:hover { background: #c8daef; color: var(--text); }
+  .sub-tab-btn.active { background: #eef3fb; color: var(--accent); border-bottom: 2px solid var(--accent); margin-bottom: -1px; }
+  .sub-tab-panel { display: none; padding: 14px 16px; font-size: 13px; line-height: 1.7; color: var(--text); background: #eef3fb; }
+  .sub-tab-panel.active { display: block; }
+  .sub-tab-panel ul { padding-left: 18px; margin-top: 4px; }
+  .sub-tab-panel ul li { margin-bottom: 4px; }
+  .sub-tab-panel .co-row { display: flex; gap: 8px; align-items: flex-start; padding: 7px 0; border-bottom: 1px solid var(--border); }
+  .sub-tab-panel .co-row:last-child { border-bottom: none; }
+  .sub-tab-panel .co-badge { min-width: 38px; font-size: 11px; font-weight: 800; color: #fff; background: var(--accent); border-radius: 5px; padding: 2px 7px; text-align: center; flex-shrink: 0; margin-top: 2px; }
+  .sub-tab-panel .co-badge.toc { background: #0e6b4a; }
+
   /* ── OS ROADMAP (embedded) ── */
   .roadmap-wrap { margin-top: 14px; background: #f0f4fa; border-radius: 10px; padding: 16px 10px; overflow-x: auto; }
   .rm-root-box { background: #1a3a6b; color: #fff; border-radius: 10px; padding: 10px 24px; text-align: center; font-size: 15px; font-weight: 800; box-shadow: 0 4px 14px rgba(26,58,107,.3); }
@@ -363,6 +383,44 @@
           </div>
         </div>
       </div>
+
+      <!-- TOC TABS -->
+      <div class="sub-tabs-wrap" style="width:100%">
+        <div class="sub-tab-bar">
+          <button class="sub-tab-btn active" onclick="showTab('toc','prereq',this)">Prerequisites</button>
+          <button class="sub-tab-btn" onclick="showTab('toc','obj',this)">Course Objectives</button>
+          <button class="sub-tab-btn" onclick="showTab('toc','co',this)">Course Outcomes</button>
+        </div>
+        <div class="sub-tab-panel active" id="toc-prereq">
+          <strong>Prerequisites:</strong>
+          <ul>
+            <li>Discrete Mathematics</li>
+            <li>Data Structures &amp; Algorithms</li>
+            <li>Mathematical Logic &amp; Set Theory</li>
+            <li>Digital Logic Design</li>
+          </ul>
+        </div>
+        <div class="sub-tab-panel" id="toc-obj">
+          <strong>Course Objectives:</strong>
+          <ul>
+            <li>Understand finite automata, regular languages and their applications.</li>
+            <li>Apply regular expressions and prove language properties using Pumping Lemma.</li>
+            <li>Design context-free grammars, parse trees and normal forms.</li>
+            <li>Understand pushdown automata and their equivalence to context-free languages.</li>
+            <li>Analyse Turing machines, Church-Turing thesis, decidability and P vs NP.</li>
+          </ul>
+        </div>
+        <div class="sub-tab-panel" id="toc-co">
+          <strong>Course Outcomes:</strong>
+          <div class="co-row"><span class="co-badge toc">CO1</span><span>Understand and design finite automata (DFA, NFA, ε-NFA) for regular languages.</span></div>
+          <div class="co-row"><span class="co-badge toc">CO2</span><span>Apply regular expressions, Arden's theorem and Pumping Lemma to analyse formal languages.</span></div>
+          <div class="co-row"><span class="co-badge toc">CO3</span><span>Design context-free grammars, construct parse trees and convert to CNF/GNF.</span></div>
+          <div class="co-row"><span class="co-badge toc">CO4</span><span>Understand pushdown automata and establish equivalence with context-free grammars.</span></div>
+          <div class="co-row"><span class="co-badge toc">CO5</span><span>Analyse Turing machines, decidability, Rice's theorem and computational complexity (P vs NP).</span></div>
+        </div>
+      </div>
+      <!-- END TOC TABS -->
+
       <!-- TOC ROADMAP EMBEDDED -->
       <div class="roadmap-wrap" style="width:100%">
         <div class="rm-root-box" style="background:#0e6b4a;">
@@ -462,6 +520,44 @@
         </div>
         <span class="subject-badge">Current</span>
       </div>
+
+      <!-- OS TABS -->
+      <div class="sub-tabs-wrap" style="width:100%">
+        <div class="sub-tab-bar">
+          <button class="sub-tab-btn active" onclick="showTab('os','prereq',this)">Prerequisites</button>
+          <button class="sub-tab-btn" onclick="showTab('os','obj',this)">Course Objectives</button>
+          <button class="sub-tab-btn" onclick="showTab('os','co',this)">Course Outcomes</button>
+        </div>
+        <div class="sub-tab-panel active" id="os-prereq">
+          <strong>Prerequisites:</strong>
+          <ul>
+            <li>Data Structures &amp; Algorithms</li>
+            <li>Computer Organization &amp; Architecture</li>
+            <li>C / C++ Programming</li>
+            <li>Discrete Mathematics</li>
+          </ul>
+        </div>
+        <div class="sub-tab-panel" id="os-obj">
+          <strong>Course Objectives:</strong>
+          <ul>
+            <li>Explain the services an OS provides to users, processes and other systems.</li>
+            <li>Examine different process scheduling and synchronization algorithms.</li>
+            <li>Demonstrate deadlock handling and prevention mechanisms.</li>
+            <li>Apply and analyse memory management and virtual memory techniques.</li>
+            <li>Examine file system implementation, I/O systems and security protection.</li>
+          </ul>
+        </div>
+        <div class="sub-tab-panel" id="os-co">
+          <strong>Course Outcomes:</strong>
+          <div class="co-row"><span class="co-badge">CO1</span><span>Illustrate the structure, functionality and services of an Operating System.</span></div>
+          <div class="co-row"><span class="co-badge">CO2</span><span>Implement CPU scheduling algorithms and inter-process communication.</span></div>
+          <div class="co-row"><span class="co-badge">CO3</span><span>Demonstrate process synchronization mechanisms and deadlock handling.</span></div>
+          <div class="co-row"><span class="co-badge">CO4</span><span>Apply and analyse memory management and virtual memory mechanisms.</span></div>
+          <div class="co-row"><span class="co-badge">CO5</span><span>Demonstrate file system structure, I/O management and OS protection.</span></div>
+        </div>
+      </div>
+      <!-- END OS TABS -->
+
       <!-- OS ROADMAP EMBEDDED -->
       <div class="roadmap-wrap" style="width:100%">
         <div class="rm-root-box">
@@ -591,6 +687,16 @@ function rmShow(topic, co, color, coDesc, ...levels) {
   document.getElementById('rmOverlay').style.display = 'flex';
 }
 function rmClose(e) { if(e.target===document.getElementById('rmOverlay')) document.getElementById('rmOverlay').style.display='none'; }
+
+/* ── subject info tabs ── */
+function showTab(subject, tab, btn) {
+  ['prereq','obj','co'].forEach(t => {
+    document.getElementById(subject+'-'+t).classList.remove('active');
+  });
+  document.getElementById(subject+'-'+tab).classList.add('active');
+  btn.closest('.sub-tab-bar').querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
 
 /* ── toggle section open/close ── */
 function toggleSection(id) {
