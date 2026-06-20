@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Theory of Computation — Complete Study Guide</title>
+<style>
+  :root {
+    --bg: #f5f7fa;
+    --bg2: #ffffff;
+    --bg3: #eef1f6;
+    --border: #d8dde8;
+    --text: #1a2233;
+    --muted: #5a6a85;
+    --accent: #1a6fbe;
+    --accent2: #0e8f7a;
+    --green: #0e8f7a;
+    --amber: #b07800;
+    --red: #c0392b;
+    --purple: #6c3fbf;
+    --radius: 10px;
+    --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --mono: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 15px; line-height: 1.7; min-height: 100vh; }
+
+  /* HEADER */
+  .hero { background: linear-gradient(135deg, #1a3a6b 0%, #1a5fa0 60%, #1a3a6b 100%); border-bottom: 2px solid #1a3a6b; padding: 32px 24px 28px; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,255,255,0.08) 0%, transparent 70%); pointer-events: none; }
+  .hero-college { font-size: 12px; color: rgba(255,255,255,0.75); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px; }
+  .hero-label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,0.7); font-weight: 600; margin-bottom: 8px; }
+  .hero h1 { font-size: clamp(20px, 4vw, 32px); font-weight: 800; color: #fff; letter-spacing: -.02em; margin-bottom: 6px; }
+  .hero h1 span { color: #7ecfff; }
+  .hero p { color: rgba(255,255,255,0.7); font-size: 13px; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 14px; }
+  .pill { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 3px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+
+  /* NAV */
+  .nav-wrap { background: var(--bg2); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .nav { display: flex; overflow-x: auto; gap: 0; padding: 0 12px; scrollbar-width: none; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn { flex-shrink: 0; padding: 13px 16px; background: none; border: none; color: var(--muted); font-size: 13px; font-weight: 500; cursor: pointer; border-bottom: 2px solid transparent; transition: color .15s, border-color .15s; white-space: nowrap; font-family: var(--font); }
+  .nav-btn:hover { color: var(--text); }
+  .nav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .back-btn { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-size: 13px; text-decoration: none; padding: 13px 16px; border-bottom: 2px solid transparent; font-weight: 500; flex-shrink: 0; }
+  .back-btn:hover { color: var(--text); }
+
+  /* MAIN */
+  .main { max-width: 880px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  /* UNIT PAGE */
+  .unit-page { display: none; }
+  .unit-page.active { display: block; }
+
+  /* UNIT HEADER */
+  .unit-header { background: linear-gradient(135deg, rgba(26,111,190,0.08), rgba(14,143,122,0.05)); border: 1px solid rgba(26,111,190,0.2); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 28px; }
+  .unit-tag { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .unit-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+  .unit-topics { display: flex; flex-wrap: wrap; gap: 6px; }
+  .unit-topic-chip { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 3px 10px; font-size: 12px; color: var(--muted); }
+
+  /* SECTION BLOCKS */
+  .section-block { margin-bottom: 26px; }
+  .section-label { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; margin-bottom: 10px; padding: 4px 10px; border-radius: 4px; display: inline-block; }
+  .sl-blue   { background: rgba(26,111,190,0.12); color: var(--accent); }
+  .sl-green  { background: rgba(14,143,122,0.12); color: var(--green); }
+  .sl-amber  { background: rgba(176,120,0,0.12); color: var(--amber); }
+  .sl-red    { background: rgba(192,57,43,0.12); color: var(--red); }
+  .sl-purple { background: rgba(108,63,191,0.12); color: var(--purple); }
+
+  .core-card { background: linear-gradient(135deg, rgba(26,111,190,0.06), rgba(14,143,122,0.04)); border: 1px solid rgba(26,111,190,0.2); border-radius: var(--radius); padding: 18px 20px; font-size: 15px; line-height: 1.7; }
+  .core-card strong { color: var(--accent); }
+
+  /* TOPIC SECTION */
+  .topic-section { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 18px; overflow: hidden; }
+  .topic-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; cursor: pointer; user-select: none; background: var(--bg2); transition: background .15s; }
+  .topic-header:hover { background: rgba(26,111,190,0.04); }
+  .topic-header-title { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; }
+  .topic-num-badge { min-width: 26px; height: 26px; background: rgba(26,111,190,0.1); border: 1px solid rgba(26,111,190,0.25); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: var(--accent); flex-shrink: 0; }
+  .topic-arrow { color: var(--muted); font-size: 11px; transition: transform .2s; }
+  .topic-section.open .topic-arrow { transform: rotate(180deg); }
+  .topic-body { display: none; border-top: 1px solid var(--border); padding: 18px 20px; }
+  .topic-section.open .topic-body { display: block; }
+
+  /* CONTENT ELEMENTS */
+  .content-p { font-size: 14px; line-height: 1.75; margin-bottom: 14px; color: var(--text); }
+  .def-box { background: rgba(26,111,190,0.06); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 12px 16px; margin-bottom: 14px; font-size: 13.5px; line-height: 1.65; }
+  .def-box strong { color: var(--accent); display: block; margin-bottom: 3px; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+  .example-box { background: rgba(14,143,122,0.05); border-left: 3px solid var(--green); border-radius: 0 8px 8px 0; padding: 12px 16px; margin-bottom: 14px; font-size: 13.5px; }
+  .example-box strong { color: var(--green); display: block; margin-bottom: 3px; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+  .tip-box { background: rgba(176,120,0,0.06); border-left: 3px solid var(--amber); border-radius: 0 8px 8px 0; padding: 12px 16px; margin-bottom: 14px; font-size: 13.5px; }
+  .tip-box strong { color: var(--amber); }
+  .warn-box { background: rgba(192,57,43,0.06); border-left: 3px solid var(--red); border-radius: 0 8px 8px 0; padding: 12px 16px; margin-bottom: 14px; font-size: 13.5px; }
+  .warn-box strong { color: var(--red); }
+
+  /* TABLE */
+  .note-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 14px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+  .note-table th { background: var(--bg3); color: var(--muted); font-weight: 600; padding: 9px 13px; text-align: left; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+  .note-table td { padding: 9px 13px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+  .note-table tr:last-child td { border-bottom: none; }
+  .note-table td:first-child { font-weight: 600; color: var(--accent); }
+
+  /* STEPS */
+  .steps-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .step-row { display: flex; gap: 12px; align-items: flex-start; }
+  .step-num { min-width: 26px; height: 26px; background: rgba(26,111,190,0.12); border: 1px solid rgba(26,111,190,0.3); color: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 3px; }
+  .step-text { font-size: 13.5px; line-height: 1.65; }
+
+  /* Q&A */
+  .qa-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .qa-item { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 13.5px; }
+  .qa-q { font-weight: 600; color: var(--accent); margin-bottom: 2px; }
+
+  /* CODE */
+  .code-block { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; font-family: var(--mono); font-size: 12.5px; line-height: 1.7; white-space: pre-wrap; word-break: break-word; margin-bottom: 14px; color: #1a2233; overflow-x: auto; }
+
+  /* SECTION HEADING */
+  .sub-heading { font-size: 14px; font-weight: 700; color: var(--text); margin: 16px 0 8px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+
+  /* QUESTION BANK */
+  .qbank { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; margin-top: 20px; }
+  .qbank h3 { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 14px; }
+  .qbank-section { margin-bottom: 16px; }
+  .qbank-section h4 { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; font-weight: 700; color: var(--muted); background: var(--bg3); padding: 5px 10px; border-radius: 5px; display: inline-block; margin-bottom: 8px; }
+  .qbank ol { padding-left: 20px; display: flex; flex-direction: column; gap: 5px; }
+  .qbank ol li { font-size: 13.5px; line-height: 1.6; }
+
+  @media (max-width: 600px) {
+    .hero { padding: 20px 16px; }
+    .main { padding: 16px 12px 60px; }
+    .unit-title { font-size: 18px; }
+    .topic-body { padding: 14px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hero">
+  <div class="hero-college">Anil Neerukonda Institute of Technology &amp; Sciences · Sangivalasa, Visakhapatnam</div>
+  <div class="hero-label">Department of CSE — AI &amp; ML &nbsp;·&nbsp; Course Code: 23CM4112</div>
+  <h1>Theory of <span>Computation</span></h1>
+  <p>Complete Study Notes · II B.Tech CSE-AI&ML · Faculty: Nimmala Sakitha Sri · 2026–27</p>
+  <div class="pill-row">
+    <span class="pill">Unit I: Finite Automata</span>
+    <span class="pill">Unit II: Regular Expressions</span>
+    <span class="pill">Unit III: CFG</span>
+    <span class="pill">Unit IV: PDA</span>
+    <span class="pill">Unit V: Turing Machines</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <div class="nav">
+    <a class="back-btn" href="index.html">← Back</a>
+    <button class="nav-btn active" onclick="showUnit('u1')">Unit I</button>
+    <button class="nav-btn" onclick="showUnit('u2')">Unit II</button>
+    <button class="nav-btn" onclick="showUnit('u3')">Unit III</button>
+    <button class="nav-btn" onclick="showUnit('u4')">Unit IV</button>
+    <button class="nav-btn" onclick="showUnit('u5')">Unit V</button>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ═══════════════════════════════════════════════════════════
+     UNIT I — FINITE AUTOMATA
+═══════════════════════════════════════════════════════════ -->
+<div class="unit-page active" id="u1">
+  <div class="unit-header">
+    <div class="unit-tag">Unit I</div>
+    <div class="unit-title">Finite Automata</div>
+    <div class="unit-topics">
+      <span class="unit-topic-chip">Central Concepts</span>
+      <span class="unit-topic-chip">DFA</span>
+      <span class="unit-topic-chip">NFA</span>
+      <span class="unit-topic-chip">DFA ≡ NFA</span>
+      <span class="unit-topic-chip">ε-NFA</span>
+      <span class="unit-topic-chip">Minimization</span>
+      <span class="unit-topic-chip">Mealy &amp; Moore</span>
+      <span class="unit-topic-chip">Applications</span>
+    </div>
+  </div>
+
+  <!-- Topic 1 -->
+  <div class="topic-section open" id="u1t1">
+    <div class="topic-header" onclick="toggleTopic('u1t1')">
+      <div class="topic-header-title"><div class="topic-num-badge">1</div>Need of Automata Theory &amp; Central Concepts</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-blue">Core Concept</div>
+      <div class="core-card">Automata Theory studies <strong>abstract machines</strong> and the problems they can solve. It is the mathematical foundation of compiler design, pattern matching, and computation theory.</div>
+      <div class="example-box"><strong>🌍 Real World Example</strong>When you type "recieve" instead of "receive", the spell checker instantly flags it using a Finite Automaton — scanning each word character by character against dictionary patterns.</div>
+
+      <div class="sub-heading">Core Areas of Automata Theory</div>
+      <table class="note-table">
+        <tr><th>Area</th><th>Real-World Use</th></tr>
+        <tr><td>Formal Languages</td><td>Designing programming languages (C, Java)</td></tr>
+        <tr><td>Automata (Machines)</td><td>Compilers, text editors, search engines</td></tr>
+        <tr><td>Computability Theory</td><td>What can a computer solve at all?</td></tr>
+        <tr><td>Complexity Theory</td><td>How fast can a problem be solved?</td></tr>
+      </table>
+
+      <div class="sub-heading">Central Concepts</div>
+      <div class="def-box"><strong>📌 Alphabet (Σ)</strong>A finite, non-empty set of symbols. Building block of any language.<br>💡 Example: Σ = {0,1} for binary; Σ = {a,b,...,z} for English</div>
+      <div class="def-box"><strong>📌 String (Word)</strong>A finite sequence of symbols from an alphabet. Empty string = ε (epsilon).<br>💡 Example: If Σ={a,b}, then "ab", "bba", "a", ε are strings</div>
+      <div class="def-box"><strong>📌 Language</strong>A set of strings over an alphabet. Can be finite or infinite.<br>💡 Example: L = {all strings of even length over {a,b}}</div>
+      <div class="def-box"><strong>📌 Automaton</strong>An abstract machine that reads an input string and either ACCEPTS or REJECTS it.<br>💡 A vending machine accepts/rejects coins — it behaves like an automaton!</div>
+      <div class="tip-box"><strong>📝 TIP:</strong> Strings are to Languages what Sentences are to English — strings make up a language, just like sentences make up literature!</div>
+
+      <div class="section-label sl-purple" style="margin-top:16px">Self-Assessment</div>
+      <div class="qa-list">
+        <div class="qa-item"><div class="qa-q">Q1.</div>What is an alphabet? Give two examples from everyday life.</div>
+        <div class="qa-item"><div class="qa-q">Q2.</div>What is the difference between a string and a language?</div>
+        <div class="qa-item"><div class="qa-q">Q3.</div>Name two real-world systems that use automata theory.</div>
+        <div class="qa-item"><div class="qa-q">Q4.</div>What does ε (epsilon) represent in automata theory?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Topic 2 -->
+  <div class="topic-section" id="u1t2">
+    <div class="topic-header" onclick="toggleTopic('u1t2')">
+      <div class="topic-header-title"><div class="topic-num-badge">2</div>Deterministic Finite Automaton (DFA)</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-blue">Core Concept</div>
+      <div class="core-card">A <strong>DFA</strong> is a 5-tuple M = (Q, Σ, δ, q₀, F) that reads input one symbol at a time and makes exactly ONE deterministic move per step. For every state and every input, there is exactly one next state.</div>
+      <div class="example-box"><strong>🌍 Real World Example</strong>A metro turnstile is a perfect DFA! States: LOCKED and UNLOCKED. Insert coin → LOCKED→UNLOCKED. Push → UNLOCKED→LOCKED. For every state and input, exactly one action.</div>
+
+      <div class="sub-heading">Formal Definition — DFA 5-Tuple</div>
+      <div class="def-box"><strong>Q</strong>Finite, non-empty set of states. Example: Q = {q0, q1, q2}</div>
+      <div class="def-box"><strong>Σ</strong>Finite set of input symbols (alphabet). Example: Σ = {0, 1}</div>
+      <div class="def-box"><strong>δ: Q × Σ → Q</strong>Transition function — given a state and input, returns the NEXT state (deterministic!). Example: δ(q0, 0) = q1</div>
+      <div class="def-box"><strong>q₀ ∈ Q</strong>Start state (initial state). Example: q₀ = q0</div>
+      <div class="def-box"><strong>F ⊆ Q</strong>Set of final/accepting states. Example: F = {q2}</div>
+
+      <div class="sub-heading">Solved Example 1 — DFA for strings ending in "01"</div>
+      <div class="code-block">States: q0 (start), q1 (last char = '0'), q2 (last two = '01') — FINAL
+Σ = {0, 1}
+
+Transition Table:
+State     | On 0  | On 1  | Remark
+→ q0      | q1    | q0    | Start state
+  q1      | q1    | q2    | Last char = 0
+* q2      | q1    | q0    | FINAL: last two = "01"
+
+Accepts: 01, 001, 101, 1001
+Rejects: 10, 00, 1, 11</div>
+      <div class="tip-box"><strong>→</strong> denotes start state &nbsp;|&nbsp; <strong>*</strong> denotes final/accepting state</div>
+
+      <div class="sub-heading">DFA Design Strategy</div>
+      <div class="steps-list">
+        <div class="step-row"><div class="step-num">1</div><div class="step-text">Understand what property the language describes</div></div>
+        <div class="step-row"><div class="step-num">2</div><div class="step-text">Identify what information needs to be "remembered" (this defines your states)</div></div>
+        <div class="step-row"><div class="step-num">3</div><div class="step-text">Create one state for each distinct memory scenario</div></div>
+        <div class="step-row"><div class="step-num">4</div><div class="step-text">Draw transitions for each state and each input symbol</div></div>
+        <div class="step-row"><div class="step-num">5</div><div class="step-text">Mark initial state (→) and final states (*)</div></div>
+        <div class="step-row"><div class="step-num">6</div><div class="step-text">Verify with sample strings (accepted and rejected)</div></div>
+      </div>
+
+      <div class="section-label sl-purple" style="margin-top:16px">Self-Assessment</div>
+      <div class="qa-list">
+        <div class="qa-item"><div class="qa-q">Q1.</div>What does "deterministic" in DFA mean?</div>
+        <div class="qa-item"><div class="qa-q">Q2.</div>What are the 5 components of a DFA? Define each.</div>
+        <div class="qa-item"><div class="qa-q">Q3.</div>Design a DFA that accepts strings over {a,b} that start with "ab".</div>
+        <div class="qa-item"><div class="qa-q">Q4.</div>Trace the DFA from Example 1 on input string "1001". Is it accepted?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Topic 3 -->
+  <div class="topic-section" id="u1t3">
+    <div class="topic-header" onclick="toggleTopic('u1t3')">
+      <div class="topic-header-title"><div class="topic-num-badge">3</div>Non-Deterministic Finite Automaton (NFA)</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-blue">Core Concept</div>
+      <div class="core-card">An <strong>NFA</strong> can be in multiple states at once, make guesses, and can have zero, one, or many transitions for the same input. δ: Q × Σ → <strong>2^Q</strong> (returns a SET of states). If ANY path leads to an accepting state, the string is ACCEPTED.</div>
+      <div class="example-box"><strong>🌍 Real World Example</strong>Google Search Autocomplete — when you type "app", it shows multiple suggestions simultaneously ("apple", "application", "app store"). It explores ALL possibilities at once — exactly how an NFA works!</div>
+
+      <div class="sub-heading">DFA vs NFA Comparison</div>
+      <table class="note-table">
+        <tr><th>Feature</th><th>DFA</th><th>NFA</th></tr>
+        <tr><td>Transition</td><td>δ: Q×Σ→Q (one next state)</td><td>δ: Q×Σ→2^Q (set of states)</td></tr>
+        <tr><td>ε-transitions</td><td>Not allowed</td><td>Allowed</td></tr>
+        <tr><td>Design ease</td><td>Harder for some languages</td><td>More natural, easier</td></tr>
+        <tr><td>Power</td><td>Same as NFA</td><td>Same as DFA</td></tr>
+        <tr><td>Relation</td><td>Every DFA is an NFA</td><td>Not every NFA is a DFA (as-is)</td></tr>
+      </table>
+
+      <div class="sub-heading">Solved Example — NFA for strings ending in "01"</div>
+      <div class="code-block">States: q0 (start), q1 (saw '0'), q2 (saw '01') — FINAL
+
+State     | On 0      | On 1    | Remark
+→ q0      | {q0, q1}  | {q0}    | Loop or guess start of "01"
+  q1      | {}        | {q2}    | Saw 0, waiting for 1
+* q2      | {}        | {}      | FINAL: Accepted!
+
+KEY: q0 has TWO transitions on input 0 — this is non-determinism!</div>
+      <div class="tip-box"><strong>📝 KEY:</strong> NFA accepts a string if at LEAST ONE computation path leads to a final state. Even if 100 paths reject and 1 accepts — it ACCEPTS!</div>
+
+      <div class="section-label sl-purple" style="margin-top:16px">Self-Assessment</div>
+      <div class="qa-list">
+        <div class="qa-item"><div class="qa-q">Q1.</div>What is the key difference between a DFA and an NFA?</div>
+        <div class="qa-item"><div class="qa-q">Q2.</div>Can an NFA have zero transitions on some input? Give an example.</div>
+        <div class="qa-item"><div class="qa-q">Q3.</div>True or False: Every DFA is an NFA. Justify your answer.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Topic 4 -->
+  <div class="topic-section" id="u1t4">
+    <div class="topic-header" onclick="toggleTopic('u1t4')">
+      <div class="topic-header-title"><div class="topic-num-badge">4</div>Equivalence of DFA and NFA &amp; Subset Construction</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-blue">Core Concept</div>
+      <div class="core-card"><strong>Theorem: DFA ≡ NFA</strong> — For every NFA, there exists a DFA that accepts exactly the same language. Both recognize exactly the class of <strong>Regular Languages</strong>.</div>
+
+      <div class="sub-heading">Subset Construction Algorithm (NFA → DFA)</div>
+      <div class="steps-list">
+        <div class="step-row"><div class="step-num">1</div><div class="step-text">DFA start state = {q₀} (the NFA start state as a set)</div></div>
+        <div class="step-row"><div class="step-num">2</div><div class="step-text">For each DFA state (set of NFA states) and each input: compute union of δ_NFA(q, a) for all q in the current set</div></div>
+        <div class="step-row"><div class="step-num">3</div><div class="step-text">Add this new set as a DFA state if not already present</div></div>
+        <div class="step-row"><div class="step-num">4</div><div class="step-text">Repeat until no new states are generated</div></div>
+        <div class="step-row"><div class="step-num">5</div><div class="step-text">DFA final states = any set containing at least one NFA final state</div></div>
+        <div class="step-row"><div class="step-num">6</div><div class="step-text">Dead state = ∅ (empty set) — trap/sink state that rejects everything</div></div>
+      </div>
+
+      <div class="warn-box"><strong>⚠️ WARNING:</strong> The number of DFA states can be at most 2^n where n = number of NFA states. This is called the "state explosion" problem.</div>
+
+      <div class="section-label sl-purple" style="margin-top:16px">Self-Assessment</div>
+      <div class="qa-list">
+        <div class="qa-item"><div class="qa-q">Q1.</div>State the theorem that proves DFA and NFA are equivalent.</div>
+        <div class="qa-item"><div class="qa-q">Q2.</div>An NFA has 3 states. What is the maximum number of states in its equivalent DFA?</div>
+        <div class="qa-item"><div class="qa-q">Q3.</div>What is a "dead state" in DFA conversion? When does it appear?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Topic 5 -->
+  <div class="topic-section" id="u1t5">
+    <div class="topic-header" onclick="toggleTopic('u1t5')">
+      <div class="topic-header-title"><div class="topic-num-badge">5</div>Finite Automata with ε-Transitions (ε-NFA)</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-blue">Core Concept</div>
+      <div class="core-card">An <strong>ε-transition</strong> allows an automaton to change state <strong>without consuming any input symbol</strong> — a "free step". <strong>ε-closure(q)</strong> = the set of ALL states reachable from q using only ε-transitions (including q itself).</div>
+      <div class="example-box"><strong>🌍 Real World Example</strong>In Delhi airport transit, you can freely move between international terminals WITHOUT going through immigration (ε-transition) — changing location without any "input".</div>
+
+      <div class="sub-heading">ε-NFA to DFA Conversion</div>
+      <div class="steps-list">
+        <div class="step-row"><div class="step-num">1</div><div class="step-text">DFA start state = ε-closure({q₀})</div></div>
+        <div class="step-row"><div class="step-num">2</div><div class="step-text">For each DFA state S and input a: Move(S, a) = ∪{δ(q, a) : q ∈ S} → new DFA state = ε-closure(Move(S, a))</div></div>
+        <div class="step-row"><div class="step-num">3</div><div class="step-text">Add to DFA if not already present</div></div>
+        <div class="step-row"><div class="step-num">4</div><div class="step-text">DFA final states = sets containing any NFA final state</div></div>
+      </div>
+
+      <div class="section-label sl-purple" style="margin-top:16px">Self-Assessment</div>
+      <div class="qa-list">
+        <div class="qa-item"><div class="qa-q">Q1.</div>What is an ε-transition? How is it different from a regular transition?</div>
+        <div class="qa-item"><div class="qa-q">Q2.</div>Define ε-closure. Compute ε-closure(q0) if q0→q1 via ε, q1→q2 via ε, q2→q3 via ε.</div>
+        <div class="qa-item"><div class="qa-q">Q3.</div>Why is ε-closure of a state always non-empty?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Topic 6 -->
+  <div class="topic-section" id="u1t6">
+    <div class="topic-header" onclick="toggleTopic('u1t6')">
+      <div class="topic-header-title"><div class="topic-num-badge">6</div>Minimization of Finite Automata</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-blue">Core Concept</div>
+      <div class="core-card">Minimization removes unnecessary (indistinguishable) states to get the <strong>smallest equivalent DFA</strong>. The minimized DFA is <strong>unique</strong> for any regular language (Myhill-Nerode theorem).</div>
+
+      <div class="sub-heading">Table Filling Algorithm</div>
+      <div class="steps-list">
+        <div class="step-row"><div class="step-num">1</div><div class="step-text">Remove all UNREACHABLE states</div></div>
+        <div class="step-row"><div class="step-num">2</div><div class="step-text">Create a table of all pairs (qi, qj) where i &lt; j</div></div>
+        <div class="step-row"><div class="step-num">3</div><div class="step-text">Mark all pairs (final, non-final) as DISTINGUISHABLE (base case)</div></div>
+        <div class="step-row"><div class="step-num">4</div><div class="step-text">For each unmarked pair (p, q) and each input a: if (δ(p,a), δ(q,a)) is marked → mark (p, q)</div></div>
+        <div class="step-row"><div class="step-num">5</div><div class="step-text">Repeat until no new pairs can be marked</div></div>
+        <div class="step-row"><div class="step-num">6</div><div class="step-text">All UNMARKED pairs are INDISTINGUISHABLE → MERGE them into one state</div></div>
+      </div>
+      <div class="tip-box"><strong>📝 KEY:</strong> The minimized DFA is UNIQUE for a given regular language. This is guaranteed by the Myhill-Nerode theorem!</div>
+    </div>
+  </div>
+
+  <!-- Topic 7 -->
+  <div class="topic-section" id="u1t7">
+    <div class="topic-header" onclick="toggleTopic('u1t7')">
+      <div class="topic-header-title"><div class="topic-num-badge">7</div>Mealy and Moore Machines</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-blue">Core Concept</div>
+      <div class="core-card">Mealy and Moore machines are FA that <strong>produce output</strong> (transducers), not just accept/reject. <strong>Moore:</strong> output depends on STATE. <strong>Mealy:</strong> output depends on STATE + INPUT.</div>
+      <div class="example-box"><strong>🌍 Real World Example</strong>ATM Machine — it produces outputs at each step: "Enter PIN", "Incorrect PIN", "Welcome!", "Select Amount", "Dispensing Cash". This sequence of outputs based on states and inputs is exactly what Mealy/Moore machines model!</div>
+
+      <div class="sub-heading">Comparison</div>
+      <table class="note-table">
+        <tr><th>Feature</th><th>Moore Machine</th><th>Mealy Machine</th></tr>
+        <tr><td>Output linked to</td><td>STATE</td><td>TRANSITION (state + input)</td></tr>
+        <tr><td>Output length</td><td>Input length + 1</td><td>Input length</td></tr>
+        <tr><td>Output function</td><td>λ: Q → Δ</td><td>λ: Q × Σ → Δ</td></tr>
+        <tr><td>States needed</td><td>More states usually</td><td>Fewer states usually</td></tr>
+      </table>
+
+      <div class="sub-heading">Solved Example — Mealy Machine for 1's Complement</div>
+      <div class="code-block">Single state q0. Transition:
+  q0 on 0 → q0, output: 1  (flip 0 to 1)
+  q0 on 1 → q0, output: 0  (flip 1 to 0)
+
+Input:  "1011"
+Output: "0100" ✓</div>
+    </div>
+  </div>
+
+  <!-- Topic 8 -->
+  <div class="topic-section" id="u1t8">
+    <div class="topic-header" onclick="toggleTopic('u1t8')">
+      <div class="topic-header-title"><div class="topic-num-badge">8</div>Applications &amp; Limitations of Finite Automata</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="sub-heading">Real-World Applications</div>
+      <div class="steps-list">
+        <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>Lexical Analysis</strong> in Compilers — tokenizing source code (keywords, identifiers, numbers)</div></div>
+        <div class="step-row"><div class="step-num">2</div><div class="step-text"><strong>Pattern Matching</strong> — grep, regex engines in Python/Java use FA</div></div>
+        <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>Text Editors</strong> — Search &amp; Replace, syntax highlighting</div></div>
+        <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>Network Protocols</strong> — TCP/IP state machines, packet filtering</div></div>
+        <div class="step-row"><div class="step-num">5</div><div class="step-text"><strong>Digital Circuits</strong> — Sequential circuits, vending machines, traffic lights</div></div>
+        <div class="step-row"><div class="step-num">6</div><div class="step-text"><strong>Bioinformatics</strong> — DNA sequence pattern matching</div></div>
+      </div>
+
+      <div class="sub-heading">Limitations — Languages FA CANNOT Recognize</div>
+      <div class="warn-box"><strong>FA has FIXED, FINITE memory (states). It CANNOT count unboundedly or remember unlimited history.</strong><br><br>
+        1. L = {aⁿbⁿ | n ≥ 1} — FA cannot count to arbitrary n<br>
+        2. L = {wwᴿ | w ∈ {a,b}*} — FA cannot remember the full first half<br>
+        3. L = {aⁿ | n is prime} — FA cannot perform primality testing<br>
+        4. Balanced parentheses — needs a stack → needs Context-Free Grammar (Unit III!)</div>
+      <div class="tip-box"><strong>📝 TIP:</strong> The Pumping Lemma (Unit II) gives us a formal tool to PROVE that a language is NOT regular.</div>
+    </div>
+  </div>
+
+  <!-- Question Bank U1 -->
+  <div class="qbank">
+    <h3>📋 Unit I — Question Bank</h3>
+    <div class="qbank-section">
+      <h4>2-Mark Questions</h4>
+      <ol>
+        <li>Define DFA with its 5-tuple formal definition.</li>
+        <li>What is the difference between DFA and NFA?</li>
+        <li>Define ε-closure of a state with an example.</li>
+        <li>What is a dead state (trap state) in a DFA?</li>
+        <li>Define Mealy machine and Moore machine.</li>
+        <li>What are the limitations of Finite Automata?</li>
+        <li>What does it mean for a string to be accepted by a DFA?</li>
+        <li>State the equivalence theorem for DFA and NFA.</li>
+      </ol>
+    </div>
+    <div class="qbank-section">
+      <h4>5-Mark Questions</h4>
+      <ol>
+        <li>Design a DFA over Σ={0,1} that accepts strings with an odd number of 1s. Draw the transition diagram and give the transition table.</li>
+        <li>Convert the NFA: States {q0,q1,q2}, Σ={a,b}, δ(q0,a)={q0,q1}, δ(q0,b)={q0}, δ(q1,b)={q2}, F={q2} to DFA using subset construction.</li>
+        <li>Explain the minimization of DFA with the table-filling algorithm.</li>
+        <li>Design a Mealy machine that outputs the 1's complement of a binary number.</li>
+        <li>Explain ε-closure with an example. Convert an ε-NFA with 3 states to a DFA.</li>
+      </ol>
+    </div>
+    <div class="qbank-section">
+      <h4>10-Mark Questions</h4>
+      <ol>
+        <li>(a) Define DFA and NFA. (b) Prove DFA ≡ NFA. (c) Design NFA for strings containing "aba" as substring and convert to DFA.</li>
+        <li>(a) Explain minimization algorithm for DFA. (b) Minimize a given 5-state DFA. (c) Show step-by-step table filling.</li>
+        <li>Compare Mealy and Moore machines. Design both for detecting "101" in a binary string. Show equivalence.</li>
+      </ol>
+    </div>
+    <div class="qbank-section">
+      <h4>Previous Year Questions</h4>
+      <ol>
+        <li>Design a DFA that accepts strings over {a,b} where every "a" is followed by at least one "b". [2021]</li>
+        <li>Prove that L = {0ⁿ1ⁿ | n≥1} is not regular using the pumping lemma. [2022]</li>
+        <li>Convert NFA with ε-transitions to equivalent DFA. Show all steps. [2020]</li>
+        <li>Minimize the given 6-state DFA to its minimum state equivalent. [2023]</li>
+        <li>Design a Moore machine to detect divisibility by 3 of a binary number. [2021]</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     UNIT II — REGULAR EXPRESSIONS & LANGUAGES
+═══════════════════════════════════════════════════════════ -->
+<div class="unit-page" id="u2">
+  <div class="unit-header">
+    <div class="unit-tag">Unit II</div>
+    <div class="unit-title">Regular Expressions &amp; Languages</div>
+    <div class="unit-topics">
+      <span class="unit-topic-chip">Chomsky Hierarchy</span>
+      <span class="unit-topic-chip">Regular Expressions</span>
+      <span class="unit-topic-chip">Algebraic Laws</span>
+      <span class="unit-topic-chip">Arden's Theorem</span>
+      <span class="unit-topic-chip">Pumping Lemma</span>
+      <span class="unit-topic-chip">Closure Properties</span>
+    </div>
+  </div>
+
+  <div class="topic-section open" id="u2t1">
+    <div class="topic-header" onclick="toggleTopic('u2t1')">
+      <div class="topic-header-title"><div class="topic-num-badge">1</div>Classification of Grammars — Chomsky Hierarchy</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-blue">Core Concept</div>
+      <div class="core-card">A <strong>formal grammar</strong> G = (V, T, P, S) defines rules to generate strings of a language. Chomsky classified all grammars into 4 types based on the production rule restrictions.</div>
+      <div class="example-box"><strong>🌍 Real World Example</strong>When you write "int x = 5;" in C, the compiler uses a formal grammar to verify your syntax. Every programming language is defined by a formal grammar!</div>
+
+      <div class="sub-heading">Chomsky Hierarchy</div>
+      <table class="note-table">
+        <tr><th>Type</th><th>Name</th><th>Machine</th><th>Rule Form</th><th>Example</th></tr>
+        <tr><td>Type 0</td><td>Unrestricted</td><td>Turing Machine</td><td>α → β (no restriction)</td><td>All computable languages</td></tr>
+        <tr><td>Type 1</td><td>Context-Sensitive</td><td>LBA</td><td>|α| ≤ |β|</td><td>aⁿbⁿcⁿ</td></tr>
+        <tr><td>Type 2</td><td>Context-Free</td><td>PDA</td><td>A → γ</td><td>aⁿbⁿ, palindromes</td></tr>
+        <tr><td>Type 3</td><td>Regular</td><td>Finite Automaton</td><td>A → aB or A → a</td><td>a*, (ab)*, a*b*</td></tr>
+      </table>
+      <div class="tip-box"><strong>Memory Aid:</strong> "3-2-1-BLAST OFF!" — simple to powerful like a rocket! Type 3 ⊂ Type 2 ⊂ Type 1 ⊂ Type 0</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="u2t2">
+    <div class="topic-header" onclick="toggleTopic('u2t2')">
+      <div class="topic-header-title"><div class="topic-num-badge">2</div>Regular Expressions — Definitions &amp; Operators</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-blue">Core Concept</div>
+      <div class="core-card">A <strong>Regular Expression (RE)</strong> is a compact algebraic notation to describe Regular Languages. Every RE describes exactly one language, and every Regular Language has at least one RE.</div>
+      <div class="example-box"><strong>🌍 Real World Example</strong>In VS Code, press Ctrl+H and enable regex mode. Type "ab*c" to find strings starting with a, having zero or more b's, ending with c: "ac", "abc", "abbc" all match.</div>
+
+      <div class="sub-heading">Basic RE Operators</div>
+      <table class="note-table">
+        <tr><th>Operator</th><th>Symbol</th><th>Meaning</th><th>Example Strings</th></tr>
+        <tr><td>Empty Set</td><td>∅</td><td>No strings</td><td>(none)</td></tr>
+        <tr><td>Empty String</td><td>ε</td><td>Only the empty string</td><td>ε</td></tr>
+        <tr><td>Symbol</td><td>a</td><td>Just the single symbol a</td><td>"a"</td></tr>
+        <tr><td>Union</td><td>r + s</td><td>L(r) ∪ L(s)</td><td>a+b gives "a" or "b"</td></tr>
+        <tr><td>Concatenation</td><td>r·s</td><td>L(r) followed by L(s)</td><td>ab gives only "ab"</td></tr>
+        <tr><td>Kleene Star</td><td>r*</td><td>Zero or more repetitions</td><td>a* gives ε,a,aa,aaa...</td></tr>
+        <tr><td>Positive Closure</td><td>r+</td><td>One or more repetitions</td><td>a+ gives a,aa,aaa...</td></tr>
+        <tr><td>Optional</td><td>r?</td><td>Zero or one occurrence</td><td>ab? gives "a" or "ab"</td></tr>
+      </table>
+
+      <div class="sub-heading">Operator Precedence (High → Low)</div>
+      <div class="code-block">1st: Parentheses ( )
+2nd: Kleene Star * and Positive Closure + (unary)
+3rd: Concatenation (juxtaposition)
+4th: Union +
+
+Example: ab*+c means (a(b*))+c    NOT a(b*+c)</div>
+
+      <div class="sub-heading">Common Regular Expressions</div>
+      <table class="note-table">
+        <tr><th>Language</th><th>Regular Expression</th></tr>
+        <tr><td>Strings starting with 'a' over {a,b}</td><td>a(a+b)*</td></tr>
+        <tr><td>Strings ending with '01' over {0,1}</td><td>(0+1)*01</td></tr>
+        <tr><td>Strings with even number of 0s</td><td>(1*01*0)*1*</td></tr>
+        <tr><td>Strings containing "ab" as substring</td><td>(a+b)*ab(a+b)*</td></tr>
+        <tr><td>All strings over {a,b}</td><td>(a+b)*</td></tr>
+        <tr><td>Non-empty strings over {a,b}</td><td>(a+b)+</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="topic-section" id="u2t3">
+    <div class="topic-header" onclick="toggleTopic('u2t3')">
+      <div class="topic-header-title"><div class="topic-num-badge">3</div>Algebraic Laws &amp; Arden's Theorem</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="sub-heading">Algebraic Laws for Regular Expressions</div>
+      <table class="note-table">
+        <tr><th>Law</th><th>Expression</th></tr>
+        <tr><td>Idempotent</td><td>r + r = r</td></tr>
+        <tr><td>Commutativity of Union</td><td>r + s = s + r</td></tr>
+        <tr><td>Associativity of Union</td><td>(r+s)+t = r+(s+t)</td></tr>
+        <tr><td>Associativity of Concat</td><td>(rs)t = r(st)</td></tr>
+        <tr><td>Distributivity</td><td>r(s+t) = rs+rt</td></tr>
+        <tr><td>Identity for Union</td><td>r + ∅ = r</td></tr>
+        <tr><td>Identity for Concat</td><td>εr = rε = r</td></tr>
+        <tr><td>Zero for Concat</td><td>∅r = r∅ = ∅</td></tr>
+        <tr><td>Closure of ε</td><td>ε* = ε</td></tr>
+        <tr><td>Closure of ∅</td><td>∅* = ε</td></tr>
+        <tr><td>Double Closure</td><td>(r*)* = r*</td></tr>
+      </table>
+
+      <div class="sub-heading">Arden's Theorem — FA to RE Conversion</div>
+      <div class="def-box"><strong>Arden's Theorem</strong>If P and Q are regular expressions and P does not contain ε, then the equation X = QP* + R has a unique solution X = QP* + R.<br><br>Used to convert a DFA/NFA into its equivalent Regular Expression by setting up and solving a system of equations.</div>
+      <div class="code-block">Method: For each state qi, write equation:
+  qi = (union of all terms: qj · a, for each transition qj→qi on a)
+       + (ε if qi is the start state)
+
+Apply substitution + Arden's theorem to solve for start state equation.
+The solution gives the Regular Expression!</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="u2t4">
+    <div class="topic-header" onclick="toggleTopic('u2t4')">
+      <div class="topic-header-title"><div class="topic-num-badge">4</div>Pumping Lemma for Regular Languages</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-blue">Core Concept</div>
+      <div class="core-card">The <strong>Pumping Lemma</strong> is a tool to <strong>PROVE a language is NOT regular</strong>. It states: if L is regular, then there exists a pumping length p such that any string w ∈ L with |w| ≥ p can be split into w = xyz where certain conditions hold.</div>
+
+      <div class="sub-heading">Pumping Lemma Conditions</div>
+      <div class="def-box"><strong>For any string w ∈ L with |w| ≥ p:</strong><br>
+        1. w = xyz<br>
+        2. |y| ≥ 1 (y is non-empty)<br>
+        3. |xy| ≤ p (xy fits in first p characters)<br>
+        4. For all i ≥ 0, xyⁱz ∈ L (pumping y keeps string in L)</div>
+
+      <div class="sub-heading">Proof Strategy (by Contradiction)</div>
+      <div class="steps-list">
+        <div class="step-row"><div class="step-num">1</div><div class="step-text">Assume L is regular, so pumping length p exists</div></div>
+        <div class="step-row"><div class="step-num">2</div><div class="step-text">Choose a specific string w ∈ L with |w| ≥ p</div></div>
+        <div class="step-row"><div class="step-num">3</div><div class="step-text">For ANY split w = xyz satisfying conditions, show xyⁱz ∉ L for some i</div></div>
+        <div class="step-row"><div class="step-num">4</div><div class="step-text">Contradiction! → L is NOT regular</div></div>
+      </div>
+
+      <div class="example-box"><strong>💡 Classic Example: L = {aⁿbⁿ | n ≥ 1}</strong><br>
+        Choose w = aᵖbᵖ. Since |xy| ≤ p, y must be all a's (y = aᵏ for some k ≥ 1).<br>
+        Pumping: xy²z = aᵖ⁺ᵏbᵖ — more a's than b's → NOT in L. Contradiction!<br>
+        ∴ L = {aⁿbⁿ} is NOT regular ✓</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="u2t5">
+    <div class="topic-header" onclick="toggleTopic('u2t5')">
+      <div class="topic-header-title"><div class="topic-num-badge">5</div>Closure Properties of Regular Languages</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-blue">Core Concept</div>
+      <div class="core-card">Regular languages are <strong>closed under</strong> many operations — if L1 and L2 are regular, the result of applying these operations is also regular.</div>
+
+      <table class="note-table">
+        <tr><th>Operation</th><th>Result Regular?</th><th>Proof Method</th></tr>
+        <tr><td>Union (L1 ∪ L2)</td><td>✅ Yes</td><td>NFA construction</td></tr>
+        <tr><td>Concatenation (L1·L2)</td><td>✅ Yes</td><td>NFA construction</td></tr>
+        <tr><td>Kleene Star (L1*)</td><td>✅ Yes</td><td>NFA construction</td></tr>
+        <tr><td>Complement (L̄)</td><td>✅ Yes</td><td>DFA: swap final/non-final states</td></tr>
+        <tr><td>Intersection (L1 ∩ L2)</td><td>✅ Yes</td><td>Product construction or De Morgan's</td></tr>
+        <tr><td>Difference (L1 - L2)</td><td>✅ Yes</td><td>L1 ∩ L̄2</td></tr>
+        <tr><td>Reverse (Lᴿ)</td><td>✅ Yes</td><td>Reverse all transitions in NFA</td></tr>
+        <tr><td>Homomorphism h(L)</td><td>✅ Yes</td><td>Apply h to each transition label</td></tr>
+      </table>
+
+      <div class="qbank" style="margin-top:20px">
+        <h3>📋 Unit II — Question Bank</h3>
+        <div class="qbank-section">
+          <h4>Key Questions</h4>
+          <ol>
+            <li>Write a RE for: strings over {a,b} with at least two consecutive b's.</li>
+            <li>State and prove the Pumping Lemma for regular languages.</li>
+            <li>Prove that L = {0ⁿ1ⁿ | n ≥ 0} is not regular using the pumping lemma.</li>
+            <li>State Arden's theorem. Use it to find the RE for a given DFA.</li>
+            <li>Prove that regular languages are closed under complement. Give an example.</li>
+            <li>Prove that regular languages are closed under intersection using product construction.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     UNIT III — FORMAL LANGUAGES & CFG
+═══════════════════════════════════════════════════════════ -->
+<div class="unit-page" id="u3">
+  <div class="unit-header">
+    <div class="unit-tag">Unit III</div>
+    <div class="unit-title">Formal Languages &amp; Context Free Grammars</div>
+    <div class="unit-topics">
+      <span class="unit-topic-chip">CFG Definition</span>
+      <span class="unit-topic-chip">Derivations</span>
+      <span class="unit-topic-chip">Parse Trees</span>
+      <span class="unit-topic-chip">Ambiguous Grammars</span>
+      <span class="unit-topic-chip">Simplification</span>
+      <span class="unit-topic-chip">CNF</span>
+      <span class="unit-topic-chip">GNF</span>
+      <span class="unit-topic-chip">Pumping Lemma CFG</span>
+    </div>
+  </div>
+
+  <div class="topic-section open" id="u3t1">
+    <div class="topic-header" onclick="toggleTopic('u3t1')">
+      <div class="topic-header-title"><div class="topic-num-badge">1</div>Context Free Grammar (CFG) — Definition &amp; Examples</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-blue">Core Concept</div>
+      <div class="core-card">A <strong>CFG</strong> G = (V, T, P, S) is a Type 2 grammar. Every production has the form <strong>A → α</strong> where A is a single variable. CFGs generate languages more complex than Regular Languages and are the foundation of programming language design.</div>
+      <div class="example-box"><strong>🌍 Real World Example</strong>Every programming language (Python, Java, C) is defined by a CFG. The grammar rule for if-statement: "if_statement → if ( condition ) { block }". Compilers use CFG rules to build parse trees representing your program's structure.</div>
+
+      <div class="sub-heading">CFG 4-Tuple: G = (V, T, P, S)</div>
+      <div class="def-box"><strong>V</strong>Set of Variables (Non-terminals) — appear on left side of productions</div>
+      <div class="def-box"><strong>T</strong>Set of Terminals (actual symbols) — appear in the final string; V ∩ T = ∅</div>
+      <div class="def-box"><strong>P</strong>Set of Production rules of the form A → α (where A ∈ V, α ∈ (V ∪ T)*)</div>
+      <div class="def-box"><strong>S</strong>Start variable (S ∈ V) — derivation always begins here</div>
+
+      <div class="sub-heading">Important CFG Examples</div>
+      <table class="note-table">
+        <tr><th>Language</th><th>CFG Productions</th></tr>
+        <tr><td>L1: {aⁿbⁿ | n≥1}</td><td>S → aSb | ab</td></tr>
+        <tr><td>L2: Palindromes over {a,b}</td><td>S → aSa | bSb | a | b | ε</td></tr>
+        <tr><td>L3: Balanced Parentheses</td><td>S → SS | (S) | ε</td></tr>
+        <tr><td>L4: Arithmetic Expressions</td><td>E → E+E | E*E | (E) | id</td></tr>
+        <tr><td>L5: {aⁿbᵐ | n ≠ m}</td><td>S → A | B; A → aAb | aA | a; B → aBb | Bb | b</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="topic-section" id="u3t2">
+    <div class="topic-header" onclick="toggleTopic('u3t2')">
+      <div class="topic-header-title"><div class="topic-num-badge">2</div>Derivations &amp; Parse Trees</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-blue">Core Concept</div>
+      <div class="core-card">A <strong>derivation</strong> is a sequence of steps replacing variables with production bodies. <strong>Leftmost:</strong> always replace the leftmost variable. <strong>Rightmost:</strong> always replace the rightmost variable. A <strong>Parse Tree</strong> is the tree representation of a derivation.</div>
+
+      <div class="sub-heading">Parse Tree Properties</div>
+      <div class="def-box"><strong>Root</strong>The start symbol S</div>
+      <div class="def-box"><strong>Interior Nodes</strong>Variables (non-terminals)</div>
+      <div class="def-box"><strong>Leaves</strong>Terminals (or ε)</div>
+      <div class="def-box"><strong>Yield</strong>Reading leaves left-to-right gives the derived string</div>
+      <div class="def-box"><strong>Every interior node and its children</strong>Correspond to a single production rule</div>
+
+      <div class="code-block">Example: G: E → E+E | E*E | (E) | id
+Derive "id + id * id" (Leftmost):
+E ⟹ E + E ⟹ id + E ⟹ id + E * E ⟹ id + id * E ⟹ id + id * id
+
+Parse Tree:
+        E
+      / | \
+     E  +  E
+     |    / | \
+    id   E  *  E
+         |     |
+        id    id</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="u3t3">
+    <div class="topic-header" onclick="toggleTopic('u3t3')">
+      <div class="topic-header-title"><div class="topic-num-badge">3</div>Ambiguous Grammars</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-blue">Core Concept</div>
+      <div class="core-card">A CFG is <strong>ambiguous</strong> if there exists a string with <strong>more than one parse tree</strong> (or more than one leftmost derivation). Ambiguity in compilers can cause different interpretations of the same program — a serious bug!</div>
+      <div class="example-box"><strong>Example: E → E+E | E*E | id</strong><br>For "id+id*id", there are TWO parse trees:<br>1. (id+id)*id — multiplication first<br>2. id+(id*id) — addition first<br><br>This grammar is AMBIGUOUS! Fix by defining precedence rules in the grammar.</div>
+
+      <div class="sub-heading">Removing Ambiguity — Example Fix</div>
+      <div class="code-block">Ambiguous: E → E+E | E*E | (E) | id
+
+Unambiguous (with precedence * > +):
+E → E + T | T        (lowest precedence: +)
+T → T * F | F        (higher precedence: *)
+F → (E) | id         (highest: atom/parens)</div>
+      <div class="tip-box"><strong>📝 Note:</strong> Some CFLs are INHERENTLY AMBIGUOUS — no unambiguous CFG can generate them. Example: {aⁿbⁿcᵐ | n,m≥1} ∪ {aⁿbᵐcᵐ | n,m≥1}</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="u3t4">
+    <div class="topic-header" onclick="toggleTopic('u3t4')">
+      <div class="topic-header-title"><div class="topic-num-badge">4</div>Simplification of CFG, CNF, GNF</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="sub-heading">Simplification Steps</div>
+      <div class="steps-list">
+        <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>Remove Useless Symbols:</strong> Symbols that never appear in any derivation of a terminal string</div></div>
+        <div class="step-row"><div class="step-num">2</div><div class="step-text"><strong>Remove ε-productions:</strong> Productions of form A → ε (except if ε ∈ L(G))</div></div>
+        <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>Remove Unit Productions:</strong> Productions of form A → B (variable → single variable)</div></div>
+      </div>
+
+      <div class="sub-heading">Chomsky Normal Form (CNF)</div>
+      <div class="def-box"><strong>Every CFG can be converted to CNF.</strong><br>In CNF, every production has the form:<br>
+        A → BC (two variables), or<br>
+        A → a (single terminal)</div>
+      <div class="tip-box"><strong>Use of CNF:</strong> CYK parsing algorithm requires CNF. Membership testing in O(n³) time.</div>
+
+      <div class="sub-heading">Greibach Normal Form (GNF)</div>
+      <div class="def-box"><strong>In GNF, every production has the form:</strong><br>
+        A → aα where a ∈ T and α ∈ V*<br><br>
+        Every string derivation in GNF takes exactly n steps for a string of length n. Useful for constructing PDAs from CFGs.</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="u3t5">
+    <div class="topic-header" onclick="toggleTopic('u3t5')">
+      <div class="topic-header-title"><div class="topic-num-badge">5</div>Pumping Lemma for CFLs &amp; Closure Properties</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-blue">Core Concept</div>
+      <div class="core-card">The <strong>Pumping Lemma for CFLs</strong> is used to prove a language is NOT context-free. If L is a CFL, any sufficiently long string w ∈ L can be split into w = uvxyz with certain "pumping" conditions.</div>
+
+      <div class="def-box"><strong>Pumping Lemma for CFLs (Ogden's Lemma variant)</strong><br>
+        If L is a CFL, ∃ pumping length p such that for any w ∈ L with |w| ≥ p:<br>
+        w = uvxyz where:<br>
+        1. |vxy| ≤ p<br>
+        2. |vy| ≥ 1 (v and y are not both empty)<br>
+        3. For all i ≥ 0, uvⁱxyⁱz ∈ L</div>
+
+      <div class="example-box"><strong>💡 Proving {aⁿbⁿcⁿ | n≥1} is NOT Context-Free</strong><br>
+        Choose w = aᵖbᵖcᵖ. For any split uvxyz, since |vxy| ≤ p, vxy cannot span all three sections.<br>
+        Pumping up (i=2) creates imbalance in at least one count. Contradiction!<br>
+        ∴ {aⁿbⁿcⁿ} is NOT context-free (it needs a Turing Machine!)</div>
+
+      <div class="sub-heading">Closure Properties of CFLs</div>
+      <table class="note-table">
+        <tr><th>Operation</th><th>CFL Closed?</th></tr>
+        <tr><td>Union (L1 ∪ L2)</td><td>✅ Yes</td></tr>
+        <tr><td>Concatenation (L1·L2)</td><td>✅ Yes</td></tr>
+        <tr><td>Kleene Star (L1*)</td><td>✅ Yes</td></tr>
+        <tr><td>Complement (L̄)</td><td>❌ No</td></tr>
+        <tr><td>Intersection (L1 ∩ L2)</td><td>❌ No</td></tr>
+        <tr><td>Intersection with Regular</td><td>✅ Yes</td></tr>
+      </table>
+
+      <div class="qbank" style="margin-top:20px">
+        <h3>📋 Unit III — Question Bank</h3>
+        <div class="qbank-section">
+          <h4>Key Questions</h4>
+          <ol>
+            <li>Design a CFG for L = {aⁿbⁿ | n≥1}. Show leftmost and rightmost derivations for "aaabbb".</li>
+            <li>What is an ambiguous grammar? How do you remove ambiguity? Give example.</li>
+            <li>Convert the following CFG to CNF: S→AB|a, A→aA|a, B→bB|b.</li>
+            <li>Convert the following CFG to GNF.</li>
+            <li>Prove that {aⁿbⁿcⁿ | n≥1} is not context-free using the pumping lemma.</li>
+            <li>State the closure properties of CFLs. Which operations are CFLs NOT closed under?</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     UNIT IV — PUSHDOWN AUTOMATA
+═══════════════════════════════════════════════════════════ -->
+<div class="unit-page" id="u4">
+  <div class="unit-header">
+    <div class="unit-tag">Unit IV</div>
+    <div class="unit-title">Pushdown Automata (PDA)</div>
+    <div class="unit-topics">
+      <span class="unit-topic-chip">PDA Definition</span>
+      <span class="unit-topic-chip">Graphical Notation</span>
+      <span class="unit-topic-chip">ID &amp; Moves</span>
+      <span class="unit-topic-chip">Acceptance Modes</span>
+      <span class="unit-topic-chip">DPDA vs NPDA</span>
+      <span class="unit-topic-chip">CFG ↔ PDA</span>
+      <span class="unit-topic-chip">Two-Stack PDA</span>
+    </div>
+  </div>
+
+  <div class="topic-section open" id="u4t1">
+    <div class="topic-header" onclick="toggleTopic('u4t1')">
+      <div class="topic-header-title"><div class="topic-num-badge">1</div>PDA — Definition, Model &amp; Components</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-blue">Core Concept</div>
+      <div class="core-card">A <strong>PDA = Finite Automaton + STACK</strong>. The stack gives unlimited memory (LIFO). This allows PDA to recognize Context Free Languages that FA cannot handle, like balanced parentheses and aⁿbⁿ.</div>
+      <div class="example-box"><strong>🌍 Real World Example</strong>A stack of plates in a cafeteria — you can only ADD (push) or REMOVE (pop) from the TOP. This LIFO structure lets PDAs count: push one plate per 'a', pop one per 'b' — when stack is empty, a's and b's were equal!</div>
+
+      <div class="sub-heading">PDA 7-Tuple: M = (Q, Σ, Γ, δ, q₀, Z₀, F)</div>
+      <div class="def-box"><strong>Q</strong>Finite set of states</div>
+      <div class="def-box"><strong>Σ</strong>Input alphabet</div>
+      <div class="def-box"><strong>Γ</strong>Stack alphabet (can differ from Σ)</div>
+      <div class="def-box"><strong>δ: Q × (Σ ∪ {ε}) × Γ → 2^(Q×Γ*)</strong>Transition function. δ(q, a, A) = {(p, γ)} means: in state q, reading 'a', with A on stack top → go to p and replace A with γ</div>
+      <div class="def-box"><strong>q₀</strong>Initial state</div>
+      <div class="def-box"><strong>Z₀</strong>Initial stack symbol (bottom-of-stack marker)</div>
+      <div class="def-box"><strong>F</strong>Set of final/accepting states</div>
+
+      <div class="sub-heading">Stack Operations</div>
+      <table class="note-table">
+        <tr><th>Operation</th><th>Replace A with</th><th>Effect</th></tr>
+        <tr><td>PUSH X onto stack</td><td>XA</td><td>X goes on top of A</td></tr>
+        <tr><td>POP top of stack</td><td>ε</td><td>A is removed</td></tr>
+        <tr><td>REPLACE A with B</td><td>B</td><td>Old top A becomes B</td></tr>
+        <tr><td>KEEP top unchanged</td><td>A</td><td>No change to stack</td></tr>
+      </table>
+
+      <div class="sub-heading">FA vs PDA Comparison</div>
+      <table class="note-table">
+        <tr><th>Feature</th><th>Finite Automaton</th><th>Pushdown Automaton</th></tr>
+        <tr><td>Tuple</td><td>5-tuple</td><td>7-tuple</td></tr>
+        <tr><td>δ</td><td>Q × Σ → Q</td><td>Q × (Σ∪{ε}) × Γ → 2^(Q×Γ*)</td></tr>
+        <tr><td>Memory</td><td>States only</td><td>States + Stack (LIFO)</td></tr>
+        <tr><td>Languages</td><td>Regular</td><td>Context Free</td></tr>
+        <tr><td>Example</td><td>a*b*</td><td>aⁿbⁿ</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="topic-section" id="u4t2">
+    <div class="topic-header" onclick="toggleTopic('u4t2')">
+      <div class="topic-header-title"><div class="topic-num-badge">2</div>Instantaneous Description &amp; Language Acceptance</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-blue">Core Concept</div>
+      <div class="core-card">An <strong>Instantaneous Description (ID)</strong> = (q, w, γ) represents the complete current configuration of a PDA: current state q, remaining input w, current stack contents γ (top first).</div>
+
+      <div class="def-box"><strong>Move notation:</strong> (q, aw, Aγ) ⊢ (p, w, βγ) if δ(q, a, A) contains (p, β)</div>
+
+      <div class="sub-heading">Two Modes of Acceptance</div>
+      <table class="note-table">
+        <tr><th>Mode</th><th>Acceptance Condition</th><th>Notation</th></tr>
+        <tr><td>Final State</td><td>PDA reaches a final state after consuming all input</td><td>N(M) = {w | (q₀,w,Z₀) ⊢* (f,ε,γ), f∈F}</td></tr>
+        <tr><td>Empty Stack</td><td>PDA empties the stack after consuming all input</td><td>L(M) = {w | (q₀,w,Z₀) ⊢* (q,ε,ε)}</td></tr>
+      </table>
+      <div class="tip-box"><strong>📝 KEY:</strong> Both acceptance modes are equivalent — for every PDA accepting by final state, there's a PDA accepting same language by empty stack, and vice versa.</div>
+
+      <div class="sub-heading">Solved Example — PDA for {aⁿbⁿ | n≥1}</div>
+      <div class="code-block">Strategy: Push 'a' for each input 'a'. Pop 'a' for each input 'b'. Accept by empty stack.
+
+States: {q0, q1}
+δ(q0, a, Z0) = {(q0, AZ0)}  — Push A, keep Z0
+δ(q0, a, A)  = {(q0, AA)}   — Push another A
+δ(q0, b, A)  = {(q1, ε)}    — Pop A on reading b (switch to q1)
+δ(q1, b, A)  = {(q1, ε)}    — Keep popping A for each b
+δ(q1, ε, Z0) = {(q1, ε)}    — Pop Z0 — accept by empty stack
+
+Trace for "aabb":
+(q0,aabb,Z0) ⊢ (q0,abb,AZ0) ⊢ (q0,bb,AAZ0)
+             ⊢ (q1,b,AZ0) ⊢ (q1,ε,Z0) ⊢ (q1,ε,ε) ACCEPT ✓</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="u4t3">
+    <div class="topic-header" onclick="toggleTopic('u4t3')">
+      <div class="topic-header-title"><div class="topic-num-badge">3</div>DPDA vs NPDA &amp; Equivalence with CFG</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="sub-heading">DPDA vs NPDA</div>
+      <table class="note-table">
+        <tr><th>Feature</th><th>DPDA</th><th>NPDA</th></tr>
+        <tr><td>Transitions</td><td>At most one move per (q, a, A)</td><td>Multiple moves possible</td></tr>
+        <tr><td>Power</td><td>Less powerful than NPDA</td><td>Full CFL power</td></tr>
+        <tr><td>Languages</td><td>Deterministic CFLs only</td><td>All CFLs</td></tr>
+        <tr><td>Example</td><td>Palindromes with middle marker</td><td>Palindromes without marker</td></tr>
+        <tr><td>Parsing</td><td>LR parsing (unambiguous grammars)</td><td>Earley, CYK parsing</td></tr>
+      </table>
+      <div class="warn-box"><strong>⚠️ Unlike FA:</strong> DPDA ≠ NPDA in power! Non-determinism adds expressive power for PDAs.</div>
+
+      <div class="sub-heading">Equivalence: PDA ↔ CFG</div>
+      <div class="def-box"><strong>Theorem:</strong> A language L is a CFL if and only if there exists a PDA that accepts L.<br><br>
+        <strong>CFG → PDA:</strong> Create a PDA that simulates leftmost derivation using stack<br>
+        <strong>PDA → CFG:</strong> Create variables [p,A,q] representing "going from state p to q while clearing A from stack"</div>
+
+      <div class="qbank" style="margin-top:20px">
+        <h3>📋 Unit IV — Question Bank</h3>
+        <div class="qbank-section">
+          <h4>Key Questions</h4>
+          <ol>
+            <li>Define PDA as a 7-tuple. Explain each component with an example.</li>
+            <li>Design a PDA for L = {aⁿbⁿ | n≥1}. Trace it on input "aaabbb".</li>
+            <li>What is an Instantaneous Description? Show the move sequence for a given PDA.</li>
+            <li>Explain the two modes of acceptance of a PDA. Are they equivalent?</li>
+            <li>Differentiate DPDA and NPDA. Give an example language accepted by NPDA but not DPDA.</li>
+            <li>State the theorem on equivalence of PDA and CFG. Outline the CFG→PDA conversion.</li>
+            <li>Design a PDA to accept palindromes over {a,b}.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     UNIT V — TURING MACHINES
+═══════════════════════════════════════════════════════════ -->
+<div class="unit-page" id="u5">
+  <div class="unit-header">
+    <div class="unit-tag">Unit V</div>
+    <div class="unit-title">Turing Machines &amp; Computability</div>
+    <div class="unit-topics">
+      <span class="unit-topic-chip">TM Definition</span>
+      <span class="unit-topic-chip">ID &amp; Moves</span>
+      <span class="unit-topic-chip">TM Variants</span>
+      <span class="unit-topic-chip">Church-Turing Thesis</span>
+      <span class="unit-topic-chip">Decidability</span>
+      <span class="unit-topic-chip">Halting Problem</span>
+      <span class="unit-topic-chip">Rice's Theorem</span>
+      <span class="unit-topic-chip">P and NP</span>
+    </div>
+  </div>
+
+  <div class="topic-section open" id="u5t1">
+    <div class="topic-header" onclick="toggleTopic('u5t1')">
+      <div class="topic-header-title"><div class="topic-num-badge">1</div>Turing Machine — Definition, Model &amp; Components</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-blue">Core Concept</div>
+      <div class="core-card">A <strong>Turing Machine (TM)</strong> is the most powerful model of computation. It has an <strong>infinite tape</strong> (read/write), a <strong>read-write head</strong> that can move left or right, and a finite control. TMs recognize <strong>Recursively Enumerable Languages</strong> (Type 0 in Chomsky hierarchy).</div>
+      <div class="example-box"><strong>🌍 Real World Example</strong>Your computer is essentially a Turing Machine! It reads/writes memory, executes instructions in sequence, and can solve any algorithmically solvable problem. The TM is the mathematical model that proves what computers can (and CANNOT) do.</div>
+
+      <div class="sub-heading">TM 7-Tuple: M = (Q, Σ, Γ, δ, q₀, B, F)</div>
+      <div class="def-box"><strong>Q</strong>Finite set of states</div>
+      <div class="def-box"><strong>Σ</strong>Input alphabet (Σ ⊂ Γ, B ∉ Σ)</div>
+      <div class="def-box"><strong>Γ</strong>Tape alphabet (includes Σ and blank B)</div>
+      <div class="def-box"><strong>δ: Q × Γ → Q × Γ × {L, R}</strong>Transition function. δ(q, X) = (p, Y, D) means: in state q, reading X → go to p, write Y, move head in direction D (L=Left, R=Right)</div>
+      <div class="def-box"><strong>q₀</strong>Initial state</div>
+      <div class="def-box"><strong>B</strong>Blank symbol (represents empty tape cells)</div>
+      <div class="def-box"><strong>F</strong>Set of final/accepting states</div>
+
+      <div class="sub-heading">TM vs PDA vs FA</div>
+      <table class="note-table">
+        <tr><th>Feature</th><th>FA</th><th>PDA</th><th>Turing Machine</th></tr>
+        <tr><td>Memory</td><td>States only</td><td>Stack (LIFO)</td><td>Infinite tape (R/W)</td></tr>
+        <tr><td>Head movement</td><td>Right only</td><td>Right only</td><td>Left and Right</td></tr>
+        <tr><td>Languages</td><td>Regular (Type 3)</td><td>CFL (Type 2)</td><td>RE (Type 0)</td></tr>
+        <tr><td>Grammar</td><td>Regular</td><td>Context-Free</td><td>Unrestricted</td></tr>
+        <tr><td>Tape</td><td>Read-only input</td><td>Read-only + stack</td><td>Read/Write infinite</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="topic-section" id="u5t2">
+    <div class="topic-header" onclick="toggleTopic('u5t2')">
+      <div class="topic-header-title"><div class="topic-num-badge">2</div>Instantaneous Description &amp; Language Acceptance</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-blue">Core Concept</div>
+      <div class="core-card">An <strong>ID</strong> of a TM is written as α q β, where q is the current state, α is the tape content to the LEFT of the head, and β is the tape content from the head position onwards (first symbol is under the head).</div>
+
+      <div class="def-box"><strong>Move notation:</strong> αXqYβ ⊢ αXpZβ if δ(q, Y) = (p, Z, R) (right move)<br>
+      αqXYβ ⊢ pαZYβ if δ(q, X) = (p, Z, L) (left move)</div>
+
+      <div class="sub-heading">TM Acceptance Modes</div>
+      <table class="note-table">
+        <tr><th>Mode</th><th>Condition</th><th>Language Class</th></tr>
+        <tr><td>Accept by final state</td><td>TM enters a final state q_f ∈ F</td><td>Recursively Enumerable (RE)</td></tr>
+        <tr><td>Halt and accept</td><td>TM halts in accepting state</td><td>Recursive (Decidable)</td></tr>
+        <tr><td>Halt and reject</td><td>TM halts in non-accepting state</td><td>—</td></tr>
+        <tr><td>Loop forever</td><td>TM never halts (on some inputs)</td><td>Input not in language</td></tr>
+      </table>
+
+      <div class="sub-heading">Solved Example — TM for {aⁿbⁿcⁿ | n≥1}</div>
+      <div class="code-block">Strategy: Cross off one a, one b, one c repeatedly until all are matched.
+
+States: q0 (start), q1 (scanned a), q2 (scanned b), q3 (returning left), q_accept, q_reject
+
+Step 1: q0 reads 'a' → write X, move Right, go to q1 (looking for b)
+Step 2: q1 reads 'a/X' → move Right (skip a's and X's, find b)
+Step 3: q1 reads 'b' → write Y, move Right, go to q2 (looking for c)
+Step 4: q2 reads 'b/Y' → move Right (skip b's and Y's, find c)
+Step 5: q2 reads 'c' → write Z, move Left, go to q3 (return to start)
+Step 6: q3 moves Left until reaching leftmost unmarked 'a' → go to q0
+Step 7: If q0 reads B (blank) → check all X,Y,Z → ACCEPT
+        If counts mismatch at any step → REJECT
+
+This language is NOT context-free — requires a TM!</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="u5t3">
+    <div class="topic-header" onclick="toggleTopic('u5t3')">
+      <div class="topic-header-title"><div class="topic-num-badge">3</div>TM Variants &amp; Church-Turing Thesis</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="sub-heading">TM Variants (All Equivalent in Power)</div>
+      <table class="note-table">
+        <tr><th>Variant</th><th>Feature</th><th>Equivalence</th></tr>
+        <tr><td>Standard TM</td><td>Single tape, deterministic</td><td>Base model</td></tr>
+        <tr><td>Multi-tape TM</td><td>k tapes, k heads</td><td>≡ Standard TM (time: O(t²))</td></tr>
+        <tr><td>Non-deterministic TM</td><td>Multiple moves at each step</td><td>≡ Standard TM</td></tr>
+        <tr><td>2-way infinite tape</td><td>Tape extends infinitely in both directions</td><td>≡ Standard TM</td></tr>
+        <tr><td>Multi-dimensional TM</td><td>k-dimensional tape grid</td><td>≡ Standard TM</td></tr>
+        <tr><td>Enumerator</td><td>Generates (prints) all strings of a language</td><td>≡ Standard TM</td></tr>
+      </table>
+
+      <div class="sub-heading">Church-Turing Thesis</div>
+      <div class="def-box"><strong>Church-Turing Thesis (not a theorem — a thesis/belief):</strong><br>
+        "Every effectively computable function is computable by a Turing Machine."<br><br>
+        In other words: <strong>TM = the ultimate model of computation</strong>. Any algorithm that can be described precisely can be implemented on a TM.<br><br>
+        This cannot be mathematically proved (it's a claim about the nature of computation), but no counterexample has ever been found.</div>
+      <div class="tip-box"><strong>📝 Implication:</strong> If a problem has no TM solution, it has NO algorithmic solution by any computer — past, present, or future!</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="u5t4">
+    <div class="topic-header" onclick="toggleTopic('u5t4')">
+      <div class="topic-header-title"><div class="topic-num-badge">4</div>Decidability — Decidable and Undecidable Problems</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-blue">Core Concept</div>
+      <div class="core-card">A language L is <strong>decidable (recursive)</strong> if there exists a TM that HALTS on every input and accepts if input ∈ L, rejects otherwise. A language is <strong>undecidable</strong> if no such TM exists — the problem cannot be algorithmically solved!</div>
+
+      <div class="sub-heading">Language Classes</div>
+      <table class="note-table">
+        <tr><th>Class</th><th>Recognizable by</th><th>TM Behavior</th><th>Example</th></tr>
+        <tr><td>Regular</td><td>FA</td><td>Always halts</td><td>a*b*</td></tr>
+        <tr><td>CFL</td><td>PDA</td><td>Always halts</td><td>aⁿbⁿ</td></tr>
+        <tr><td>Recursive (Decidable)</td><td>TM (always halts)</td><td>Halts on all inputs</td><td>aⁿbⁿcⁿ</td></tr>
+        <tr><td>RE (Semi-decidable)</td><td>TM (may loop)</td><td>Accepts ∈ L, loops on ∉ L</td><td>Halting problem inputs that halt</td></tr>
+        <tr><td>Non-RE</td><td>No TM</td><td>Cannot even recognize</td><td>Complement of halting problem</td></tr>
+      </table>
+
+      <div class="sub-heading">Decidable Problems (Examples)</div>
+      <div class="steps-list">
+        <div class="step-row"><div class="step-num">✅</div><div class="step-text">A_DFA = {(M,w) | DFA M accepts string w} — DECIDABLE</div></div>
+        <div class="step-row"><div class="step-num">✅</div><div class="step-text">E_DFA = {(M) | L(M) = ∅} — DECIDABLE</div></div>
+        <div class="step-row"><div class="step-num">✅</div><div class="step-text">EQ_DFA = {(M1,M2) | L(M1) = L(M2)} — DECIDABLE</div></div>
+        <div class="step-row"><div class="step-num">✅</div><div class="step-text">A_CFG = {(G,w) | CFG G generates w} — DECIDABLE (CYK algorithm)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="u5t5">
+    <div class="topic-header" onclick="toggleTopic('u5t5')">
+      <div class="topic-header-title"><div class="topic-num-badge">5</div>The Halting Problem &amp; Undecidability</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-red">Core Concept</div>
+      <div class="core-card">The <strong>Halting Problem</strong> H = {(M, w) | TM M halts on input w} is <strong>UNDECIDABLE</strong>. No algorithm can determine for all (M, w) pairs whether M will halt on w. This was proven by Alan Turing in 1936 using <strong>diagonalization/self-reference contradiction</strong>.</div>
+
+      <div class="sub-heading">Proof of Undecidability (Contradiction)</div>
+      <div class="steps-list">
+        <div class="step-row"><div class="step-num">1</div><div class="step-text">Assume ∃ TM H that decides the halting problem: H(M,w) = ACCEPT if M halts on w; REJECT otherwise</div></div>
+        <div class="step-row"><div class="step-num">2</div><div class="step-text">Construct a new TM D that uses H as subroutine: D(M) = if H(M,M) = ACCEPT → LOOP; if H(M,M) = REJECT → HALT</div></div>
+        <div class="step-row"><div class="step-num">3</div><div class="step-text">Run D on itself: D(D) = if H(D,D) = ACCEPT (D halts on D) → D LOOPS (contradiction!)</div></div>
+        <div class="step-row"><div class="step-num">4</div><div class="step-text">D(D) = if H(D,D) = REJECT (D doesn't halt on D) → D HALTS (contradiction!)</div></div>
+        <div class="step-row"><div class="step-num">5</div><div class="step-text">Both cases lead to contradiction → H cannot exist → Halting Problem is UNDECIDABLE ✓</div></div>
+      </div>
+      <div class="warn-box"><strong>⚠️ Important Implications:</strong><br>
+        • We cannot write a program to check if any given program has an infinite loop<br>
+        • We cannot write a perfect virus scanner (would need to decide behavior of arbitrary programs)<br>
+        • Many software verification problems are undecidable in general</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="u5t6">
+    <div class="topic-header" onclick="toggleTopic('u5t6')">
+      <div class="topic-header-title"><div class="topic-num-badge">6</div>Rice's Theorem</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-red">Core Concept</div>
+      <div class="core-card"><strong>Rice's Theorem:</strong> Any non-trivial semantic property of a Turing Machine is <strong>UNDECIDABLE</strong>. A property P is trivial if it holds for ALL TMs or NO TMs. Everything else is undecidable!</div>
+
+      <div class="example-box"><strong>💡 Consequences of Rice's Theorem (all UNDECIDABLE):</strong><br>
+        • "Does TM M accept the empty string?"<br>
+        • "Is the language of TM M a regular language?"<br>
+        • "Does TM M accept at least 5 strings?"<br>
+        • "Do two TMs M1 and M2 accept the same language?"<br>
+        • "Is TM M's language context-free?"</div>
+
+      <div class="tip-box"><strong>📝 How to use Rice's Theorem:</strong> Identify the property being asked about → Check if it's about the LANGUAGE (semantic) → Check if it's non-trivial (some TMs satisfy it, some don't) → If both: UNDECIDABLE by Rice's theorem!</div>
+    </div>
+  </div>
+
+  <div class="topic-section" id="u5t7">
+    <div class="topic-header" onclick="toggleTopic('u5t7')">
+      <div class="topic-header-title"><div class="topic-num-badge">7</div>Complexity Classes P, NP &amp; NP-Completeness</div>
+      <span class="topic-arrow">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="section-label sl-blue">Core Concept</div>
+      <div class="core-card">Complexity theory asks: even for <strong>decidable</strong> problems, how <strong>efficiently</strong> can they be solved? Class <strong>P</strong> = problems solvable in polynomial time. Class <strong>NP</strong> = problems verifiable in polynomial time. The <strong>P vs NP question</strong> is the most famous unsolved problem in computer science!</div>
+
+      <div class="sub-heading">Key Complexity Classes</div>
+      <table class="note-table">
+        <tr><th>Class</th><th>Definition</th><th>Examples</th></tr>
+        <tr><td>P</td><td>Decidable in O(nᵏ) time on deterministic TM</td><td>Sorting, shortest path, primality testing</td></tr>
+        <tr><td>NP</td><td>Decidable in O(nᵏ) time on non-deterministic TM (or verifiable in poly time)</td><td>SAT, TSP, Graph Coloring, Subset Sum</td></tr>
+        <tr><td>NP-Complete</td><td>In NP AND every NP problem reduces to it</td><td>3-SAT, Clique, Hamiltonian Path</td></tr>
+        <tr><td>NP-Hard</td><td>Every NP problem reduces to it (may not be in NP)</td><td>Halting Problem, TSP optimization</td></tr>
+        <tr><td>PSPACE</td><td>Solvable using polynomial space</td><td>Quantified Boolean Formula (QBF)</td></tr>
+      </table>
+
+      <div class="sub-heading">Cook's Theorem — SAT is NP-Complete</div>
+      <div class="def-box"><strong>Cook-Levin Theorem (1971):</strong> The Boolean Satisfiability Problem (SAT) is NP-Complete.<br><br>
+        This means: if SAT can be solved in polynomial time, then P = NP and ALL NP problems are in P!</div>
+
+      <div class="sub-heading">Polynomial Time Reduction</div>
+      <div class="def-box"><strong>A ≤ₚ B (A reduces to B):</strong> If we can solve B in polynomial time, we can solve A in polynomial time.<br><br>
+        To show problem X is NP-Complete:<br>
+        1. Show X ∈ NP (give a polynomial verifier)<br>
+        2. Show a known NP-Complete problem ≤ₚ X</div>
+
+      <div class="example-box"><strong>🌍 Real World Significance of P vs NP</strong><br>
+        If P = NP:<br>
+        • RSA encryption (used in banking, internet security) would be broken<br>
+        • Drug discovery, protein folding, scheduling — all solvable efficiently<br>
+        • AI would be dramatically more powerful<br><br>
+        If P ≠ NP (widely believed but unproven):<br>
+        • Internet security remains safe<br>
+        • Many optimization problems remain computationally hard</div>
+
+      <div class="qbank" style="margin-top:20px">
+        <h3>📋 Unit V — Question Bank</h3>
+        <div class="qbank-section">
+          <h4>2-Mark Questions</h4>
+          <ol>
+            <li>Define Turing Machine with its 7-tuple formal definition.</li>
+            <li>What is an Instantaneous Description (ID) of a TM? Give an example.</li>
+            <li>State the Church-Turing Thesis. Why is it a "thesis" and not a "theorem"?</li>
+            <li>Define recursive and recursively enumerable languages.</li>
+            <li>What is the Halting Problem? Is it decidable?</li>
+            <li>State Rice's Theorem.</li>
+            <li>Define the complexity classes P and NP.</li>
+            <li>What does NP-Complete mean? Give two examples.</li>
+          </ol>
+        </div>
+        <div class="qbank-section">
+          <h4>5-Mark Questions</h4>
+          <ol>
+            <li>Design a TM for L = {aⁿbⁿcⁿ | n≥1}. Give the transition function and trace on "aabbcc".</li>
+            <li>Explain the difference between multi-tape TM and single-tape TM. Are they equivalent?</li>
+            <li>Prove that the Halting Problem is undecidable (by contradiction/diagonalization).</li>
+            <li>State and explain Rice's Theorem. Give three examples of undecidable properties.</li>
+            <li>Explain the relationship between P, NP, NP-Complete, and NP-Hard with a diagram.</li>
+          </ol>
+        </div>
+        <div class="qbank-section">
+          <h4>10-Mark Questions</h4>
+          <ol>
+            <li>(a) Define TM formally. (b) Construct TM for L={ww^R | w∈{a,b}*}. (c) Explain TM variants and their equivalence.</li>
+            <li>(a) State Church-Turing Thesis. (b) Define decidable and semi-decidable languages. (c) Prove the Halting Problem is undecidable. (d) Give 3 examples of undecidable problems.</li>
+            <li>(a) State Rice's Theorem and prove it. (b) Use it to show 3 undecidable properties of TMs. (c) Distinguish RE and non-RE languages.</li>
+            <li>(a) Define P, NP, NP-Complete, NP-Hard. (b) State Cook's Theorem. (c) Show 3-SAT is NP-Complete by reduction from SAT. (d) Discuss the P=NP? question and its implications.</li>
+          </ol>
+        </div>
+        <div class="qbank-section">
+          <h4>Previous Year Questions</h4>
+          <ol>
+            <li>Design a TM for L = {0ⁿ1ⁿ | n≥1}. Show transition function and computation on "0011". [2022]</li>
+            <li>State and prove that the Halting Problem is undecidable. [2023]</li>
+            <li>State Rice's Theorem. Use it to prove that the language {M | M accepts at least one string} is undecidable. [2021]</li>
+            <li>Explain the classes P and NP. What is the P vs NP problem? State Cook's theorem. [2022]</li>
+            <li>Differentiate between decidable and undecidable problems with examples. [2023]</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+function showUnit(id) {
+  document.querySelectorAll('.unit-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const idx = {'u1':0,'u2':1,'u3':2,'u4':3,'u5':4}[id];
+  document.querySelectorAll('.nav-btn')[idx].classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function toggleTopic(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+}
+
+// Auto-open from sessionStorage (linked from index.html)
+(function() {
+  const unit = sessionStorage.getItem('toc_open_unit');
+  if (unit) { showUnit(unit); sessionStorage.removeItem('toc_open_unit'); }
+})();
+</script>
+</body>
+</html>
