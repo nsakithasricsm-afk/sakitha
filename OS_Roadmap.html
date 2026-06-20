@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>OS Roadmap — 23CM4114 — ANITS</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #f0f4fa; font-family: 'Segoe UI', sans-serif; padding: 20px; min-height: 100vh; }
+  .header-strip { background: linear-gradient(90deg, #1a3a6b, #1a5fa0); color: #fff; text-align: center; border-radius: 10px; padding: 16px 20px; margin-bottom: 16px; }
+  .header-strip strong { font-size: 22px; display: block; font-weight: 800; letter-spacing: .01em; }
+  .header-strip span { font-size: 12px; opacity: .85; letter-spacing: .03em; }
+  .root-wrap { display: flex; justify-content: center; }
+  .root-box { background: #1a3a6b; color: #fff; border-radius: 12px; padding: 12px 40px; text-align: center; font-size: 18px; font-weight: 800; box-shadow: 0 4px 18px rgba(26,58,107,.3); }
+  .root-box small { display: block; font-size: 11px; font-weight: 400; opacity: .75; margin-top: 4px; }
+  .v-line { width: 2px; height: 20px; background: #9fb0cc; margin: 0 auto; }
+  .h-bar-wrap { display: flex; justify-content: center; }
+  .h-bar { height: 2px; background: #9fb0cc; width: 100%; max-width: 1200px; }
+  .units-row { display: flex; justify-content: center; gap: 0; padding: 0 4px; width: 100%; max-width: 1200px; margin: 0 auto; }
+  .unit-col { display: flex; flex-direction: column; align-items: center; flex: 1; position: relative; min-width: 0; }
+  .unit-col::before { content: ''; display: block; width: 2px; height: 22px; background: #9fb0cc; }
+  .unit-box { width: 95%; border-radius: 10px; padding: 18px 10px; text-align: center; font-size: 17px; font-weight: 700; color: #fff; box-shadow: 0 3px 10px rgba(0,0,0,.18); position: relative; z-index: 2; }
+  .unit-box .unit-sub { font-size: 15px; font-weight: 700; opacity: 1; display: block; margin-top: 4px; }
+  .unit-box .co-tag { font-size: 12px; margin-top: 8px; background: rgba(0,0,0,.18); border-radius: 4px; padding: 3px 10px; display: inline-block; font-weight: 700; letter-spacing: .03em; }
+  .u1{background:#1a6fbe;} .u2{background:#0e8f7a;} .u3{background:#7b3fbf;} .u4{background:#c07000;} .u5{background:#c0392b;}
+  .sub-vline { width: 2px; height: 12px; background: #9fb0cc; }
+  .subtopics { display: flex; flex-direction: column; gap: 8px; align-items: center; width: 95%; }
+  .sub-box {
+    width: 100%; background: #fff; border-radius: 7px; padding: 11px 10px;
+    font-size: 16px; text-align: center; color: #1a2233; font-weight: 700;
+    box-shadow: 0 1px 5px rgba(0,0,0,.09); border-left: 3px solid #ccc;
+    line-height: 1.4; cursor: pointer; position: relative;
+    transition: transform .12s, box-shadow .12s;
+  }
+  .sub-box:hover { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,.15); }
+  .sub-box::after { content: 'ℹ'; position: absolute; right: 7px; top: 50%; transform: translateY(-50%); font-size: 10px; opacity: .4; }
+  .sub-box.u1b{border-color:#1a6fbe;} .sub-box.u2b{border-color:#0e8f7a;} .sub-box.u3b{border-color:#7b3fbf;} .sub-box.u4b{border-color:#c07000;} .sub-box.u5b{border-color:#c0392b;}
+  .sub-box.u1b:hover{background:#f0f5ff;} .sub-box.u2b:hover{background:#f0faf7;} .sub-box.u3b:hover{background:#f7f0ff;} .sub-box.u4b:hover{background:#fff8ed;} .sub-box.u5b:hover{background:#fff0f0;}
+
+  /* POPUP MODAL */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 1000; align-items: center; justify-content: center; }
+  .modal-overlay.show { display: flex; }
+  .modal { background: #fff; border-radius: 14px; padding: 0; width: 360px; box-shadow: 0 12px 40px rgba(0,0,0,.25); overflow: hidden; animation: popIn .18s ease; }
+  @keyframes popIn { from { transform: scale(.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .modal-header { padding: 16px 20px 14px; color: #fff; position: relative; }
+  .modal-header h3 { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+  .modal-header p { font-size: 11px; opacity: .85; }
+  .modal-close { position: absolute; top: 12px; right: 14px; background: rgba(255,255,255,.25); border: none; color: #fff; border-radius: 50%; width: 24px; height: 24px; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .modal-body { padding: 18px 20px; }
+  .modal-co { font-size: 12px; font-weight: 600; color: #1a3a6b; margin-bottom: 12px; background: #eef4ff; padding: 8px 12px; border-radius: 7px; }
+  .po-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+  .po-item { background: #f5f7fa; border-radius: 8px; padding: 8px 10px; text-align: center; }
+  .po-item .po-num { font-size: 12px; font-weight: 700; color: #1a3a6b; }
+  .po-item .po-level { font-size: 10px; color: #666; margin-top: 2px; }
+  .po-item .po-badge { font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 10px; display: inline-block; margin-top: 3px; }
+  .badge-1 { background: #e8f5e9; color: #2e7d32; }
+  .badge-2 { background: #fff3e0; color: #e65100; }
+  .modal-footer { font-size: 10px; color: #999; border-top: 1px solid #eee; padding: 10px 20px; text-align: center; }
+
+  .legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 20px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #444; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 4px; }
+  .hint { text-align: center; font-size: 10.5px; color: #888; margin-top: 10px; }
+  .footer { text-align: center; margin-top: 10px; font-size: 10px; color: #888; }
+</style>
+</head>
+<body>
+
+<div class="header-strip">
+  <strong>OPERATING SYSTEM — Course Roadmap</strong>
+  <span>Course Code: 23CM4114 &nbsp;|&nbsp; Credits: 3 &nbsp;|&nbsp; 4 Theory / Week &nbsp;|&nbsp; Sessional: 40M &nbsp;|&nbsp; End Exam: 60M &nbsp;|&nbsp; Dept. of CSE-AI&ML, ANITS</span>
+</div>
+
+<div class="root-wrap">
+  <div class="root-box">
+    Operating System Concepts
+    <small>Text: Silberschatz, Galvin &amp; Gagne — OS Concepts, 10th Ed., Wiley 2018</small>
+    <a href="OS_syllabus.pdf" target="_blank" style="display:inline-block;margin-top:8px;background:rgba(255,255,255,0.2);color:#fff;font-size:11px;font-weight:600;padding:4px 14px;border-radius:20px;text-decoration:none;border:1px solid rgba(255,255,255,0.4);">📄 Click here to view Syllabus</a>
+  </div>
+</div>
+<div class="v-line"></div>
+<div class="h-bar-wrap"><div class="h-bar"></div></div>
+
+<div class="units-row">
+
+  <!-- UNIT I -->
+  <div class="unit-col">
+    <div class="unit-box u1">
+      UNIT I<span class="unit-sub">Intro to OS &amp; Shell</span>
+      <div class="co-tag">CO1</div>
+    </div>
+    <div class="sub-vline"></div>
+    <div class="subtopics">
+      <div class="sub-box u1b" onclick="show('Overview of OS','CO1','1a6fbe','CO1 — Illustrate OS structure, functionality and services','1','1','1','1','-','-','-','-','-','-','-','-','-','1')">Overview of OS</div>
+      <div class="sub-box u1b" onclick="show('Types of OS','CO1','1a6fbe','CO1 — Illustrate OS structure, functionality and services','1','1','1','1','-','-','-','-','-','-','-','-','-','1')">Types of OS</div>
+      <div class="sub-box u1b" onclick="show('OS Structures','CO1','1a6fbe','CO1 — Illustrate OS structure, functionality and services','1','1','1','1','-','-','-','-','-','-','-','-','-','1')">OS Structures</div>
+      <div class="sub-box u1b" onclick="show('OS Services','CO1','1a6fbe','CO1 — Illustrate OS structure, functionality and services','1','1','1','1','-','-','-','-','-','-','-','-','-','1')">OS Services</div>
+      <div class="sub-box u1b" onclick="show('System Calls','CO1','1a6fbe','CO1 — Illustrate OS structure, functionality and services','1','1','1','1','-','-','-','-','-','-','-','-','-','1')">System Calls</div>
+      <div class="sub-box u1b" onclick="show('Virtual Machines','CO1','1a6fbe','CO1 — Illustrate OS structure, functionality and services','1','1','1','1','-','-','-','-','-','-','-','-','-','1')">Virtual Machines</div>
+      <div class="sub-box u1b" onclick="show('Shell Programming','CO1','1a6fbe','CO1 — Illustrate OS structure, functionality and services','1','1','1','1','-','-','-','-','-','-','-','-','-','1')">Shell Programming</div>
+    </div>
+  </div>
+
+  <!-- UNIT II -->
+  <div class="unit-col">
+    <div class="unit-box u2">
+      UNIT II<span class="unit-sub">Process Management</span>
+      <div class="co-tag">CO2</div>
+    </div>
+    <div class="sub-vline"></div>
+    <div class="subtopics">
+      <div class="sub-box u2b" onclick="show('Process Concept &amp; PCB','CO2','0e8f7a','CO2 — Implement CPU Scheduling and Process Synchronization','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Process Concept &amp; PCB</div>
+      <div class="sub-box u2b" onclick="show('Process Scheduling','CO2','0e8f7a','CO2 — Implement CPU Scheduling and Process Synchronization','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Process Scheduling</div>
+      <div class="sub-box u2b" onclick="show('Operations on Process','CO2','0e8f7a','CO2 — Implement CPU Scheduling and Process Synchronization','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Operations on Process</div>
+      <div class="sub-box u2b" onclick="show('IPC','CO2','0e8f7a','CO2 — Implement CPU Scheduling and Process Synchronization','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">IPC</div>
+      <div class="sub-box u2b" onclick="show('Client-Server Comm.','CO2','0e8f7a','CO2 — Implement CPU Scheduling and Process Synchronization','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Client-Server Comm.</div>
+      <div class="sub-box u2b" onclick="show('Threads &amp; Multithreading','CO2','0e8f7a','CO2 — Implement CPU Scheduling and Process Synchronization','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Threads &amp; Multithreading</div>
+      <div class="sub-box u2b" onclick="show('CPU Scheduling Algorithms','CO2','0e8f7a','CO2 — Implement CPU Scheduling and Process Synchronization','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">CPU Scheduling Algorithms</div>
+    </div>
+  </div>
+
+  <!-- UNIT III -->
+  <div class="unit-col">
+    <div class="unit-box u3">
+      UNIT III<span class="unit-sub">Sync &amp; Deadlock</span>
+      <div class="co-tag">CO3</div>
+    </div>
+    <div class="sub-vline"></div>
+    <div class="subtopics">
+      <div class="sub-box u3b" onclick="show('Critical Section Problem','CO3','7b3fbf','CO3 — Demonstrate Process Synchronization and Deadlocks','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Critical Section Problem</div>
+      <div class="sub-box u3b" onclick="show('Peterson\'s Solution','CO3','7b3fbf','CO3 — Demonstrate Process Synchronization and Deadlocks','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Peterson's Solution</div>
+      <div class="sub-box u3b" onclick="show('Sync Hardware','CO3','7b3fbf','CO3 — Demonstrate Process Synchronization and Deadlocks','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Sync Hardware</div>
+      <div class="sub-box u3b" onclick="show('Semaphores','CO3','7b3fbf','CO3 — Demonstrate Process Synchronization and Deadlocks','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Semaphores</div>
+      <div class="sub-box u3b" onclick="show('Classical Problems','CO3','7b3fbf','CO3 — Demonstrate Process Synchronization and Deadlocks','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Classical Problems</div>
+      <div class="sub-box u3b" onclick="show('Monitors','CO3','7b3fbf','CO3 — Demonstrate Process Synchronization and Deadlocks','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Monitors</div>
+      <div class="sub-box u3b" onclick="show('Deadlock: Avoid, Detect &amp; Recover','CO3','7b3fbf','CO3 — Demonstrate Process Synchronization and Deadlocks','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Deadlock: Avoid, Detect &amp; Recover</div>
+    </div>
+  </div>
+
+  <!-- UNIT IV -->
+  <div class="unit-col">
+    <div class="unit-box u4">
+      UNIT IV<span class="unit-sub">Memory Management</span>
+      <div class="co-tag">CO4</div>
+    </div>
+    <div class="sub-vline"></div>
+    <div class="subtopics">
+      <div class="sub-box u4b" onclick="show('Logical vs Physical Addr.','CO4','c07000','CO4 — Apply and analyse memory management mechanisms','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Logical vs Physical Addr.</div>
+      <div class="sub-box u4b" onclick="show('Contiguous Allocation','CO4','c07000','CO4 — Apply and analyse memory management mechanisms','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Contiguous Allocation</div>
+      <div class="sub-box u4b" onclick="show('Paging &amp; TLBs','CO4','c07000','CO4 — Apply and analyse memory management mechanisms','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Paging &amp; TLBs</div>
+      <div class="sub-box u4b" onclick="show('Segmentation','CO4','c07000','CO4 — Apply and analyse memory management mechanisms','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Segmentation</div>
+      <div class="sub-box u4b" onclick="show('Swapping','CO4','c07000','CO4 — Apply and analyse memory management mechanisms','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Swapping</div>
+      <div class="sub-box u4b" onclick="show('Virtual Memory','CO4','c07000','CO4 — Apply and analyse memory management mechanisms','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Virtual Memory</div>
+      <div class="sub-box u4b" onclick="show('Page Replacement &amp; Thrashing','CO4','c07000','CO4 — Apply and analyse memory management mechanisms','2','2','2','1','-','-','-','-','-','-','-','-','1','1')">Page Replacement &amp; Thrashing</div>
+    </div>
+  </div>
+
+  <!-- UNIT V -->
+  <div class="unit-col">
+    <div class="unit-box u5">
+      UNIT V<span class="unit-sub">File Systems &amp; Protection</span>
+      <div class="co-tag">CO5</div>
+    </div>
+    <div class="sub-vline"></div>
+    <div class="subtopics">
+      <div class="sub-box u5b" onclick="show('File Concepts &amp; Access Methods','CO5','c0392b','CO5 — Demonstrate file system structure and protection','2','2','2','1','-','-','-','-','-','-','-','-','-','1')">File Concepts &amp; Access Methods</div>
+      <div class="sub-box u5b" onclick="show('Directory Structure','CO5','c0392b','CO5 — Demonstrate file system structure and protection','2','2','2','1','-','-','-','-','-','-','-','-','-','1')">Directory Structure</div>
+      <div class="sub-box u5b" onclick="show('File System Implementation','CO5','c0392b','CO5 — Demonstrate file system structure and protection','2','2','2','1','-','-','-','-','-','-','-','-','-','1')">File System Implementation</div>
+      <div class="sub-box u5b" onclick="show('Disk Scheduling','CO5','c0392b','CO5 — Demonstrate file system structure and protection','2','2','2','1','-','-','-','-','-','-','-','-','-','1')">Disk Scheduling</div>
+      <div class="sub-box u5b" onclick="show('I/O Systems','CO5','c0392b','CO5 — Demonstrate file system structure and protection','2','2','2','1','-','-','-','-','-','-','-','-','-','1')">I/O Systems</div>
+      <div class="sub-box u5b" onclick="show('Goals of Protection','CO5','c0392b','CO5 — Demonstrate file system structure and protection','2','2','2','1','-','-','-','-','-','-','-','-','-','1')">Goals of Protection</div>
+      <div class="sub-box u5b" onclick="show('Access Matrix','CO5','c0392b','CO5 — Demonstrate file system structure and protection','2','2','2','1','-','-','-','-','-','-','-','-','-','1')">Access Matrix</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#1a6fbe"></div> Unit I — Intro &amp; Shell (10 Th)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#0e8f7a"></div> Unit II — Process Mgmt (12 Th)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#7b3fbf"></div> Unit III — Sync &amp; Deadlock (12 Th)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#c07000"></div> Unit IV — Memory Mgmt (10 Th)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#c0392b"></div> Unit V — File &amp; Protection (10 Th)</div>
+</div>
+<div class="hint">💡 Click any topic box to see its CO-PO mapping</div>
+<div class="footer">Total: 54 Th &nbsp;|&nbsp; Faculty: Nimmala Sakitha Sri, Asst. Prof., CSE-AI&ML &nbsp;|&nbsp; ANITS, Sangivalasa</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header" id="modalHeader">
+      <h3 id="modalTopic">Topic</h3>
+      <p id="modalCO">CO</p>
+      <button class="modal-close" onclick="document.getElementById('overlay').classList.remove('show')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-co" id="modalCODesc"></div>
+      <div class="po-grid" id="poGrid"></div>
+    </div>
+    <div class="modal-footer">Mapping Level: 1 = Slightly | 2 = Moderately | — = Not Mapped</div>
+  </div>
+</div>
+
+<script>
+const PO_NAMES = ['PO1','PO2','PO3','PO4','PO5','PO6','PO7','PO8','PO9','PO10','PO11','PO12','PSO1','PSO2'];
+const PO_DESC = {
+  'PO1':'Engineering Knowledge','PO2':'Problem Analysis','PO3':'Design / Development',
+  'PO4':'Investigation','PO5':'Modern Tool Usage','PO6':'Engineer & Society',
+  'PO7':'Environment','PO8':'Ethics','PO9':'Teamwork','PO10':'Communication',
+  'PO11':'Project Management','PO12':'Life-long Learning','PSO1':'Apply CS Concepts','PSO2':'Software Development'
+};
+function show(topic, co, color, coDesc, ...levels) {
+  document.getElementById('modalTopic').textContent = topic;
+  document.getElementById('modalCO').textContent = co;
+  document.getElementById('modalCODesc').textContent = coDesc;
+  document.getElementById('modalHeader').style.background = '#' + color;
+  const grid = document.getElementById('poGrid');
+  grid.innerHTML = '';
+  PO_NAMES.forEach((po, i) => {
+    const level = levels[i] || '-';
+    if (level !== '-') {
+      grid.innerHTML += `<div class="po-item">
+        <div class="po-num">${po}</div>
+        <div class="po-level">${PO_DESC[po]}</div>
+        <div class="po-badge ${level==='2'?'badge-2':'badge-1'}">${level==='2'?'Level 2':'Level 1'}</div>
+      </div>`;
+    }
+  });
+  document.getElementById('overlay').classList.add('show');
+}
+function closeModal(e) {
+  if (e.target === document.getElementById('overlay'))
+    document.getElementById('overlay').classList.remove('show');
+}
+</script>
+</body>
+</html>
