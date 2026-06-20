@@ -234,12 +234,13 @@
   }
   .subjects-row {
     display: flex;
-    flex-direction: column;
     gap: 14px;
     margin-bottom: 28px;
+    flex-wrap: wrap;
   }
   .subject-card {
-    width: 100%;
+    flex: 1;
+    min-width: 200px;
     background: var(--bg2);
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -250,10 +251,8 @@
     position: relative;
     transition: box-shadow .15s, border-color .15s;
   }
-  .subject-card:nth-child(1) { background: rgba(26,111,190,0.07); border-color: rgba(26,111,190,0.3); }
-  .subject-card:nth-child(2) { background: rgba(14,143,122,0.07); border-color: rgba(14,143,122,0.3); }
-  .subject-card:hover { box-shadow: 0 3px 12px rgba(26,111,190,0.15); }
-  .subject-card.active { border-color: rgba(14,143,122,0.45); }
+  .subject-card:hover { box-shadow: 0 2px 10px rgba(26,111,190,0.1); border-color: rgba(26,111,190,0.3); }
+  .subject-card.active { border-color: rgba(26,111,190,0.45); background: rgba(26,111,190,0.04); }
   .subject-num {
     width: 34px; height: 34px;
     background: var(--bg3);
@@ -264,25 +263,14 @@
     flex-shrink: 0;
   }
   .subject-card.active .subject-num { background: rgba(26,111,190,0.1); border-color: rgba(26,111,190,0.3); }
-  .subject-name { font-size: 14px; font-weight: 700; color: #fff; background: var(--accent); border-radius: 6px; padding: 3px 10px; display: inline-block; letter-spacing: .01em; }
-  .subject-card:nth-child(2) .subject-name { background: var(--green); }
-  .subject-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .subject-name { font-size: 14px; font-weight: 600; color: var(--text); }
+  .subject-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
   .subject-badge {
     position: absolute; top: 10px; right: 12px;
     background: rgba(26,111,190,0.12); border: 1px solid rgba(26,111,190,0.3);
     color: var(--accent); font-size: 11px; font-weight: 600;
     padding: 2px 9px; border-radius: 20px;
   }
-  .toc-units { display: flex; flex-direction: column; gap: 0; margin-top: 12px; border-top: 1px solid rgba(0,0,0,0.08); }
-  .toc-unit-link { display: flex; align-items: center; gap: 10px; padding: 9px 4px; text-decoration: none; color: var(--text); border-bottom: 1px solid var(--border); transition: color .12s; font-size: 13px; }
-  .toc-unit-link:last-child { border-bottom: none; }
-  .toc-unit-link:hover { color: var(--accent); }
-  .toc-unit-link:hover .toc-unit-num { background: rgba(26,111,190,0.15); border-color: rgba(26,111,190,0.4); color: var(--accent); }
-  .toc-unit-num { min-width: 26px; height: 22px; background: var(--bg3); border: 1px solid var(--border); border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: var(--muted); flex-shrink: 0; transition: background .12s, border-color .12s, color .12s; }
-  .toc-unit-label { font-weight: 600; font-size: 13px; min-width: 160px; }
-  .toc-unit-topic { font-size: 11.5px; color: var(--muted); flex: 1; }
-  .toc-arrow-icon { color: var(--muted); font-size: 14px; margin-left: auto; }
-  .subject-card.toc-card { flex-direction: column; align-items: flex-start; }
 
   @media (max-width: 600px) {
     .header { padding: 20px; flex-wrap: wrap; }
@@ -305,8 +293,8 @@
     <div class="college-name">Anil Neerukonda Institute of Technology &amp; Sciences</div>
     <div class="college-location">Sangivalasa, Visakhapatnam</div>
     <div class="dept-label">Department of CSE — AI &amp; ML</div>
+    <div class="course-title">Operating <span>Systems</span></div>
     <div class="faculty-name">Faculty: <strong>Sakita Sri Nimmala</strong></div>
-    <div class="faculty-name" style="font-size:13px;margin-top:2px;">Assistant Professor, Dept. of CSE — AI &amp; ML</div>
   </div>
 
   <!-- PHOTO -->
@@ -326,88 +314,20 @@
   <!-- Subjects -->
   <h2 class="subjects-heading">Subjects</h2>
   <div class="subjects-row">
-    <div class="subject-card toc-card">
-      <div style="display:flex;align-items:center;gap:14px;width:100%">
-        <div class="subject-num">1</div>
-        <div class="subject-info">
-          <div class="subject-name">Theory of Computation</div>
-          <div class="subject-desc">Automata, Languages &amp; Computability</div>
-        </div>
-      </div>
-      <div class="toc-units" style="width:100%">
-        <a class="toc-unit-link" href="tocnotes.html" onclick="sessionStorage.setItem('toc_open_unit','u1')">
-          <div class="toc-unit-num">I</div>
-          <div class="toc-unit-label">Finite Automata</div>
-          <div class="toc-unit-topic">DFA · NFA · ε-NFA · Minimization</div>
-          <span class="toc-arrow-icon">›</span>
-        </a>
-        <a class="toc-unit-link" href="tocnotes.html" onclick="sessionStorage.setItem('toc_open_unit','u2')">
-          <div class="toc-unit-num">II</div>
-          <div class="toc-unit-label">Regular Expressions</div>
-          <div class="toc-unit-topic">RE · Arden's · Pumping Lemma</div>
-          <span class="toc-arrow-icon">›</span>
-        </a>
-        <a class="toc-unit-link" href="tocnotes.html" onclick="sessionStorage.setItem('toc_open_unit','u3')">
-          <div class="toc-unit-num">III</div>
-          <div class="toc-unit-label">Context Free Grammars</div>
-          <div class="toc-unit-topic">CFG · Parse Trees · CNF · GNF</div>
-          <span class="toc-arrow-icon">›</span>
-        </a>
-        <a class="toc-unit-link" href="tocnotes.html" onclick="sessionStorage.setItem('toc_open_unit','u4')">
-          <div class="toc-unit-num">IV</div>
-          <div class="toc-unit-label">Pushdown Automata</div>
-          <div class="toc-unit-topic">PDA · ID &amp; Moves · CFG ↔ PDA</div>
-          <span class="toc-arrow-icon">›</span>
-        </a>
-        <a class="toc-unit-link" href="tocnotes.html" onclick="sessionStorage.setItem('toc_open_unit','u5')">
-          <div class="toc-unit-num">V</div>
-          <div class="toc-unit-label">Turing Machines</div>
-          <div class="toc-unit-topic">TM · Church-Turing · Halting Problem · P vs NP</div>
-          <span class="toc-arrow-icon">›</span>
-        </a>
+    <div class="subject-card">
+      <div class="subject-num">1</div>
+      <div class="subject-info">
+        <div class="subject-name">Theory of Computation</div>
+        <div class="subject-desc">Automata, Languages &amp; Computability</div>
       </div>
     </div>
-    <div class="subject-card toc-card active">
-      <div style="display:flex;align-items:center;gap:14px;width:100%">
-        <div class="subject-num">2</div>
-        <div class="subject-info">
-          <div class="subject-name">Operating Systems</div>
-          <div class="subject-desc">Process, Memory &amp; File Management</div>
-        </div>
-        <span class="subject-badge">Current</span>
+    <div class="subject-card active">
+      <div class="subject-num">2</div>
+      <div class="subject-info">
+        <div class="subject-name">Operating Systems</div>
+        <div class="subject-desc">Process, Memory &amp; File Management</div>
       </div>
-      <div class="toc-units" style="width:100%">
-        <a class="toc-unit-link" href="osnotes.html" onclick="sessionStorage.setItem('os_open_topic','overview')">
-          <div class="toc-unit-num">I</div>
-          <div class="toc-unit-label">Intro to OS &amp; Shell</div>
-          <div class="toc-unit-topic">Overview · Types · Shell Programming</div>
-          <span class="toc-arrow-icon">›</span>
-        </a>
-        <a class="toc-unit-link" href="osnotes.html" onclick="sessionStorage.setItem('os_open_topic','process')">
-          <div class="toc-unit-num">II</div>
-          <div class="toc-unit-label">Process Management</div>
-          <div class="toc-unit-topic">Scheduling · Synchronization · Deadlock</div>
-          <span class="toc-arrow-icon">›</span>
-        </a>
-        <a class="toc-unit-link" href="osnotes.html" onclick="sessionStorage.setItem('os_open_topic','memory')">
-          <div class="toc-unit-num">III</div>
-          <div class="toc-unit-label">Memory Management</div>
-          <div class="toc-unit-topic">Paging · Segmentation · Virtual Memory</div>
-          <span class="toc-arrow-icon">›</span>
-        </a>
-        <a class="toc-unit-link" href="osnotes.html" onclick="sessionStorage.setItem('os_open_topic','file')">
-          <div class="toc-unit-num">IV</div>
-          <div class="toc-unit-label">File System Management</div>
-          <div class="toc-unit-topic">File Structure · Directory · Disk Scheduling</div>
-          <span class="toc-arrow-icon">›</span>
-        </a>
-        <a class="toc-unit-link" href="osnotes.html" onclick="sessionStorage.setItem('os_open_topic','protection')">
-          <div class="toc-unit-num">V</div>
-          <div class="toc-unit-label">Protection &amp; Security</div>
-          <div class="toc-unit-topic">Access Matrix · Authentication · Linux Security</div>
-          <span class="toc-arrow-icon">›</span>
-        </a>
-      </div>
+      <span class="subject-badge">Current</span>
     </div>
   </div>
 
@@ -502,4 +422,127 @@
             </div>
           </li>
 
-          <li class="topic-
+          <li class="topic-item">
+            <div class="topic-num">3</div>
+            <div class="topic-name">Operating System Structures<br><small style="color:var(--muted);font-size:12px">Monolithic · Layered · Microkernel · Modular · Hybrid · Exokernel</small></div>
+            <div class="topic-actions">
+              <a class="topic-btn btn-notes" href="osnotes.html" onclick="setTopic('structures')">📖 Notes</a>
+              <a class="topic-btn btn-quiz" href="osnotes.html" onclick="setTopicQuiz()">📝 Quiz</a>
+            </div>
+          </li>
+
+          <li class="topic-item">
+            <div class="topic-num">4</div>
+            <div class="topic-name">Operating System Services<br><small style="color:var(--muted);font-size:12px">Program execution · I/O · File system · IPC · Error detection · Security</small></div>
+            <div class="topic-actions">
+              <a class="topic-btn btn-notes" href="osnotes.html" onclick="setTopic('services')">📖 Notes</a>
+              <a class="topic-btn btn-quiz" href="osnotes.html" onclick="setTopicQuiz()">📝 Quiz</a>
+            </div>
+          </li>
+
+          <li class="topic-item">
+            <div class="topic-num">5</div>
+            <div class="topic-name">System Calls<br><small style="color:var(--muted);font-size:12px">Trap · Mode switch · POSIX · libc · fork() · 5 categories</small></div>
+            <div class="topic-actions">
+              <a class="topic-btn btn-notes" href="osnotes.html" onclick="setTopic('syscalls')">📖 Notes</a>
+              <a class="topic-btn btn-quiz" href="osnotes.html" onclick="setTopicQuiz()">📝 Quiz</a>
+            </div>
+          </li>
+
+          <li class="topic-item">
+            <div class="topic-num">6</div>
+            <div class="topic-name">Virtual Machines<br><small style="color:var(--muted);font-size:12px">Hypervisor · Type 1 vs Type 2 · Full vs Para-virtualisation · Containers</small></div>
+            <div class="topic-actions">
+              <a class="topic-btn btn-notes" href="osnotes.html" onclick="setTopic('vm')">📖 Notes</a>
+              <a class="topic-btn btn-quiz" href="osnotes.html" onclick="setTopicQuiz()">📝 Quiz</a>
+            </div>
+          </li>
+
+          <li class="topic-item">
+            <div class="topic-num">7</div>
+            <div class="topic-name">Operating System Design &amp; Implementation<br><small style="color:var(--muted);font-size:12px">Policy vs Mechanism · User/System goals · C vs Assembly · HAL</small></div>
+            <div class="topic-actions">
+              <a class="topic-btn btn-notes" href="osnotes.html" onclick="setTopic('design')">📖 Notes</a>
+              <a class="topic-btn btn-quiz" href="osnotes.html" onclick="setTopicQuiz()">📝 Quiz</a>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+
+    <!-- Section 2: Shell Programming -->
+    <div class="section-card open" id="sec-shell">
+      <div class="section-header" onclick="toggleSection('sec-shell')">
+        <div class="section-title">
+          <div class="section-icon icon-teal">🖱️</div>
+          Introduction to Shell Programming
+        </div>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div class="section-body">
+        <ul class="topic-list">
+
+          <li class="topic-item">
+            <div class="topic-num">8</div>
+            <div class="topic-name">Commands &amp; Shell Basics<br><small style="color:var(--muted);font-size:12px">bash · ls · cp · mv · grep · find · chmod · pipes · redirection</small></div>
+            <div class="topic-actions">
+              <a class="topic-btn btn-notes" href="osnotes.html" onclick="setTopic('shell')">📖 Notes</a>
+              <a class="topic-btn btn-quiz" href="osnotes.html" onclick="setTopicQuiz()">📝 Quiz</a>
+            </div>
+          </li>
+
+          <li class="topic-item">
+            <div class="topic-num">9</div>
+            <div class="topic-name">Shell Scripting<br><small style="color:var(--muted);font-size:12px">Shebang · Variables · if/for/while · $? · Functions · cron</small></div>
+            <div class="topic-actions">
+              <a class="topic-btn btn-notes" href="osnotes.html" onclick="setTopic('shell')">📖 Notes</a>
+              <a class="topic-btn btn-quiz" href="osnotes.html" onclick="setTopicQuiz()">📝 Quiz</a>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+
+  </div><!-- /unit-block -->
+
+  <!-- Coming Soon Units -->
+  <div style="border: 1px dashed var(--border); border-radius: var(--radius); padding: 18px 22px; color: var(--muted); font-size: 13px; text-align: center;">
+    📌 UNIT-II through UNIT-V notes will appear here as they are added
+  </div>
+
+</div><!-- /main -->
+
+<script>
+/* ── toggle section open/close ── */
+function toggleSection(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+}
+
+/* ── navigate to osnotes.html and open correct topic ── */
+function setTopic(topicId) {
+  sessionStorage.setItem('os_open_topic', topicId);
+}
+function setTopicQuiz() {
+  sessionStorage.setItem('os_open_topic', 'quiz');
+}
+
+/* ── auto-load photo if photo.jpg exists ── */
+(function() {
+  const img = new Image();
+  img.onload = function() {
+    const wrap = document.getElementById('photoWrap');
+    const ph   = document.getElementById('photoPlaceholder');
+    const el   = document.createElement('img');
+    el.src = img.src;
+    el.alt = 'Sakita Sri Nimmala';
+    ph.replaceWith(el);
+  };
+  img.src = 'photo.jpg';
+})();
+</script>
+
+</body>
+</html>
