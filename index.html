@@ -6,89 +6,27 @@
 <title>Operating Systems — Course Page</title>
 <style>
   :root {
-    --bg: #f5f7fa;
-    --bg2: #ffffff;
-    --bg3: #eef1f6;
-    --border: #d8dde8;
-    --text: #1a2233;
-    --muted: #5a6a85;
-    --accent: #1a6fbe;
-    --accent2: #0e8f7a;
-    --green: #0e8f7a;
-    --amber: #c48a00;
-    --red: #c0392b;
-    --coral: #d35400;
-    --purple: #1a6fbe;
-    --radius: 10px;
-    --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --bg: #f5f7fa; --bg2: #ffffff; --bg3: #eef1f6; --border: #d8dde8;
+    --text: #1a2233; --muted: #5a6a85; --accent: #1a6fbe; --accent2: #0e8f7a;
+    --green: #0e8f7a; --amber: #c48a00; --red: #c0392b; --coral: #d35400;
+    --purple: #1a6fbe; --radius: 10px; --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 15px; line-height: 1.7; min-height: 100vh; }
 
   /* ── HEADER ── */
-  .header {
-    background: linear-gradient(135deg, #1a3a6b 0%, #1a5fa0 60%, #1a3a6b 100%);
-    border-bottom: 1px solid #1a3a6b;
-    padding: 36px 40px;
-    display: flex;
-    align-items: center;
-    gap: 28px;
-    position: relative;
-    overflow: hidden;
-  }
-  .header::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 70% 80% at 0% 50%, rgba(255,255,255,0.08) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  /* Faculty photo */
-  .faculty-photo {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    border: 3px solid rgba(255,255,255,0.6);
-    object-fit: cover;
-    flex-shrink: 0;
-    background: rgba(255,255,255,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 36px;
-    color: #ffffff;
-    overflow: hidden;
-    position: relative;
-    z-index: 1;
-  }
-  .faculty-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-  }
-  .photo-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255,255,255,0.2);
-    border-radius: 50%;
-    font-size: 36px;
-  }
-
+  .header { background: linear-gradient(135deg, #1a3a6b 0%, #1a5fa0 60%, #1a3a6b 100%); border-bottom: 1px solid #1a3a6b; padding: 36px 40px; display: flex; align-items: center; gap: 28px; position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 80% at 0% 50%, rgba(255,255,255,0.08) 0%, transparent 70%); pointer-events: none; }
+  .faculty-photo { width: 90px; height: 90px; border-radius: 50%; border: 3px solid rgba(255,255,255,0.6); object-fit: cover; flex-shrink: 0; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 36px; color: #ffffff; overflow: hidden; position: relative; z-index: 1; }
+  .faculty-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+  .photo-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.2); border-radius: 50%; font-size: 36px; }
   .header-info { flex: 1; position: relative; z-index: 1; }
   .anits-emblem { width: 80px; height: 80px; object-fit: contain; flex-shrink: 0; filter: brightness(0) invert(1); position: relative; z-index: 1; }
   .college-name { font-size: 20px; font-weight: 800; color: #ffffff; letter-spacing: .01em; margin-bottom: 2px; line-height: 1.2; }
   .college-location { font-size: 12px; color: rgba(255,255,255,0.65); margin-bottom: 8px; letter-spacing: .02em; }
   .dept-label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,0.75); font-weight: 600; margin-bottom: 6px; }
-  .course-title { font-size: clamp(20px, 3vw, 32px); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; margin-bottom: 6px; color: #ffffff; }
-  .course-title span { color: #7ecfff; }
   .faculty-name { font-size: 15px; color: rgba(255,255,255,0.7); }
   .faculty-name strong { color: #ffffff; font-weight: 600; }
-
   .header-badges { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; position: relative; z-index: 1; }
   .badge { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.35); color: #ffffff; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; white-space: nowrap; }
   .badge.green { background: rgba(0,220,150,0.25); border-color: rgba(0,220,150,0.5); color: #b3ffec; }
@@ -96,118 +34,35 @@
   /* ── MAIN ── */
   .main { max-width: 900px; margin: 0 auto; padding: 36px 24px 60px; }
 
-  /* ── UNIT BLOCK ── */
-  .unit-block { margin-bottom: 40px; }
-  .unit-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: linear-gradient(90deg, rgba(26,111,190,0.10), rgba(14,143,122,0.07));
-    border: 1px solid rgba(26,111,190,0.25);
-    border-radius: 8px;
-    padding: 8px 18px;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 20px;
-  }
-  .unit-label .dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
-
   /* ── SECTION CARD ── */
-  .section-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    margin-bottom: 16px;
-    overflow: hidden;
-  }
-  .section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 20px;
-    cursor: pointer;
-    user-select: none;
-    transition: background .15s;
-  }
+  .section-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 16px; overflow: hidden; }
+  .section-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; cursor: pointer; user-select: none; transition: background .15s; }
   .section-header:hover { background: rgba(26,111,190,0.05); }
-  .section-title {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-weight: 600;
-    font-size: 15px;
-  }
-  .section-icon {
-    width: 34px; height: 34px;
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-    flex-shrink: 0;
-  }
-  .icon-purple { background: rgba(0,200,150,0.15); }
-  .icon-blue   { background: rgba(0,180,216,0.15); }
-  .icon-green  { background: rgba(0,229,160,0.15); }
-  .icon-amber  { background: rgba(245,197,24,0.15); }
-  .icon-red    { background: rgba(255,79,107,0.15); }
-  .icon-teal   { background: rgba(0,200,150,0.18); }
-  .icon-coral  { background: rgba(255,123,114,0.15); }
-  .icon-pink   { background: rgba(0,180,216,0.15); }
-
+  .section-title { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 15px; }
+  .section-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .icon-purple{background:rgba(0,200,150,0.15);} .icon-blue{background:rgba(0,180,216,0.15);} .icon-green{background:rgba(0,229,160,0.15);} .icon-amber{background:rgba(245,197,24,0.15);} .icon-red{background:rgba(255,79,107,0.15);}
   .toggle-arrow { color: var(--muted); font-size: 12px; transition: transform .2s; }
   .section-card.open .toggle-arrow { transform: rotate(180deg); }
-
   .section-body { display: none; border-top: 1px solid var(--border); }
   .section-card.open .section-body { display: block; }
 
   /* ── TOPIC LIST ── */
   .topic-list { list-style: none; }
-  .topic-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 13px 20px 13px 30px;
-    border-bottom: 1px solid var(--border);
-    gap: 12px;
-    transition: background .12s;
-  }
+  .topic-item { display: flex; align-items: center; justify-content: space-between; padding: 13px 20px 13px 30px; border-bottom: 1px solid var(--border); gap: 12px; transition: background .12s; }
   .topic-item:last-child { border-bottom: none; }
   .topic-item:hover { background: rgba(26,111,190,0.05); }
-  .topic-num {
-    min-width: 24px; height: 24px;
-    background: var(--bg3); border: 1px solid var(--border);
-    border-radius: 6px; display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 700; color: var(--muted); flex-shrink: 0;
-  }
+  .topic-num { min-width: 24px; height: 24px; background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: var(--muted); flex-shrink: 0; }
   .topic-name { flex: 1; font-size: 14px; line-height: 1.4; }
   .topic-actions { display: flex; gap: 8px; flex-shrink: 0; }
-  .topic-btn {
-    padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;
-    text-decoration: none; border: 1px solid; cursor: pointer;
-    transition: background .15s, transform .1s; display: inline-block;
-  }
+  .topic-btn { padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; text-decoration: none; border: 1px solid; cursor: pointer; transition: background .15s, transform .1s; display: inline-block; }
   .topic-btn:active { transform: scale(.97); }
-  .btn-notes {
-    background: rgba(26,111,190,0.08); border-color: rgba(26,111,190,0.35);
-    color: var(--accent);
-  }
+  .btn-notes { background: rgba(26,111,190,0.08); border-color: rgba(26,111,190,0.35); color: var(--accent); }
   .btn-notes:hover { background: rgba(26,111,190,0.18); }
-  .btn-quiz {
-    background: rgba(14,143,122,0.08); border-color: rgba(14,143,122,0.35);
-    color: var(--accent2);
-  }
+  .btn-quiz { background: rgba(14,143,122,0.08); border-color: rgba(14,143,122,0.35); color: var(--accent2); }
   .btn-quiz:hover { background: rgba(14,143,122,0.18); }
 
   /* ── NOTE FORMAT LEGEND ── */
-  .format-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 22px 24px;
-    margin-bottom: 32px;
-  }
+  .format-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 32px; }
   .format-card h3 { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
   .format-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
   .format-item { display: flex; align-items: flex-start; gap: 10px; }
@@ -217,62 +72,25 @@
 
   /* ── INFO ROW ── */
   .info-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
-  .info-chip {
-    background: var(--bg2); border: 1px solid var(--border);
-    border-radius: 8px; padding: 10px 16px; font-size: 13px; color: var(--muted);
-    display: flex; align-items: center; gap: 6px;
-  }
+  .info-chip { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 16px; font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
   .info-chip span { color: var(--text); font-weight: 600; }
 
   /* ── SUBJECTS ── */
-  .subjects-heading {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 14px;
-    letter-spacing: -.01em;
-  }
-  .subjects-row {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    margin-bottom: 28px;
-  }
-  .subject-card {
-    width: 100%;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px 18px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    position: relative;
-    transition: box-shadow .15s, border-color .15s;
-  }
+  .subjects-heading { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 14px; letter-spacing: -.01em; }
+  .subjects-row { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+  .subject-card { width: 100%; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; display: flex; align-items: center; gap: 14px; position: relative; transition: box-shadow .15s, border-color .15s; }
   .subject-card:nth-child(1) { background: rgba(26,111,190,0.07); border-color: rgba(26,111,190,0.3); }
   .subject-card:nth-child(2) { background: rgba(14,143,122,0.07); border-color: rgba(14,143,122,0.3); }
+  .subject-card:nth-child(3) { background: rgba(192,57,43,0.07); border-color: rgba(192,57,43,0.3); }
   .subject-card:hover { box-shadow: 0 3px 12px rgba(26,111,190,0.15); }
   .subject-card.active { border-color: rgba(14,143,122,0.45); }
-  .subject-num {
-    width: 34px; height: 34px;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px; font-weight: 700; color: var(--accent);
-    flex-shrink: 0;
-  }
+  .subject-num { width: 34px; height: 34px; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: var(--accent); flex-shrink: 0; }
   .subject-card.active .subject-num { background: rgba(26,111,190,0.1); border-color: rgba(26,111,190,0.3); }
   .subject-name { font-size: 14px; font-weight: 700; color: #fff; background: var(--accent); border-radius: 6px; padding: 3px 10px; display: inline-block; letter-spacing: .01em; }
   .subject-card:nth-child(2) .subject-name { background: var(--green); }
+  .subject-card:nth-child(3) .subject-name { background: #c0392b; }
   .subject-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
-  .subject-badge {
-    position: absolute; top: 10px; right: 12px;
-    background: rgba(26,111,190,0.12); border: 1px solid rgba(26,111,190,0.3);
-    color: var(--accent); font-size: 11px; font-weight: 600;
-    padding: 2px 9px; border-radius: 20px;
-  }
+  .subject-badge { position: absolute; top: 10px; right: 12px; background: rgba(26,111,190,0.12); border: 1px solid rgba(26,111,190,0.3); color: var(--accent); font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 20px; }
   .toc-units { display: flex; flex-direction: column; gap: 0; margin-top: 12px; border-top: 1px solid rgba(0,0,0,0.08); }
   .toc-unit-link { display: flex; align-items: center; gap: 10px; padding: 9px 4px; text-decoration: none; color: var(--text); border-bottom: 1px solid var(--border); transition: color .12s; font-size: 13px; }
   .toc-unit-link:last-child { border-bottom: none; }
@@ -287,11 +105,7 @@
   /* ── SUBJECT TABS ── */
   .sub-tabs-wrap { width: 100%; margin-top: 14px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: #eef3fb; }
   .sub-tab-bar { display: flex; border-bottom: 1px solid var(--border); }
-  .sub-tab-btn {
-    flex: 1; padding: 10px 6px; font-size: 12px; font-weight: 700; color: var(--muted);
-    background: #dce7f7; border: none; cursor: pointer; border-right: 1px solid #c2d2e8;
-    transition: background .15s, color .15s; letter-spacing: .01em;
-  }
+  .sub-tab-btn { flex: 1; padding: 10px 6px; font-size: 12px; font-weight: 700; color: var(--muted); background: #dce7f7; border: none; cursor: pointer; border-right: 1px solid #c2d2e8; transition: background .15s, color .15s; letter-spacing: .01em; }
   .sub-tab-btn:last-child { border-right: none; }
   .sub-tab-btn:hover { background: #c8daef; color: var(--text); }
   .sub-tab-btn.active { background: #eef3fb; color: var(--accent); border-bottom: 2px solid var(--accent); margin-bottom: -1px; }
@@ -315,7 +129,7 @@
   .co-popup-close { position:absolute; top:10px; right:12px; background:rgba(255,255,255,.25); border:none; color:#fff; border-radius:50%; width:22px; height:22px; font-size:12px; cursor:pointer; }
   .co-popup-body { padding:16px 18px; font-size:13px; line-height:1.7; color:#1a2233; }
 
-  /* ── OS ROADMAP (embedded) ── */
+  /* ── EMBEDDED ROADMAP ── */
   .roadmap-wrap { margin-top: 14px; background: #f0f4fa; border-radius: 10px; padding: 16px 10px; overflow-x: auto; }
   .rm-root-box { background: #1a3a6b; color: #fff; border-radius: 10px; padding: 10px 24px; text-align: center; font-size: 15px; font-weight: 800; box-shadow: 0 4px 14px rgba(26,58,107,.3); }
   .rm-root-box small { display: block; font-size: 10px; font-weight: 400; opacity: .75; margin-top: 3px; }
@@ -341,23 +155,22 @@
   .rm-legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
   .rm-hint { text-align: center; font-size: 14px; font-weight: 800; color: #1a3a6b; background: #fff9c4; border: 2px solid #f9c006; border-radius: 8px; padding: 7px 16px; margin-top: 10px; display: inline-block; width: 100%; }
 
-  @media (max-width: 600px) {
-    .header { padding: 20px; flex-wrap: wrap; }
-    .header-badges { flex-direction: row; flex-wrap: wrap; justify-content: flex-start; }
-    .format-grid { grid-template-columns: 1fr; }
-    .topic-actions { flex-direction: column; }
-    .main { padding: 20px 14px 60px; }
+  @keyframes popIn { from{transform:scale(.9);opacity:0;} to{transform:scale(1);opacity:1;} }
+
+  @media (max-width:600px) {
+    .header{padding:20px;flex-wrap:wrap;}
+    .header-badges{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;}
+    .format-grid{grid-template-columns:1fr;}
+    .topic-actions{flex-direction:column;}
+    .main{padding:20px 14px 60px;}
   }
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════ HEADER ══════════════════════ -->
+<!-- HEADER -->
 <div class="header">
-
-  <!-- ANITS Emblem -->
-  <img src="https://anits.edu.in/assets/images/icon/logo-Anits.png" alt="ANITS Emblem" class="anits-emblem" onerror="this.style.display='none'">
-
+  <img src="https://anits.edu.in/assets/images/icon/logo-Anits.png" alt="ANITS" class="anits-emblem" onerror="this.style.display='none'">
   <div class="header-info">
     <div class="college-name">Anil Neerukonda Institute of Technology &amp; Sciences</div>
     <div class="college-location">Sangivalasa, Visakhapatnam</div>
@@ -365,21 +178,19 @@
     <div class="faculty-name">Faculty: <strong>Sakita Sri Nimmala</strong></div>
     <div class="faculty-name" style="font-size:13px;margin-top:2px;">Assistant Professor, Dept. of CSE — AI &amp; ML</div>
   </div>
-
-  <!-- PHOTO -->
   <div class="faculty-photo" id="photoWrap">
     <div class="photo-placeholder" id="photoPlaceholder">👩‍🏫</div>
   </div>
-
   <div class="header-badges"></div>
 </div>
 
-<!-- ══════════════════════ MAIN ══════════════════════ -->
+<!-- MAIN -->
 <div class="main">
 
-  <!-- Subjects -->
-  <h2 class="subjects-heading">Subjects (AY: 2026-2027 Sem -1)</h2>
+  <h2 class="subjects-heading">Subjects (AY: 2026-2027 Sem-1)</h2>
   <div class="subjects-row">
+
+    <!-- ═══ CARD 1: TOC ═══ -->
     <div class="subject-card toc-card">
       <div style="display:flex;align-items:center;gap:14px;width:100%">
         <div class="subject-num">2</div>
@@ -392,8 +203,6 @@
           </div>
         </div>
       </div>
-
-      <!-- TOC TABS -->
       <div class="sub-tabs-wrap" style="width:100%">
         <div class="sub-tab-bar">
           <button class="sub-tab-btn active" onclick="showTab('toc','prereq',this)">Prerequisites</button>
@@ -402,12 +211,7 @@
         </div>
         <div class="sub-tab-panel active" id="toc-prereq">
           <strong>Prerequisites:</strong>
-          <ul>
-            <li>Discrete Mathematics</li>
-            <li>Data Structures &amp; Algorithms</li>
-            <li>Mathematical Logic &amp; Set Theory</li>
-            <li>Digital Logic Design</li>
-          </ul>
+          <ul><li>Discrete Mathematics</li><li>Data Structures &amp; Algorithms</li><li>Mathematical Logic &amp; Set Theory</li><li>Digital Logic Design</li></ul>
         </div>
         <div class="sub-tab-panel" id="toc-obj">
           <strong>Course Objectives:</strong>
@@ -428,14 +232,9 @@
           <div class="co-row"><span class="co-badge toc">CO5</span><span>Analyse Turing machines, decidability, Rice's theorem and computational complexity (P vs NP).</span></div>
         </div>
       </div>
-      <!-- END TOC TABS -->
-
-      <!-- TOC ROADMAP EMBEDDED -->
+      <!-- TOC ROADMAP -->
       <div class="roadmap-wrap" style="width:100%">
-        <div class="rm-root-box" style="background:#0e6b4a;">
-          Theory of Computation — A Road Map
-          <small>K.L.P. Mishra &amp; N. Chandrasekaran — Theory of Computer Science, 3rd Ed.</small>
-        </div>
+        <div class="rm-root-box" style="background:#0e6b4a;">Theory of Computation — A Road Map<small>K.L.P. Mishra &amp; N. Chandrasekaran — Theory of Computer Science, 3rd Ed.</small></div>
         <div class="rm-v-line"></div>
         <div class="rm-h-bar-wrap"><div class="rm-h-bar"></div></div>
         <div class="rm-units-row">
@@ -506,16 +305,17 @@
           </div>
         </div>
         <div class="rm-legend">
-          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#1a6fbe"></div>Unit I (10 Th)</div>
-          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#0e8f7a"></div>Unit II (10 Th)</div>
-          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#7b3fbf"></div>Unit III (12 Th)</div>
-          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#c07000"></div>Unit IV (10 Th)</div>
-          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#c0392b"></div>Unit V (10 Th)</div>
+          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#1a6fbe"></div>Unit I</div>
+          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#0e8f7a"></div>Unit II</div>
+          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#7b3fbf"></div>Unit III</div>
+          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#c07000"></div>Unit IV</div>
+          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#c0392b"></div>Unit V</div>
         </div>
         <div class="rm-hint">💡 Click any topic to see CO-PO mapping</div>
       </div>
-      <!-- END TOC ROADMAP -->
     </div>
+
+    <!-- ═══ CARD 2: OS (order:-1 so appears first visually) ═══ -->
     <div class="subject-card toc-card active" style="order:-1">
       <div style="display:flex;align-items:center;gap:14px;width:100%">
         <div class="subject-num">1</div>
@@ -529,8 +329,6 @@
         </div>
         <span class="subject-badge">Current</span>
       </div>
-
-      <!-- OS TABS -->
       <div class="sub-tabs-wrap" style="width:100%">
         <div class="sub-tab-bar">
           <button class="sub-tab-btn active" onclick="showTab('os','prereq',this)">Prerequisites</button>
@@ -539,12 +337,7 @@
         </div>
         <div class="sub-tab-panel active" id="os-prereq">
           <strong>Prerequisites:</strong>
-          <ul>
-            <li>Data Structures &amp; Algorithms</li>
-            <li>Computer Organization &amp; Architecture</li>
-            <li>C / C++ Programming</li>
-            <li>Discrete Mathematics</li>
-          </ul>
+          <ul><li>Data Structures &amp; Algorithms</li><li>Computer Organization &amp; Architecture</li><li>C / C++ Programming</li><li>Discrete Mathematics</li></ul>
         </div>
         <div class="sub-tab-panel" id="os-obj">
           <strong>Course Objectives:</strong>
@@ -565,14 +358,9 @@
           <div class="co-row"><span class="co-badge">CO5</span><span>Demonstrate file system structure, I/O management and OS protection.</span></div>
         </div>
       </div>
-      <!-- END OS TABS -->
-
-      <!-- OS ROADMAP EMBEDDED -->
+      <!-- OS ROADMAP -->
       <div class="roadmap-wrap" style="width:100%">
-        <div class="rm-root-box">
-          Operating System Concepts — A Road Map
-          <small>Silberschatz, Galvin &amp; Gagne — OS Concepts, 10th Ed.</small>
-        </div>
+        <div class="rm-root-box">Operating System Concepts — A Road Map<small>Silberschatz, Galvin &amp; Gagne — OS Concepts, 10th Ed.</small></div>
         <div class="rm-v-line"></div>
         <div class="rm-h-bar-wrap"><div class="rm-h-bar"></div></div>
         <div class="rm-units-row">
@@ -643,21 +431,119 @@
           </div>
         </div>
         <div class="rm-legend">
-          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#1a6fbe"></div>Unit I (10 Th)</div>
-          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#0e8f7a"></div>Unit II (12 Th)</div>
-          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#7b3fbf"></div>Unit III (12 Th)</div>
-          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#c07000"></div>Unit IV (10 Th)</div>
-          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#c0392b"></div>Unit V (10 Th)</div>
+          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#1a6fbe"></div>Unit I</div>
+          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#0e8f7a"></div>Unit II</div>
+          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#7b3fbf"></div>Unit III</div>
+          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#c07000"></div>Unit IV</div>
+          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#c0392b"></div>Unit V</div>
         </div>
         <div class="rm-hint">💡 Click any topic to see CO-PO mapping</div>
       </div>
-      <!-- END OS ROADMAP -->
     </div>
-  </div>
+
+    <!-- ═══ CARD 3: OS LAB ═══ -->
+    <div class="subject-card toc-card">
+      <div style="display:flex;align-items:center;gap:14px;width:100%">
+        <div class="subject-num">3</div>
+        <div class="subject-info">
+          <div class="subject-name">OS Lab (23CM4212)</div>
+          <div class="subject-desc">CN &amp; OS Laboratory — OS Component &nbsp;|&nbsp; CSM-C &nbsp;|&nbsp; Every Monday 1:00–3:30 PM</div>
+          <div style="margin-top:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <a href="OS LAB SYLLABUS.pdf" target="_blank" style="display:inline-block;font-size:11.5px;font-weight:600;color:#c0392b;text-decoration:none;background:rgba(192,57,43,0.1);border:1px solid rgba(192,57,43,0.35);padding:3px 10px;border-radius:20px;">📄 Click here to view Syllabus</a>
+            <a href="OSLab_Roadmap.html" target="_blank" style="display:inline-block;font-size:11.5px;font-weight:600;color:#fff;text-decoration:none;background:#c0392b;padding:3px 10px;border-radius:20px;">🗺️ Full Lab Roadmap &amp; CO-PO</a>
+            <span style="background:#c0392b;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;">🟢 Exp 1 Active</span>
+          </div>
+        </div>
+      </div>
+      <div class="sub-tabs-wrap" style="width:100%">
+        <div class="sub-tab-bar">
+          <button class="sub-tab-btn active" onclick="showTab('lab','prereq',this)">Prerequisites</button>
+          <button class="sub-tab-btn" onclick="showTab('lab','obj',this)">Course Objectives</button>
+          <button class="sub-tab-btn" onclick="showTab('lab','co',this)">Course Outcomes</button>
+        </div>
+        <div class="sub-tab-panel active" id="lab-prereq">
+          <strong>Prerequisites:</strong>
+          <ul><li>C Programming &amp; Data Structures</li><li>Operating Systems Theory (23CM4114)</li><li>Basic Linux / Unix environment</li><li>Computer Organization &amp; Architecture</li></ul>
+        </div>
+        <div class="sub-tab-panel" id="lab-obj">
+          <strong>Course Objectives:</strong>
+          <ul>
+            <li>Acquire knowledge of OS shell commands and develop proficiency in shell scripting.</li>
+            <li>Learn and execute basic UNIX system calls for process management and IPC.</li>
+            <li>Understand and implement process synchronization and deadlock algorithms.</li>
+            <li>Simulate memory management and file management techniques programmatically.</li>
+            <li>Solve problems related to page replacement and virtual memory management.</li>
+          </ul>
+        </div>
+        <div class="sub-tab-panel" id="lab-co">
+          <strong>Course Outcomes:</strong>
+          <div class="co-row"><span class="co-badge" style="background:#1a6fbe">CO1</span><span>Execute UNIX shell programming on the given system and acquire skills in various system calls.</span></div>
+          <div class="co-row"><span class="co-badge" style="background:#0e8f7a">CO2</span><span>Simulate process scheduling, synchronization, deadlock avoidance and detection algorithms.</span></div>
+          <div class="co-row"><span class="co-badge" style="background:#7b3fbf">CO3</span><span>Simulate page replacement algorithms and virtual memory management techniques.</span></div>
+          <div class="co-row"><span class="co-badge" style="background:#c07000">CO4</span><span>Implement memory allocation strategies and file system management techniques.</span></div>
+        </div>
+      </div>
+      <!-- OS LAB ROADMAP -->
+      <div class="roadmap-wrap" style="width:100%">
+        <div class="rm-root-box" style="background:#7b1a1a;">OS Lab (23CM4212) — Experiment Road Map<small>Silberschatz, Galvin &amp; Gagne — OS Concepts, 10th Ed. &nbsp;|&nbsp; Platform: Linux + GCC + Bash</small></div>
+        <div class="rm-v-line"></div>
+        <div class="rm-h-bar-wrap"><div class="rm-h-bar"></div></div>
+        <div class="rm-units-row">
+          <div class="rm-unit-col">
+            <div class="rm-unit-box rm-u1">CO1<span class="rm-unit-sub">Shell &amp; System Calls</span><div class="rm-co-tag" onclick="showCO('oslab','CO1')">Wks 1–2</div></div>
+            <div class="rm-sub-vline"></div>
+            <div class="rm-subtopics">
+              <div class="rm-sub-box rm-u1b" onclick="rmShow('Exp 1: Basic Shell Commands','CO1','1a6fbe','CO1 — Execute UNIX shell programming and system calls','2','2','2','-','-','-','-','-','2','1','-','2','-','-')">Exp 1: Shell Commands</div>
+              <div class="rm-sub-box rm-u1b" onclick="rmShow('Exp 2: Shell Scripts — Logic Programs','CO1','1a6fbe','CO1 — Execute UNIX shell programming and system calls','2','2','2','-','-','-','-','-','2','1','-','2','-','-')">Exp 2: Shell Scripts</div>
+              <div class="rm-sub-box rm-u1b" onclick="rmShow('Exp 3: Process Creation — fork() &amp; IPC','CO1','1a6fbe','CO1 — Execute UNIX shell programming and system calls','2','2','2','-','-','-','-','-','2','1','-','2','-','-')">Exp 3: fork() &amp; IPC</div>
+            </div>
+          </div>
+          <div class="rm-unit-col">
+            <div class="rm-unit-box rm-u2">CO2<span class="rm-unit-sub">Scheduling &amp; Sync</span><div class="rm-co-tag" onclick="showCO('oslab','CO2')">Wks 3–6</div></div>
+            <div class="rm-sub-vline"></div>
+            <div class="rm-subtopics">
+              <div class="rm-sub-box rm-u2b" onclick="rmShow('Exp 4: CPU Scheduling — FCFS, SJF','CO2','0e8f7a','CO2 — Simulate scheduling, synchronization and deadlock algorithms','2','2','2','2','-','-','-','-','2','2','1','2','-','-')">Exp 4: CPU Scheduling</div>
+              <div class="rm-sub-box rm-u2b" onclick="rmShow('Exp 5: Dining Philosophers (Semaphore)','CO2','0e8f7a','CO2 — Simulate scheduling, synchronization and deadlock algorithms','2','2','2','2','-','-','-','-','2','2','1','2','-','-')">Exp 5: Dining Philosophers</div>
+              <div class="rm-sub-box rm-u2b" onclick="rmShow('Exp 6: Producer-Consumer (Monitor)','CO2','0e8f7a','CO2 — Simulate scheduling, synchronization and deadlock algorithms','2','2','2','2','-','-','-','-','2','2','1','2','-','-')">Exp 6: Producer-Consumer</div>
+              <div class="rm-sub-box rm-u2b" onclick="rmShow('Exp 7: Deadlock — Banker\'s Algorithm','CO2','0e8f7a','CO2 — Simulate scheduling, synchronization and deadlock algorithms','2','2','2','2','-','-','-','-','2','2','1','2','-','-')">Exp 7: Banker's Algorithm</div>
+            </div>
+          </div>
+          <div class="rm-unit-col">
+            <div class="rm-unit-box rm-u3">CO3<span class="rm-unit-sub">Virtual Memory</span><div class="rm-co-tag" onclick="showCO('oslab','CO3')">Wks 7–8</div></div>
+            <div class="rm-sub-vline"></div>
+            <div class="rm-subtopics">
+              <div class="rm-sub-box rm-u3b" onclick="rmShow('Exp 8: Page Replacement Algorithms','CO3','7b3fbf','CO3 — Simulate page replacement and virtual memory techniques','2','2','2','2','2','-','1','1','2','2','1','2','1','1')">Exp 8: Page Replacement</div>
+              <div class="rm-sub-box rm-u3b" onclick="rmShow('Exp 9: Virtual Memory Simulation','CO3','7b3fbf','CO3 — Simulate page replacement and virtual memory techniques','2','2','2','2','2','-','1','1','2','2','1','2','1','1')">Exp 9: Virtual Memory</div>
+            </div>
+          </div>
+          <div class="rm-unit-col">
+            <div class="rm-unit-box rm-u4">CO4<span class="rm-unit-sub">Memory &amp; File Mgmt</span><div class="rm-co-tag" onclick="showCO('oslab','CO4')">Wks 9–11</div></div>
+            <div class="rm-sub-vline"></div>
+            <div class="rm-subtopics">
+              <div class="rm-sub-box rm-u4b" onclick="rmShow('Exp 10: First Fit &amp; Best Fit Allocation','CO4','c07000','CO4 — Implement memory and file system management techniques','2','2','2','2','2','-','1','1','2','2','1','2','1','1')">Exp 10: First Fit &amp; Best Fit</div>
+              <div class="rm-sub-box rm-u4b" onclick="rmShow('Exp 11: Contiguous File Allocation','CO4','c07000','CO4 — Implement memory and file system management techniques','2','2','2','2','2','-','1','1','2','2','1','2','1','1')">Exp 11: File Allocation</div>
+              <div class="rm-sub-box rm-u4b" onclick="rmShow('Exp 12: Bitmap for Memory Management','CO4','c07000','CO4 — Implement memory and file system management techniques','2','2','2','2','2','-','1','1','2','2','1','2','1','1')">Exp 12: Bitmap</div>
+            </div>
+          </div>
+        </div>
+        <div class="rm-legend">
+          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#1a6fbe"></div>CO1 – Shell &amp; System Calls (Exps 1–3)</div>
+          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#0e8f7a"></div>CO2 – Scheduling &amp; Sync (Exps 4–7)</div>
+          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#7b3fbf"></div>CO3 – Virtual Memory (Exps 8–9)</div>
+          <div class="rm-legend-item"><div class="rm-legend-dot" style="background:#c07000"></div>CO4 – Memory &amp; File Mgmt (Exps 10–12)</div>
+        </div>
+        <div style="text-align:center;margin-top:10px;">
+          <a href="OSLab_Roadmap.html" target="_blank" style="display:inline-block;background:#c0392b;color:#fff;font-size:13px;font-weight:700;padding:8px 22px;border-radius:8px;text-decoration:none;">🔗 Open Full Lab Roadmap with CO-PO Matrix →</a>
+        </div>
+        <div class="rm-hint">💡 Click any experiment to see CO-PO mapping &nbsp;|&nbsp; Click CO tag to view CO details</div>
+      </div>
+    </div>
+
+  </div><!-- /subjects-row -->
 
 </div><!-- /main -->
 
-<!-- Roadmap PO Popup Modal -->
+<!-- PO Popup Modal -->
 <div style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:2000;align-items:center;justify-content:center;" id="rmOverlay" onclick="rmClose(event)">
   <div style="background:#fff;border-radius:14px;width:340px;box-shadow:0 12px 40px rgba(0,0,0,.25);overflow:hidden;animation:popIn .18s ease;">
     <div id="rmModalHeader" style="padding:14px 18px 12px;color:#fff;position:relative;">
@@ -669,103 +555,9 @@
       <div id="rmModalCODesc" style="font-size:11px;font-weight:600;color:#1a3a6b;margin-bottom:10px;background:#eef4ff;padding:7px 10px;border-radius:6px;"></div>
       <div id="rmPoGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px;"></div>
     </div>
-    <div style="font-size:10px;color:#999;border-top:1px solid #eee;padding:8px 18px;text-align:center;">Level 1 = Slightly | Level 2 = Moderately</div>
+    <div style="font-size:10px;color:#999;border-top:1px solid #eee;padding:8px 18px;text-align:center;">Level 1 = Slightly | Level 2 = Moderately | Level 3 = Strongly</div>
   </div>
 </div>
-
-<script>
-const rmPO_NAMES = ['PO1','PO2','PO3','PO4','PO5','PO6','PO7','PO8','PO9','PO10','PO11','PO12','PSO1','PSO2'];
-const rmPO_DESC = {'PO1':'Engineering Knowledge','PO2':'Problem Analysis','PO3':'Design / Development','PO4':'Investigation','PO5':'Modern Tool Usage','PO6':'Engineer & Society','PO7':'Environment','PO8':'Ethics','PO9':'Teamwork','PO10':'Communication','PO11':'Project Management','PO12':'Life-long Learning','PSO1':'Apply CS Concepts','PSO2':'Software Development'};
-function rmShow(topic, co, color, coDesc, ...levels) {
-  document.getElementById('rmModalTopic').textContent = topic;
-  document.getElementById('rmModalCO').textContent = co;
-  document.getElementById('rmModalCODesc').textContent = coDesc;
-  document.getElementById('rmModalHeader').style.background = '#' + color;
-  const grid = document.getElementById('rmPoGrid');
-  grid.innerHTML = '';
-  rmPO_NAMES.forEach((po, i) => {
-    const level = levels[i] || '-';
-    if (level !== '-') {
-      grid.innerHTML += `<div style="background:#f5f7fa;border-radius:7px;padding:7px 8px;text-align:center;">
-        <div style="font-size:12px;font-weight:700;color:#1a3a6b;">${po}</div>
-        <div style="font-size:10px;color:#666;margin-top:2px;">${rmPO_DESC[po]}</div>
-        <div style="font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;display:inline-block;margin-top:3px;${level==='2'?'background:#fff3e0;color:#e65100':'background:#e8f5e9;color:#2e7d32'}">${level==='2'?'Level 2':'Level 1'}</div>
-      </div>`;
-    }
-  });
-  document.getElementById('rmOverlay').style.display = 'flex';
-}
-function rmClose(e) { if(e.target===document.getElementById('rmOverlay')) document.getElementById('rmOverlay').style.display='none'; }
-
-/* ── CO popup data ── */
-const CO_DATA = {
-  os: {
-    CO1: { label:'CO1', desc:'Illustrate the structure, functionality and services of an Operating System.', detail:'Covers: Overview of OS · Types of OS · OS Structures · OS Services · System Calls · Virtual Machines · Shell Programming', color:'#1a6fbe' },
-    CO2: { label:'CO2', desc:'Implement CPU scheduling algorithms and inter-process communication.', detail:'Covers: Process Concept & PCB · Process Scheduling · Operations on Process · IPC · Client-Server Communication · Threads & Multithreading · CPU Scheduling Algorithms', color:'#0e8f7a' },
-    CO3: { label:'CO3', desc:'Demonstrate process synchronization mechanisms and deadlock handling.', detail:'Covers: Critical Section Problem · Peterson\'s Solution · Sync Hardware · Semaphores · Classical Problems · Monitors · Deadlock — Avoidance, Detection & Recovery', color:'#7b3fbf' },
-    CO4: { label:'CO4', desc:'Apply and analyse memory management and virtual memory mechanisms.', detail:'Covers: Logical vs Physical Address · Contiguous Allocation · Paging & TLBs · Segmentation · Swapping · Virtual Memory · Page Replacement & Thrashing', color:'#c07000' },
-    CO5: { label:'CO5', desc:'Demonstrate file system structure, I/O management and OS protection.', detail:'Covers: File Concepts & Access Methods · Directory Structure · File System Implementation · Disk Scheduling · I/O Systems · Goals of Protection · Access Matrix', color:'#c0392b' }
-  },
-  toc: {
-    CO1: { label:'CO1', desc:'Understand and design finite automata (DFA, NFA, ε-NFA) for regular languages.', detail:'Covers: Intro to TOC · DFA · NFA · ε-NFA · DFA↔NFA Equivalence · Minimization of DFA · Mealy & Moore Machines', color:'#1a6fbe' },
-    CO2: { label:'CO2', desc:'Apply regular expressions, Arden\'s theorem and Pumping Lemma to analyse formal languages.', detail:'Covers: Regular Expressions · RE to FA Conversion · Arden\'s Theorem · Properties of RL · Pumping Lemma for RL · Chomsky Hierarchy · Applications of RL', color:'#0e8f7a' },
-    CO3: { label:'CO3', desc:'Design context-free grammars, construct parse trees and convert to CNF/GNF.', detail:'Covers: CFG Definition · Parse Trees & Derivations · Ambiguous Grammars · Simplification of CFGs · Chomsky Normal Form · Greibach Normal Form · Pumping Lemma for CFLs · Closure Properties', color:'#7b3fbf' },
-    CO4: { label:'CO4', desc:'Understand pushdown automata and establish equivalence with context-free grammars.', detail:'Covers: PDA 7-tuple Definition · Instantaneous Description · Moves of PDA · DPDA vs NPDA · CFG to PDA Conversion · PDA to CFG Conversion', color:'#c07000' },
-    CO5: { label:'CO5', desc:'Analyse Turing machines, decidability, Rice\'s theorem and computational complexity (P vs NP).', detail:'Covers: TM Definition · Variants of TM · Church-Turing Thesis · Halting Problem · Rice\'s Theorem · Decidability & Undecidability · P vs NP Problem', color:'#c0392b' }
-  }
-};
-function showCO(subject, coNum) {
-  const co = CO_DATA[subject][coNum];
-  if (!co) return;
-  document.getElementById('coPopupHeader').style.background = co.color;
-  document.getElementById('coPopupTitle').textContent = coNum + ' — ' + (subject === 'os' ? 'Operating Systems' : 'Theory of Computation');
-  document.getElementById('coPopupDesc').textContent = co.desc;
-  document.getElementById('coPopupDetail').textContent = co.detail;
-  document.getElementById('coPopup').classList.add('show');
-}
-function closeCOPopup(e) {
-  if (!e || e.target === document.getElementById('coPopup'))
-    document.getElementById('coPopup').classList.remove('show');
-}
-
-/* ── subject info tabs ── */
-function showTab(subject, tab, btn) {
-  ['prereq','obj','co'].forEach(t => {
-    document.getElementById(subject+'-'+t).classList.remove('active');
-  });
-  document.getElementById(subject+'-'+tab).classList.add('active');
-  btn.closest('.sub-tab-bar').querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-}
-
-/* ── toggle section open/close ── */
-function toggleSection(id) {
-  const el = document.getElementById(id);
-  el.classList.toggle('open');
-}
-
-/* ── navigate to osnotes.html and open correct topic ── */
-function setTopic(topicId) {
-  sessionStorage.setItem('os_open_topic', topicId);
-}
-function setTopicQuiz() {
-  sessionStorage.setItem('os_open_topic', 'quiz');
-}
-
-/* ── auto-load photo if photo.jpg exists ── */
-(function() {
-  const img = new Image();
-  img.onload = function() {
-    const wrap = document.getElementById('photoWrap');
-    const ph   = document.getElementById('photoPlaceholder');
-    const el   = document.createElement('img');
-    el.src = img.src;
-    el.alt = 'Sakita Sri Nimmala';
-    ph.replaceWith(el);
-  };
-  img.src = 'photo.jpg';
-})();
-</script>
 
 <!-- CO Detail Popup -->
 <div class="co-popup" id="coPopup" onclick="closeCOPopup(event)">
@@ -782,5 +574,93 @@ function setTopicQuiz() {
   </div>
 </div>
 
+<script>
+const rmPO_NAMES = ['PO1','PO2','PO3','PO4','PO5','PO6','PO7','PO8','PO9','PO10','PO11','PO12','PSO1','PSO2'];
+const rmPO_DESC = {'PO1':'Engineering Knowledge','PO2':'Problem Analysis','PO3':'Design / Development','PO4':'Investigation','PO5':'Modern Tool Usage','PO6':'Engineer & Society','PO7':'Environment','PO8':'Ethics','PO9':'Teamwork','PO10':'Communication','PO11':'Project Management','PO12':'Life-long Learning','PSO1':'Apply CS Concepts','PSO2':'Software Development'};
+
+function rmShow(topic, co, color, coDesc, ...levels) {
+  document.getElementById('rmModalTopic').textContent = topic;
+  document.getElementById('rmModalCO').textContent = co;
+  document.getElementById('rmModalCODesc').textContent = coDesc;
+  document.getElementById('rmModalHeader').style.background = '#' + color;
+  const grid = document.getElementById('rmPoGrid');
+  grid.innerHTML = '';
+  rmPO_NAMES.forEach((po, i) => {
+    const level = levels[i] || '-';
+    if (level !== '-') {
+      const bg  = level==='3' ? '#fdecea' : level==='2' ? '#fff3e0' : '#e8f5e9';
+      const fg  = level==='3' ? '#c62828' : level==='2' ? '#e65100' : '#2e7d32';
+      const lbl = level==='3' ? 'High (3)' : level==='2' ? 'Medium (2)' : 'Low (1)';
+      grid.innerHTML += `<div style="background:#f5f7fa;border-radius:7px;padding:7px 8px;text-align:center;">
+        <div style="font-size:12px;font-weight:700;color:#1a3a6b;">${po}</div>
+        <div style="font-size:10px;color:#666;margin-top:2px;">${rmPO_DESC[po]}</div>
+        <div style="font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;display:inline-block;margin-top:3px;background:${bg};color:${fg}">${lbl}</div>
+      </div>`;
+    }
+  });
+  document.getElementById('rmOverlay').style.display = 'flex';
+}
+function rmClose(e) { if(e.target===document.getElementById('rmOverlay')) document.getElementById('rmOverlay').style.display='none'; }
+
+const CO_DATA = {
+  os: {
+    CO1:{label:'CO1',desc:'Illustrate the structure, functionality and services of an Operating System.',detail:'Covers: Overview of OS · Types of OS · OS Structures · OS Services · System Calls · Virtual Machines · Shell Programming',color:'#1a6fbe'},
+    CO2:{label:'CO2',desc:'Implement CPU scheduling algorithms and inter-process communication.',detail:'Covers: Process Concept & PCB · Process Scheduling · Operations on Process · IPC · Client-Server Communication · Threads & Multithreading · CPU Scheduling Algorithms',color:'#0e8f7a'},
+    CO3:{label:'CO3',desc:'Demonstrate process synchronization mechanisms and deadlock handling.',detail:'Covers: Critical Section Problem · Peterson\'s Solution · Sync Hardware · Semaphores · Classical Problems · Monitors · Deadlock — Avoidance, Detection & Recovery',color:'#7b3fbf'},
+    CO4:{label:'CO4',desc:'Apply and analyse memory management and virtual memory mechanisms.',detail:'Covers: Logical vs Physical Address · Contiguous Allocation · Paging & TLBs · Segmentation · Swapping · Virtual Memory · Page Replacement & Thrashing',color:'#c07000'},
+    CO5:{label:'CO5',desc:'Demonstrate file system structure, I/O management and OS protection.',detail:'Covers: File Concepts & Access Methods · Directory Structure · File System Implementation · Disk Scheduling · I/O Systems · Goals of Protection · Access Matrix',color:'#c0392b'}
+  },
+  toc: {
+    CO1:{label:'CO1',desc:'Understand and design finite automata (DFA, NFA, ε-NFA) for regular languages.',detail:'Covers: Intro to TOC · DFA · NFA · ε-NFA · DFA↔NFA Equivalence · Minimization of DFA · Mealy & Moore Machines',color:'#1a6fbe'},
+    CO2:{label:'CO2',desc:'Apply regular expressions, Arden\'s theorem and Pumping Lemma to analyse formal languages.',detail:'Covers: Regular Expressions · RE to FA Conversion · Arden\'s Theorem · Properties of RL · Pumping Lemma for RL · Chomsky Hierarchy · Applications of RL',color:'#0e8f7a'},
+    CO3:{label:'CO3',desc:'Design context-free grammars, construct parse trees and convert to CNF/GNF.',detail:'Covers: CFG Definition · Parse Trees & Derivations · Ambiguous Grammars · Simplification of CFGs · Chomsky Normal Form · Greibach Normal Form · Pumping Lemma for CFLs · Closure Properties',color:'#7b3fbf'},
+    CO4:{label:'CO4',desc:'Understand pushdown automata and establish equivalence with context-free grammars.',detail:'Covers: PDA 7-tuple Definition · Instantaneous Description · Moves of PDA · DPDA vs NPDA · CFG to PDA Conversion · PDA to CFG Conversion',color:'#c07000'},
+    CO5:{label:'CO5',desc:'Analyse Turing machines, decidability, Rice\'s theorem and computational complexity (P vs NP).',detail:'Covers: TM Definition · Variants of TM · Church-Turing Thesis · Halting Problem · Rice\'s Theorem · Decidability & Undecidability · P vs NP Problem',color:'#c0392b'}
+  },
+  oslab: {
+    CO1:{label:'CO1',desc:'Execute UNIX shell programming on the given system and acquire skills in system calls.',detail:'Covers: Exp 1 – Basic Shell Commands · Exp 2 – Shell Scripts (select, logic programs) · Exp 3 – Process Creation using fork() & IPC',color:'#1a6fbe'},
+    CO2:{label:'CO2',desc:'Simulate process scheduling, synchronization, deadlock avoidance and detection algorithms.',detail:'Covers: Exp 4 – CPU Scheduling (FCFS, SJF) · Exp 5 – Dining Philosophers using Semaphore · Exp 6 – Producer-Consumer using Monitor · Exp 7 – Deadlock & Banker\'s Algorithm',color:'#0e8f7a'},
+    CO3:{label:'CO3',desc:'Simulate page replacement algorithms and virtual memory management techniques.',detail:'Covers: Exp 8 – Page Replacement Algorithms (FIFO, Optimal, LRU) · Exp 9 – Virtual Memory Simulation',color:'#7b3fbf'},
+    CO4:{label:'CO4',desc:'Implement memory allocation strategies and file system management techniques.',detail:'Covers: Exp 10 – First Fit & Best Fit Memory Allocation · Exp 11 – Contiguous File Allocation · Exp 12 – Bitmap for Memory Management',color:'#c07000'}
+  }
+};
+
+function showCO(subject, coNum) {
+  const co = CO_DATA[subject][coNum];
+  if (!co) return;
+  document.getElementById('coPopupHeader').style.background = co.color;
+  document.getElementById('coPopupTitle').textContent = coNum + ' — ' + (subject==='os'?'Operating Systems':subject==='toc'?'Theory of Computation':'OS Lab');
+  document.getElementById('coPopupDesc').textContent = co.desc;
+  document.getElementById('coPopupDetail').textContent = co.detail;
+  document.getElementById('coPopup').classList.add('show');
+}
+function closeCOPopup(e) {
+  if (!e || e.target===document.getElementById('coPopup'))
+    document.getElementById('coPopup').classList.remove('show');
+}
+
+function showTab(subject, tab, btn) {
+  ['prereq','obj','co'].forEach(t => {
+    const el = document.getElementById(subject+'-'+t);
+    if (el) el.classList.remove('active');
+  });
+  const active = document.getElementById(subject+'-'+tab);
+  if (active) active.classList.add('active');
+  btn.closest('.sub-tab-bar').querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+/* Auto-load photo */
+(function() {
+  const img = new Image();
+  img.onload = function() {
+    const ph = document.getElementById('photoPlaceholder');
+    const el = document.createElement('img');
+    el.src = img.src; el.alt = 'Sakita Sri Nimmala';
+    if (ph) ph.replaceWith(el);
+  };
+  img.src = 'photo.jpg';
+})();
+</script>
 </body>
 </html>

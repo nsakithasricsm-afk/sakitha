@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OS Lab Roadmap — 23CM4212 — ANITS</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #f0f4fa; font-family: 'Segoe UI', sans-serif; padding: 20px; min-height: 100vh; }
+
+  /* ── HEADER ── */
+  .header-strip {
+    background: linear-gradient(90deg, #1a3a6b, #1a5fa0);
+    color: #fff; text-align: center; border-radius: 10px;
+    padding: 18px 20px; margin-bottom: 16px;
+  }
+  .header-strip strong { font-size: 22px; display: block; font-weight: 800; letter-spacing: .01em; }
+  .header-strip span { font-size: 12px; opacity: .85; letter-spacing: .03em; display: block; margin-top: 4px; }
+  .header-strip .faculty-row {
+    margin-top: 10px; display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;
+  }
+  .header-strip .faculty-row .chip {
+    background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 600;
+  }
+
+  /* ── NAV TABS ── */
+  .nav-tabs { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+  .tab-btn {
+    padding: 8px 18px; border-radius: 8px; border: 1.5px solid #cbd5e1;
+    background: #fff; color: #1a3a6b; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all .15s;
+  }
+  .tab-btn:hover, .tab-btn.active {
+    background: #1a3a6b; color: #fff; border-color: #1a3a6b;
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── ROADMAP TREE ── */
+  .root-wrap { display: flex; justify-content: center; }
+  .root-box {
+    background: #1a3a6b; color: #fff; border-radius: 12px;
+    padding: 12px 40px; text-align: center; font-size: 18px; font-weight: 800;
+    box-shadow: 0 4px 18px rgba(26,58,107,.3);
+  }
+  .root-box small { display: block; font-size: 11px; font-weight: 400; opacity: .75; margin-top: 4px; }
+  .v-line { width: 2px; height: 20px; background: #9fb0cc; margin: 0 auto; }
+  .h-bar-wrap { display: flex; justify-content: center; }
+  .h-bar { height: 2px; background: #9fb0cc; width: 100%; max-width: 1200px; }
+  .units-row {
+    display: flex; justify-content: center; gap: 0; padding: 0 4px;
+    width: 100%; max-width: 1200px; margin: 0 auto;
+  }
+  .unit-col { display: flex; flex-direction: column; align-items: center; flex: 1; position: relative; min-width: 0; }
+  .unit-col::before { content: ''; display: block; width: 2px; height: 22px; background: #9fb0cc; }
+  .unit-box {
+    width: 95%; border-radius: 10px; padding: 16px 8px; text-align: center;
+    font-size: 15px; font-weight: 700; color: #fff;
+    box-shadow: 0 3px 10px rgba(0,0,0,.18); position: relative; z-index: 2;
+  }
+  .unit-box .unit-sub { font-size: 13px; font-weight: 600; display: block; margin-top: 4px; line-height: 1.3; }
+  .unit-box .co-tag {
+    font-size: 12px; margin-top: 8px; background: rgba(0,0,0,.2);
+    border-radius: 4px; padding: 3px 10px; display: inline-block;
+    font-weight: 700; letter-spacing: .03em;
+  }
+  .unit-box .wk-tag {
+    font-size: 10px; margin-top: 5px; background: rgba(255,255,255,.18);
+    border-radius: 4px; padding: 2px 8px; display: inline-block; opacity: .9;
+  }
+  .u1{background:#1a6fbe;} .u2{background:#0e8f7a;} .u3{background:#7b3fbf;} .u4{background:#c07000;}
+
+  .sub-vline { width: 2px; height: 12px; background: #9fb0cc; }
+  .subtopics { display: flex; flex-direction: column; gap: 8px; align-items: center; width: 95%; }
+  .sub-box {
+    width: 100%; background: #fff; border-radius: 7px; padding: 10px 26px 10px 10px;
+    font-size: 13px; text-align: left; color: #1a2233; font-weight: 600;
+    box-shadow: 0 1px 5px rgba(0,0,0,.09); border-left: 3px solid #ccc;
+    cursor: pointer; position: relative; transition: transform .12s, box-shadow .12s;
+    line-height: 1.4;
+  }
+  .sub-box:hover { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,.15); }
+  .sub-box::after { content: 'ℹ'; position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: 11px; opacity: .4; }
+  .sub-box .exp-num { font-size: 10px; font-weight: 700; opacity: .7; margin-bottom: 2px; display: block; }
+  .sub-box.u1b{border-color:#1a6fbe;} .sub-box.u2b{border-color:#0e8f7a;} .sub-box.u3b{border-color:#7b3fbf;} .sub-box.u4b{border-color:#c07000;}
+  .sub-box.u1b:hover{background:#f0f5ff;} .sub-box.u2b:hover{background:#f0faf7;} .sub-box.u3b:hover{background:#f7f0ff;} .sub-box.u4b:hover{background:#fff8ed;}
+
+  /* ── MODAL ── */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 1000; align-items: center; justify-content: center; }
+  .modal-overlay.show { display: flex; }
+  .modal { background: #fff; border-radius: 14px; width: 400px; max-width: 95vw; box-shadow: 0 12px 40px rgba(0,0,0,.25); overflow: hidden; animation: popIn .18s ease; }
+  @keyframes popIn { from { transform: scale(.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .modal-header { padding: 16px 20px 14px; color: #fff; position: relative; }
+  .modal-header h3 { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+  .modal-header .exp-badge { font-size: 10px; opacity: .85; background: rgba(0,0,0,.2); border-radius: 4px; padding: 2px 8px; display: inline-block; margin-bottom: 4px; }
+  .modal-header p { font-size: 11px; opacity: .85; }
+  .modal-close { position: absolute; top: 12px; right: 14px; background: rgba(255,255,255,.25); border: none; color: #fff; border-radius: 50%; width: 24px; height: 24px; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .modal-body { padding: 16px 20px; }
+  .modal-co { font-size: 12px; font-weight: 600; color: #1a3a6b; margin-bottom: 12px; background: #eef4ff; padding: 8px 12px; border-radius: 7px; }
+  .modal-week { font-size: 11px; color: #555; margin-bottom: 12px; background: #f5f7fa; padding: 6px 12px; border-radius: 7px; }
+  .po-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+  .po-item { background: #f5f7fa; border-radius: 8px; padding: 8px 10px; text-align: center; }
+  .po-item .po-num { font-size: 12px; font-weight: 700; color: #1a3a6b; }
+  .po-item .po-level { font-size: 10px; color: #666; margin-top: 2px; }
+  .po-item .po-badge { font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 10px; display: inline-block; margin-top: 3px; }
+  .badge-1 { background: #e8f5e9; color: #2e7d32; }
+  .badge-2 { background: #fff3e0; color: #e65100; }
+  .badge-3 { background: #fdecea; color: #c62828; }
+  .modal-footer { font-size: 10px; color: #999; border-top: 1px solid #eee; padding: 10px 20px; text-align: center; }
+
+  /* ── LEGEND ── */
+  .legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 20px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #444; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 4px; }
+  .hint { text-align: center; font-size: 14px; font-weight: 700; color: #1a3a6b; background: #fff9c4; border: 2px solid #f9c006; border-radius: 8px; padding: 8px 18px; margin-top: 12px; display: block; }
+  .footer { text-align: center; margin-top: 10px; font-size: 10px; color: #888; }
+
+  /* ── TEACHING PLAN TABLE ── */
+  .section-title {
+    font-size: 16px; font-weight: 800; color: #1a3a6b;
+    margin: 24px 0 12px; padding-left: 4px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title::before { content: ''; width: 4px; height: 20px; background: #1a5fa0; border-radius: 2px; display: inline-block; }
+  .plan-table { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,.07); }
+  .plan-table th { background: #1a3a6b; color: #fff; padding: 10px 12px; text-align: left; font-weight: 700; font-size: 12px; }
+  .plan-table td { padding: 10px 12px; border-bottom: 1px solid #eef1f6; vertical-align: top; line-height: 1.5; }
+  .plan-table tr:last-child td { border-bottom: none; }
+  .plan-table tr.os-row td { background: #fff; }
+  .plan-table tr.cn-row td { background: #f8f9fa; color: #6b7280; }
+  .plan-table tr.exam-row td { background: #fef3c7; font-weight: 700; }
+  .wk-badge { display: inline-block; background: #1a3a6b; color: #fff; border-radius: 5px; padding: 2px 8px; font-size: 11px; font-weight: 700; margin-right: 4px; }
+  .co-pill { display: inline-block; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .co1-pill { background: #dbeafe; color: #1d4ed8; }
+  .co2-pill { background: #d1fae5; color: #065f46; }
+  .co3-pill { background: #ede9fe; color: #6d28d9; }
+  .co4-pill { background: #fef3c7; color: #92400e; }
+  .cn-pill  { background: #f1f5f9; color: #64748b; }
+  .os-label { display: inline-block; background: #c0392b; color: #fff; border-radius: 4px; padding: 1px 7px; font-size: 10px; font-weight: 700; margin-right: 4px; }
+  .cn-label { display: inline-block; background: #2471a3; color: #fff; border-radius: 4px; padding: 1px 7px; font-size: 10px; font-weight: 700; margin-right: 4px; }
+
+  /* ── CO-PO MATRIX ── */
+  .matrix-wrap { overflow-x: auto; margin-top: 8px; }
+  .matrix-table { border-collapse: collapse; font-size: 12px; min-width: 640px; width: 100%; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,.07); }
+  .matrix-table th, .matrix-table td { padding: 9px 10px; text-align: center; border: 1px solid #e2e8f0; }
+  .matrix-table thead th { background: #1a3a6b; color: #fff; font-size: 11px; font-weight: 700; }
+  .matrix-table .co-cell { background: #1a3a6b; color: #fff; font-weight: 800; font-size: 13px; }
+  .lv3 { background: #fdecea; color: #c62828; font-weight: 700; }
+  .lv2 { background: #fff3e0; color: #e65100; font-weight: 700; }
+  .lv1 { background: #e8f5e9; color: #2e7d32; font-weight: 700; }
+  .lv0 { background: #f8fafc; color: #ccc; }
+  .avg-cell { background: #fef9c3; font-weight: 700; color: #92400e; }
+  .matrix-legend { display: flex; gap: 16px; margin-top: 10px; flex-wrap: wrap; font-size: 12px; }
+  .ml-item { display: flex; align-items: center; gap: 6px; }
+  .ml-dot { width: 14px; height: 14px; border-radius: 3px; }
+
+  /* CO Description cards */
+  .co-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-top: 8px; }
+  .co-card { border-radius: 10px; padding: 14px 16px; border-left: 4px solid; }
+  .co-card h4 { font-size: 13px; font-weight: 800; margin-bottom: 4px; }
+  .co-card p { font-size: 12px; line-height: 1.5; opacity: .85; }
+  .co1-card { background: #eff6ff; border-color: #1a6fbe; color: #1e3a5f; }
+  .co2-card { background: #ecfdf5; border-color: #0e8f7a; color: #064e3b; }
+  .co3-card { background: #f5f3ff; border-color: #7b3fbf; color: #3b0764; }
+  .co4-card { background: #fffbeb; border-color: #c07000; color: #78350f; }
+
+  /* PO Description cards */
+  .po-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; margin-top: 8px; }
+  .po-card { background: #f8fafc; border-radius: 8px; padding: 10px 12px; border: 1px solid #e2e8f0; }
+  .po-card h5 { font-size: 12px; font-weight: 700; color: #1a3a6b; margin-bottom: 3px; }
+  .po-card p { font-size: 11px; color: #555; line-height: 1.4; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ HEADER ═══════════════════ -->
+<div class="header-strip">
+  <strong>CN &amp; OS LABORATORY — OS Component Roadmap</strong>
+  <span>Course Code: 23CM4212 &nbsp;|&nbsp; Credits: 2 &nbsp;|&nbsp; 3P/Week &nbsp;|&nbsp; Sessional: 50M &nbsp;|&nbsp; End Exam: 50M &nbsp;|&nbsp; Dept. of CSE-AI&ML, ANITS</span>
+  <div class="faculty-row">
+    <div class="chip">👩‍🏫 OS Faculty: Mrs. N. Saketha Sri</div>
+    <div class="chip">📅 Every Monday  1:00 – 3:30 PM</div>
+    <div class="chip">🏫 Room: I-305 Lab</div>
+    <div class="chip">📘 II Year / I Sem  AY 2026-27</div>
+    <div class="chip">📗 Reg: R23</div>
+  </div>
+</div>
+
+<!-- ═══════════════════ NAV TABS ═══════════════════ -->
+<div class="nav-tabs">
+  <button class="tab-btn active" onclick="switchTab('roadmap',this)">🗺️ Course Roadmap</button>
+  <button class="tab-btn" onclick="switchTab('plan',this)">📅 Weekly Teaching Plan</button>
+  <button class="tab-btn" onclick="switchTab('copo',this)">📊 CO-PO Mapping</button>
+  <button class="tab-btn" onclick="switchTab('cos',this)">🎯 COs &amp; POs</button>
+</div>
+
+<!-- ═══════════════════ TAB 1: ROADMAP ═══════════════════ -->
+<div id="tab-roadmap" class="tab-panel active">
+
+  <div class="root-wrap">
+    <div class="root-box">
+      OS Lab (23CM4212) — Operating Systems Component
+      <small>Text: Silberschatz, Galvin &amp; Gagne — OS Concepts, 10th Ed. &nbsp;|&nbsp; Platform: Linux (GCC + Bash)</small>
+      <a href="OS LAB SYLLABUS.pdf" target="_blank" style="display:inline-block;margin-top:8px;background:rgba(255,255,255,0.2);color:#fff;font-size:11px;font-weight:600;padding:4px 14px;border-radius:20px;text-decoration:none;border:1px solid rgba(255,255,255,0.4);">📄 View Full Lab Syllabus</a>
+    </div>
+  </div>
+  <div class="v-line"></div>
+  <div class="h-bar-wrap"><div class="h-bar"></div></div>
+
+  <div class="units-row">
+
+    <!-- CO1 -->
+    <div class="unit-col">
+      <div class="unit-box u1">
+        CO1
+        <span class="unit-sub">Shell Programming &amp; System Calls</span>
+        <div class="co-tag">Wks 1–2</div>
+      </div>
+      <div class="sub-vline"></div>
+      <div class="subtopics">
+
+        <div class="sub-box u1b" onclick="show(
+          'Exp 1 — Basic Shell Commands',
+          'CO1','1a6fbe',
+          'CO1: Execute UNIX shell programming and acquire skills in system calls',
+          'Week 1',
+          '3','3','2','-','-','-','-','-','2','1','-','2','-','-')">
+          <span class="exp-num">Exp 1 · Week 1</span>
+          Basic Shell Commands
+        </div>
+
+        <div class="sub-box u1b" onclick="show(
+          'Exp 2 — Shell Programming: Simple Logic',
+          'CO1','1a6fbe',
+          'CO1: Execute UNIX shell programming and acquire skills in system calls',
+          'Week 1',
+          '3','3','2','-','-','-','-','-','2','1','-','2','-','-')">
+          <span class="exp-num">Exp 2 · Week 1</span>
+          Shell Programming: Logic Programs
+        </div>
+
+        <div class="sub-box u1b" onclick="show(
+          'Exp 3 — Process Creation: fork() &amp; IPC',
+          'CO1','1a6fbe',
+          'CO1: Execute UNIX shell programming and acquire skills in system calls',
+          'Week 2',
+          '3','3','2','-','-','-','-','-','2','1','-','2','-','-')">
+          <span class="exp-num">Exp 3 · Week 2</span>
+          Process Creation using fork() &amp; IPC
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CO2 -->
+    <div class="unit-col">
+      <div class="unit-box u2">
+        CO2
+        <span class="unit-sub">Scheduling, Sync &amp; Deadlock</span>
+        <div class="co-tag">Wks 3–6</div>
+      </div>
+      <div class="sub-vline"></div>
+      <div class="subtopics">
+
+        <div class="sub-box u2b" onclick="show(
+          'Exp 4 — CPU Scheduling Algorithms',
+          'CO2','0e8f7a',
+          'CO2: Simulate process scheduling, synchronization, deadlock avoidance and memory management',
+          'Week 3–4',
+          '3','3','3','2','-','-','-','-','2','2','1','2','-','-')">
+          <span class="exp-num">Exp 4 · Weeks 3–4</span>
+          CPU Scheduling (FCFS, SJF)
+        </div>
+
+        <div class="sub-box u2b" onclick="show(
+          'Exp 5 — Dining Philosophers (Semaphore)',
+          'CO2','0e8f7a',
+          'CO2: Simulate process scheduling, synchronization, deadlock avoidance and memory management',
+          'Week 4',
+          '3','3','3','2','-','-','-','-','2','2','1','2','-','-')">
+          <span class="exp-num">Exp 5 · Week 4</span>
+          Dining Philosophers using Semaphore
+        </div>
+
+        <div class="sub-box u2b" onclick="show(
+          'Exp 6 — Producer-Consumer (Monitor)',
+          'CO2','0e8f7a',
+          'CO2: Simulate process scheduling, synchronization, deadlock avoidance and memory management',
+          'Week 5',
+          '3','3','3','2','-','-','-','-','2','2','1','2','-','-')">
+          <span class="exp-num">Exp 6 · Week 5</span>
+          Producer-Consumer using Monitor
+        </div>
+
+        <div class="sub-box u2b" onclick="show(
+          'Exp 7 — Deadlock: Banker\'s Algorithm',
+          'CO2','0e8f7a',
+          'CO2: Simulate process scheduling, synchronization, deadlock avoidance and memory management',
+          'Week 6',
+          '3','3','3','2','-','-','-','-','2','2','1','2','-','-')">
+          <span class="exp-num">Exp 7 · Week 6</span>
+          Deadlock Detection &amp; Banker's Algorithm
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CO3 -->
+    <div class="unit-col">
+      <div class="unit-box u3">
+        CO3
+        <span class="unit-sub">Page Replacement &amp; Virtual Memory</span>
+        <div class="co-tag">Wks 7–8</div>
+      </div>
+      <div class="sub-vline"></div>
+      <div class="subtopics">
+
+        <div class="sub-box u3b" onclick="show(
+          'Exp 8 — Page Replacement Algorithms',
+          'CO3','7b3fbf',
+          'CO3: Simulate page replacement, memory management and file handling techniques',
+          'Week 7',
+          '3','3','3','2','2','-','1','1','2','2','1','2','1','1')">
+          <span class="exp-num">Exp 8 · Week 7</span>
+          Page Replacement Algorithms (FIFO, Optimal, LRU)
+        </div>
+
+        <div class="sub-box u3b" onclick="show(
+          'Exp 9 — Virtual Memory Simulation',
+          'CO3','7b3fbf',
+          'CO3: Simulate page replacement, memory management and file handling techniques',
+          'Week 8',
+          '3','3','3','2','2','-','1','1','2','2','1','2','1','1')">
+          <span class="exp-num">Exp 9 · Week 8</span>
+          Virtual Memory Simulation
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CO4 -->
+    <div class="unit-col">
+      <div class="unit-box u4">
+        CO4
+        <span class="unit-sub">Memory &amp; File Management</span>
+        <div class="co-tag">Wks 9–11</div>
+      </div>
+      <div class="sub-vline"></div>
+      <div class="subtopics">
+
+        <div class="sub-box u4b" onclick="show(
+          'Exp 10 — First Fit &amp; Best Fit (Memory)',
+          'CO4','c07000',
+          'CO4: Simulate memory allocation and file system management techniques',
+          'Week 9',
+          '2','3','3','3','2','-','1','1','2','2','1','2','1','1')">
+          <span class="exp-num">Exp 10 · Week 9</span>
+          First Fit &amp; Best Fit Memory Allocation
+        </div>
+
+        <div class="sub-box u4b" onclick="show(
+          'Exp 11 — Contiguous File Allocation',
+          'CO4','c07000',
+          'CO4: Simulate memory allocation and file system management techniques',
+          'Week 10',
+          '2','3','3','3','2','-','1','1','2','2','1','2','1','1')">
+          <span class="exp-num">Exp 11 · Week 10</span>
+          Contiguous File Allocation Method
+        </div>
+
+        <div class="sub-box u4b" onclick="show(
+          'Exp 12 — Bitmap for Memory Management',
+          'CO4','c07000',
+          'CO4: Simulate memory allocation and file system management techniques',
+          'Week 11',
+          '2','3','3','3','2','-','1','1','2','2','1','2','1','1')">
+          <span class="exp-num">Exp 12 · Week 11</span>
+          Bitmap for Memory Management
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /units-row -->
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#1a6fbe"></div> CO1 – Shell &amp; System Calls</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#0e8f7a"></div> CO2 – Scheduling, Sync &amp; Deadlock</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#7b3fbf"></div> CO3 – Virtual Memory &amp; Page Replacement</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#c07000"></div> CO4 – Memory &amp; File Management</div>
+  </div>
+  <span class="hint">💡 Click any experiment box to view CO-PO mapping details</span>
+  <div class="footer">Mrs. N. Saketha Sri &nbsp;|&nbsp; Dept. of CSE-AI&ML, ANITS &nbsp;|&nbsp; AY 2026-27</div>
+
+</div><!-- /tab-roadmap -->
+
+<!-- ═══════════════════ TAB 2: WEEKLY TEACHING PLAN ═══════════════════ -->
+<div id="tab-plan" class="tab-panel">
+  <div class="section-title">Weekly Teaching Plan — OS Lab (23CM4212)</div>
+  <p style="font-size:12px;color:#555;margin-bottom:14px;">
+    <span style="background:#c0392b;color:#fff;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;">OS</span> handled by Mrs. N. Saketha Sri &nbsp;|&nbsp;
+    <span style="background:#2471a3;color:#fff;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;">CN</span> handled by CN faculty (co-faculty slot) &nbsp;|&nbsp;
+    Lab: Every Monday 1:00–3:30 PM
+  </p>
+
+  <table class="plan-table">
+    <thead>
+      <tr>
+        <th style="width:60px">Week</th>
+        <th style="width:90px">Date (2026)</th>
+        <th style="width:60px">Part</th>
+        <th>Experiment No. &amp; Title</th>
+        <th style="width:80px">CO</th>
+        <th style="width:120px">PO Mapped</th>
+        <th style="width:100px">Tools</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr class="os-row">
+        <td rowspan="2"><span class="wk-badge">Wk 1</span><br><small>29 Jun</small></td>
+        <td>29-Jun-2026</td>
+        <td><span class="os-label">OS</span></td>
+        <td><strong>Exp 1:</strong> Basic Shell Commands — ls, pwd, cd, mkdir, rm, chmod, chown, man<br>
+            <strong>Exp 2:</strong> Shell Scripts — menu-driven (select), count vowels/chars/lines in file</td>
+        <td><span class="co-pill co1-pill">CO1</span></td>
+        <td>PO1, PO2, PO3, PO9, PO10, PO12</td>
+        <td>Linux Terminal (Bash)</td>
+      </tr>
+      <tr class="cn-row">
+        <td>29-Jun-2026</td>
+        <td><span class="cn-label">CN</span></td>
+        <td>Study of network cables &amp; connectors; Crimping tool practice</td>
+        <td><span class="co-pill cn-pill">CO3</span></td>
+        <td>PO1–PO3, PO9</td>
+        <td>Crimping tool</td>
+      </tr>
+
+      <tr class="os-row">
+        <td rowspan="2"><span class="wk-badge">Wk 2</span><br><small>06 Jul</small></td>
+        <td>06-Jul-2026</td>
+        <td><span class="os-label">OS</span></td>
+        <td><strong>Exp 3:</strong> Process Creation — fork(), getpid(), getppid(); Create P1 &amp; P2; P1 sends string → P2 concatenates without string function → returns to P1</td>
+        <td><span class="co-pill co1-pill">CO1</span></td>
+        <td>PO1, PO2, PO3, PO9, PO10, PO12</td>
+        <td>GCC / C on Linux</td>
+      </tr>
+      <tr class="cn-row">
+        <td>06-Jul-2026</td>
+        <td><span class="cn-label">CN</span></td>
+        <td>Networking commands (ping, ifconfig, netstat, traceroute)</td>
+        <td><span class="co-pill cn-pill">CO3</span></td>
+        <td>PO1–PO3</td>
+        <td>Linux Terminal</td>
+      </tr>
+
+      <tr class="os-row">
+        <td rowspan="2"><span class="wk-badge">Wk 3</span><br><small>13 Jul</small></td>
+        <td>13-Jul-2026</td>
+        <td><span class="os-label">OS</span></td>
+        <td><strong>Exp 4 (Part 1):</strong> CPU Scheduling — FCFS: washing machine example (P1–P4, AT:1,5,9,10 / BT:4,3,5,2). Calculate waiting time, TAT, CPU idle time</td>
+        <td><span class="co-pill co2-pill">CO2</span></td>
+        <td>PO1, PO2, PO3, PO4, PO9, PO10, PO11, PO12</td>
+        <td>GCC / C on Linux</td>
+      </tr>
+      <tr class="cn-row">
+        <td>13-Jul-2026</td>
+        <td><span class="cn-label">CN</span></td>
+        <td>Packet Tracer — Peer-to-Peer network connection</td>
+        <td><span class="co-pill cn-pill">CO3</span></td>
+        <td>PO1–PO5</td>
+        <td>Cisco Packet Tracer</td>
+      </tr>
+
+      <tr class="os-row">
+        <td rowspan="2"><span class="wk-badge">Wk 4</span><br><small>20 Jul</small></td>
+        <td>20-Jul-2026</td>
+        <td><span class="os-label">OS</span></td>
+        <td><strong>Exp 4 (Part 2):</strong> SJF Scheduling — given process set, calculate average waiting/response/TAT time<br>
+            <strong>Exp 5:</strong> Dining Philosophers using Semaphore — synchronize 5 philosophers</td>
+        <td><span class="co-pill co2-pill">CO2</span></td>
+        <td>PO1, PO2, PO3, PO4, PO9, PO10, PO11, PO12</td>
+        <td>GCC / C on Linux</td>
+      </tr>
+      <tr class="cn-row">
+        <td>20-Jul-2026</td>
+        <td><span class="cn-label">CN</span></td>
+        <td>Packet Tracer — Static routing configuration</td>
+        <td><span class="co-pill cn-pill">CO3</span></td>
+        <td>PO1–PO5</td>
+        <td>Cisco Packet Tracer</td>
+      </tr>
+
+      <tr class="os-row">
+        <td rowspan="2"><span class="wk-badge">Wk 5</span><br><small>27 Jul</small></td>
+        <td>27-Jul-2026</td>
+        <td><span class="os-label">OS</span></td>
+        <td><strong>Exp 6:</strong> Producer-Consumer problem using Monitor — synchronize producer and consumer processes</td>
+        <td><span class="co-pill co2-pill">CO2</span></td>
+        <td>PO1, PO2, PO3, PO4, PO9, PO10, PO11, PO12</td>
+        <td>GCC / C on Linux</td>
+      </tr>
+      <tr class="cn-row">
+        <td>27-Jul-2026</td>
+        <td><span class="cn-label">CN</span></td>
+        <td>LAN topologies — bus, star, ring; IP addressing; basic connectivity</td>
+        <td><span class="co-pill cn-pill">CO3</span></td>
+        <td>PO1–PO5</td>
+        <td>Cisco Packet Tracer</td>
+      </tr>
+
+      <tr class="os-row">
+        <td rowspan="2"><span class="wk-badge">Wk 6</span><br><small>03 Aug</small></td>
+        <td>03-Aug-2026</td>
+        <td><span class="os-label">OS</span></td>
+        <td><strong>Exp 7:</strong> Deadlock — given allocation &amp; max matrix: (i) Calculate Need matrix (ii) Check safe/unsafe state (iii) Detect deadlock (iv) Identify deadlocked processes</td>
+        <td><span class="co-pill co2-pill">CO2</span></td>
+        <td>PO1, PO2, PO3, PO4, PO9, PO10, PO11, PO12</td>
+        <td>GCC / C on Linux</td>
+      </tr>
+      <tr class="cn-row">
+        <td>03-Aug-2026</td>
+        <td><span class="cn-label">CN</span></td>
+        <td>CRC Algorithm implementation in C</td>
+        <td><span class="co-pill cn-pill">CO4</span></td>
+        <td>PO1–PO5</td>
+        <td>GCC / C</td>
+      </tr>
+
+      <tr class="os-row">
+        <td rowspan="2"><span class="wk-badge">Wk 7</span><br><small>10 Aug</small></td>
+        <td>10-Aug-2026</td>
+        <td><span class="os-label">OS</span></td>
+        <td><strong>Exp 8:</strong> Page Replacement Algorithms — Reference string: 1,2,1,3,7,4,5,6,3,1,2,4,6,3,1 (3 frames). Simulate FIFO, Optimal, LRU. Find policy with least page faults.</td>
+        <td><span class="co-pill co3-pill">CO3</span></td>
+        <td>PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO10, PO11, PO12, PSO1, PSO2</td>
+        <td>GCC / C on Linux</td>
+      </tr>
+      <tr class="cn-row">
+        <td>10-Aug-2026</td>
+        <td><span class="cn-label">CN</span></td>
+        <td>RIP routing — 3-router topology (RouterA, B, C)</td>
+        <td><span class="co-pill cn-pill">CO4</span></td>
+        <td>PO1–PO5</td>
+        <td>Cisco Packet Tracer</td>
+      </tr>
+
+      <tr class="exam-row">
+        <td colspan="7">⚠️ <strong>MID-1 EXAM — 20 August 2026</strong> &nbsp;|&nbsp; Revise Exps 1–7 thoroughly before exam &nbsp;|&nbsp; Lab record must be up to date</td>
+      </tr>
+
+      <tr class="os-row">
+        <td rowspan="2"><span class="wk-badge">Wk 8</span><br><small>24 Aug</small></td>
+        <td>24-Aug-2026</td>
+        <td><span class="os-label">OS</span></td>
+        <td><strong>Exp 9:</strong> Virtual Memory Simulation — demand paging, page table management, frame allocation</td>
+        <td><span class="co-pill co3-pill">CO3</span></td>
+        <td>PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO10, PO11, PO12, PSO1, PSO2</td>
+        <td>GCC / C on Linux</td>
+      </tr>
+      <tr class="cn-row">
+        <td>24-Aug-2026</td>
+        <td><span class="cn-label">CN</span></td>
+        <td>OSPF routing — university campus multi-building topology</td>
+        <td><span class="co-pill cn-pill">CO4</span></td>
+        <td>PO1–PO5</td>
+        <td>Cisco Packet Tracer</td>
+      </tr>
+
+      <tr class="os-row">
+        <td rowspan="2"><span class="wk-badge">Wk 9</span><br><small>31 Aug</small></td>
+        <td>31-Aug-2026</td>
+        <td><span class="os-label">OS</span></td>
+        <td><strong>Exp 10:</strong> Memory Management — implement First Fit and Best Fit allocation algorithms. Show memory utilization and fragmentation.</td>
+        <td><span class="co-pill co4-pill">CO4</span></td>
+        <td>PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO10, PO11, PO12, PSO1, PSO2</td>
+        <td>GCC / C on Linux</td>
+      </tr>
+      <tr class="cn-row">
+        <td>31-Aug-2026</td>
+        <td><span class="cn-label">CN</span></td>
+        <td>DHCP server configuration — router as DHCP server for 3+ PCs</td>
+        <td><span class="co-pill cn-pill">CO4</span></td>
+        <td>PO1–PO5</td>
+        <td>Cisco Packet Tracer</td>
+      </tr>
+
+      <tr class="os-row">
+        <td rowspan="2"><span class="wk-badge">Wk 10</span><br><small>07 Sep</small></td>
+        <td>07-Sep-2026</td>
+        <td><span class="os-label">OS</span></td>
+        <td><strong>Exp 11:</strong> Contiguous File Allocation — simulate sequential, indexed, and linked file allocation. Show file block mapping.</td>
+        <td><span class="co-pill co4-pill">CO4</span></td>
+        <td>PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO10, PO11, PO12, PSO1, PSO2</td>
+        <td>GCC / C on Linux</td>
+      </tr>
+      <tr class="cn-row">
+        <td>07-Sep-2026</td>
+        <td><span class="cn-label">CN</span></td>
+        <td>TCP vs UDP analysis using Wireshark — capture &amp; compare performance</td>
+        <td><span class="co-pill cn-pill">CO4</span></td>
+        <td>PO1–PO5</td>
+        <td>Wireshark</td>
+      </tr>
+
+      <tr class="os-row">
+        <td rowspan="2"><span class="wk-badge">Wk 11</span><br><small>14 Sep</small></td>
+        <td>14-Sep-2026</td>
+        <td><span class="os-label">OS</span></td>
+        <td><strong>Exp 12:</strong> Bitmap for Memory Management — 32-block memory, allocated blocks: 2,3,4,5,8,9,10,11,12. Display bitmap pattern and free block status.</td>
+        <td><span class="co-pill co4-pill">CO4</span></td>
+        <td>PO1, PO2, PO3, PO4, PO5, PO7, PO8, PO9, PO10, PO11, PO12, PSO1, PSO2</td>
+        <td>GCC / C on Linux</td>
+      </tr>
+      <tr class="cn-row">
+        <td>14-Sep-2026</td>
+        <td><span class="cn-label">CN</span></td>
+        <td>CN Lab revision / additional exercises</td>
+        <td><span class="co-pill cn-pill">CO4</span></td>
+        <td>—</td>
+        <td>—</td>
+      </tr>
+
+      <tr class="exam-row">
+        <td colspan="7">⚠️ <strong>MID-2 EXAM — 15 October 2026</strong> &nbsp;|&nbsp; Revise all 12 OS experiments &nbsp;|&nbsp; Prepare lab record &amp; viva answers</td>
+      </tr>
+
+      <tr class="os-row">
+        <td><span class="wk-badge">Wk 12+</span><br><small>Sep–Oct</small></td>
+        <td>Sep–Oct 2026</td>
+        <td><span class="os-label">OS</span></td>
+        <td>★ <strong>Lab Revision + Viva Preparation</strong> — Code walkthrough, common viva Q&amp;A, output verification for all 12 experiments. Lab exam preparation.</td>
+        <td><span class="co-pill co1-pill">CO1–CO4</span></td>
+        <td>PO1–PO5</td>
+        <td>All tools</td>
+      </tr>
+
+      <tr class="exam-row">
+        <td colspan="7">🎯 <strong>LAB END EXAM — 29 October 2026</strong> &nbsp;|&nbsp; Duration: 3 Hours &nbsp;|&nbsp; Marks: 50</td>
+      </tr>
+
+    </tbody>
+  </table>
+</div><!-- /tab-plan -->
+
+<!-- ═══════════════════ TAB 3: CO-PO MAPPING ═══════════════════ -->
+<div id="tab-copo" class="tab-panel">
+  <div class="section-title">CO-PO Mapping Matrix</div>
+  <p style="font-size:12px;color:#555;margin-bottom:12px;">Source: 23CM4212 Syllabus, R23 Regulation, ANITS &nbsp;|&nbsp; Scale: 3 = High &nbsp; 2 = Medium &nbsp; 1 = Low &nbsp; – = No Relation</p>
+
+  <div class="matrix-wrap">
+    <table class="matrix-table">
+      <thead>
+        <tr>
+          <th>CO</th>
+          <th>PO1</th><th>PO2</th><th>PO3</th><th>PO4</th><th>PO5</th>
+          <th>PO6</th><th>PO7</th><th>PO8</th><th>PO9</th><th>PO10</th>
+          <th>PO11</th><th>PO12</th><th>PSO1</th><th>PSO2</th>
+          <th style="background:#c07000">Avg</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="co-cell" style="background:#1a6fbe">CO1</td>
+          <td class="lv3">3</td><td class="lv3">3</td><td class="lv2">2</td><td class="lv0">–</td><td class="lv0">–</td>
+          <td class="lv0">–</td><td class="lv0">–</td><td class="lv0">–</td><td class="lv2">2</td><td class="lv1">1</td>
+          <td class="lv0">–</td><td class="lv2">2</td><td class="lv0">–</td><td class="lv0">–</td>
+          <td class="avg-cell">2.20</td>
+        </tr>
+        <tr>
+          <td class="co-cell" style="background:#0e8f7a">CO2</td>
+          <td class="lv3">3</td><td class="lv3">3</td><td class="lv3">3</td><td class="lv2">2</td><td class="lv0">–</td>
+          <td class="lv0">–</td><td class="lv0">–</td><td class="lv0">–</td><td class="lv2">2</td><td class="lv2">2</td>
+          <td class="lv1">1</td><td class="lv2">2</td><td class="lv0">–</td><td class="lv0">–</td>
+          <td class="avg-cell">2.38</td>
+        </tr>
+        <tr>
+          <td class="co-cell" style="background:#7b3fbf">CO3</td>
+          <td class="lv3">3</td><td class="lv3">3</td><td class="lv3">3</td><td class="lv2">2</td><td class="lv2">2</td>
+          <td class="lv0">–</td><td class="lv1">1</td><td class="lv1">1</td><td class="lv2">2</td><td class="lv2">2</td>
+          <td class="lv1">1</td><td class="lv2">2</td><td class="lv1">1</td><td class="lv1">1</td>
+          <td class="avg-cell">1.92</td>
+        </tr>
+        <tr>
+          <td class="co-cell" style="background:#c07000">CO4</td>
+          <td class="lv2">2</td><td class="lv3">3</td><td class="lv3">3</td><td class="lv3">3</td><td class="lv2">2</td>
+          <td class="lv0">–</td><td class="lv1">1</td><td class="lv1">1</td><td class="lv2">2</td><td class="lv2">2</td>
+          <td class="lv1">1</td><td class="lv2">2</td><td class="lv1">1</td><td class="lv1">1</td>
+          <td class="avg-cell">1.92</td>
+        </tr>
+        <tr style="background:#f8fafc;font-weight:700;">
+          <td class="co-cell">Avg</td>
+          <td class="avg-cell">2.75</td><td class="avg-cell">3.00</td><td class="avg-cell">2.75</td>
+          <td class="avg-cell">2.33</td><td class="avg-cell">2.00</td><td class="lv0">–</td>
+          <td class="avg-cell">1.00</td><td class="avg-cell">1.00</td><td class="avg-cell">2.00</td>
+          <td class="avg-cell">1.75</td><td class="avg-cell">1.00</td><td class="avg-cell">2.00</td>
+          <td class="avg-cell">1.00</td><td class="avg-cell">1.00</td><td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="matrix-legend">
+    <div class="ml-item"><div class="ml-dot lv3"></div> 3 = High Correlation</div>
+    <div class="ml-item"><div class="ml-dot lv2"></div> 2 = Medium Correlation</div>
+    <div class="ml-item"><div class="ml-dot lv1"></div> 1 = Low Correlation</div>
+    <div class="ml-item"><div class="ml-dot lv0" style="background:#f8fafc;border:1px solid #ddd"></div> – = No Relation</div>
+  </div>
+
+  <div class="section-title" style="margin-top:30px">Experiment → CO Mapping</div>
+  <table class="plan-table">
+    <thead>
+      <tr>
+        <th>Exp</th>
+        <th>Experiment Title</th>
+        <th>Week</th>
+        <th>CO</th>
+        <th>POs Addressed</th>
+        <th>Theory Unit Link</th>
+        <th>Difficulty</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Basic Shell Commands</td><td>Wk 1</td><td><span class="co-pill co1-pill">CO1</span></td><td>PO1, PO2, PO3, PO9, PO10, PO12</td><td>OS Unit 1 – Intro</td><td>⭐</td></tr>
+      <tr><td>2</td><td>Shell Programming: Logic Programs</td><td>Wk 1</td><td><span class="co-pill co1-pill">CO1</span></td><td>PO1, PO2, PO3, PO9, PO10, PO12</td><td>OS Unit 1 – Shell</td><td>⭐⭐</td></tr>
+      <tr><td>3</td><td>Process Creation – fork() &amp; IPC</td><td>Wk 2</td><td><span class="co-pill co1-pill">CO1</span></td><td>PO1, PO2, PO3, PO9, PO10, PO12</td><td>OS Unit 1 – Processes</td><td>⭐⭐</td></tr>
+      <tr><td>4</td><td>CPU Scheduling (FCFS, SJF)</td><td>Wks 3–4</td><td><span class="co-pill co2-pill">CO2</span></td><td>PO1–PO4, PO9, PO10, PO11, PO12</td><td>OS Unit 2 – CPU Sched</td><td>⭐⭐⭐</td></tr>
+      <tr><td>5</td><td>Dining Philosophers using Semaphore</td><td>Wk 4</td><td><span class="co-pill co2-pill">CO2</span></td><td>PO1–PO4, PO9, PO10, PO11, PO12</td><td>OS Unit 3 – Sync</td><td>⭐⭐⭐</td></tr>
+      <tr><td>6</td><td>Producer-Consumer using Monitor</td><td>Wk 5</td><td><span class="co-pill co2-pill">CO2</span></td><td>PO1–PO4, PO9, PO10, PO11, PO12</td><td>OS Unit 3 – Sync</td><td>⭐⭐⭐</td></tr>
+      <tr><td>7</td><td>Deadlock – Banker's Algorithm</td><td>Wk 6</td><td><span class="co-pill co2-pill">CO2</span></td><td>PO1–PO4, PO9, PO10, PO11, PO12</td><td>OS Unit 3 – Deadlock</td><td>⭐⭐⭐</td></tr>
+      <tr><td>8</td><td>Page Replacement Algorithms</td><td>Wk 7</td><td><span class="co-pill co3-pill">CO3</span></td><td>PO1–PO5, PO7–PO12, PSO1, PSO2</td><td>OS Unit 4 – Virtual Mem</td><td>⭐⭐⭐</td></tr>
+      <tr><td>9</td><td>Virtual Memory Simulation</td><td>Wk 8</td><td><span class="co-pill co3-pill">CO3</span></td><td>PO1–PO5, PO7–PO12, PSO1, PSO2</td><td>OS Unit 4 – Virtual Mem</td><td>⭐⭐⭐</td></tr>
+      <tr><td>10</td><td>First Fit &amp; Best Fit Allocation</td><td>Wk 9</td><td><span class="co-pill co4-pill">CO4</span></td><td>PO1–PO5, PO7–PO12, PSO1, PSO2</td><td>OS Unit 4 – Mem Mgmt</td><td>⭐⭐⭐</td></tr>
+      <tr><td>11</td><td>Contiguous File Allocation</td><td>Wk 10</td><td><span class="co-pill co4-pill">CO4</span></td><td>PO1–PO5, PO7–PO12, PSO1, PSO2</td><td>OS Unit 5 – File Systems</td><td>⭐⭐⭐</td></tr>
+      <tr><td>12</td><td>Bitmap for Memory Management</td><td>Wk 11</td><td><span class="co-pill co4-pill">CO4</span></td><td>PO1–PO5, PO7–PO12, PSO1, PSO2</td><td>OS Unit 4 – Mem Mgmt</td><td>⭐⭐</td></tr>
+    </tbody>
+  </table>
+</div><!-- /tab-copo -->
+
+<!-- ═══════════════════ TAB 4: COs & POs ═══════════════════ -->
+<div id="tab-cos" class="tab-panel">
+  <div class="section-title">Course Outcomes (COs)</div>
+  <div class="co-cards">
+    <div class="co-card co1-card">
+      <h4>CO1 — Shell Programming &amp; System Calls</h4>
+      <p>Execute the UNIX shell programming on the given system configuration and acquire skills in the various devices provided by the system calls.</p>
+      <div style="margin-top:8px;font-size:11px;font-weight:700;opacity:.7">Exps 1, 2, 3 &nbsp;·&nbsp; Weeks 1–2</div>
+    </div>
+    <div class="co-card co2-card">
+      <h4>CO2 — Scheduling, Sync &amp; Deadlock</h4>
+      <p>Simulate the process scheduling, process synchronization, deadlock avoidance and detection algorithms and simulate memory management techniques and file handling.</p>
+      <div style="margin-top:8px;font-size:11px;font-weight:700;opacity:.7">Exps 4, 5, 6, 7 &nbsp;·&nbsp; Weeks 3–6</div>
+    </div>
+    <div class="co-card co3-card">
+      <h4>CO3 — Page Replacement &amp; Virtual Memory</h4>
+      <p>Simulate and analyze page replacement algorithms (FIFO, Optimal, LRU) and virtual memory management to understand demand paging concepts.</p>
+      <div style="margin-top:8px;font-size:11px;font-weight:700;opacity:.7">Exps 8, 9 &nbsp;·&nbsp; Weeks 7–8</div>
+    </div>
+    <div class="co-card co4-card">
+      <h4>CO4 — Memory &amp; File Management</h4>
+      <p>Simulate and implement memory allocation strategies (First Fit, Best Fit), file allocation methods (Contiguous), and memory bitmap management.</p>
+      <div style="margin-top:8px;font-size:11px;font-weight:700;opacity:.7">Exps 10, 11, 12 &nbsp;·&nbsp; Weeks 9–11</div>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:28px">Program Outcomes (POs) — NBA Graduate Attributes</div>
+  <div class="po-cards">
+    <div class="po-card"><h5>PO1 — Engineering Knowledge</h5><p>Apply knowledge of maths, science and CS fundamentals to solve OS-related problems.</p></div>
+    <div class="po-card"><h5>PO2 — Problem Analysis</h5><p>Identify, formulate and analyze complex OS problems using scientific principles.</p></div>
+    <div class="po-card"><h5>PO3 — Design / Development</h5><p>Design and develop simulation programs for OS algorithms satisfying specified needs.</p></div>
+    <div class="po-card"><h5>PO4 — Investigation</h5><p>Conduct experiments, analyze results (scheduling/memory algorithms) to reach valid conclusions.</p></div>
+    <div class="po-card"><h5>PO5 — Modern Tool Usage</h5><p>Use Linux, GCC, Bash and simulation tools for complex OS lab activities.</p></div>
+    <div class="po-card"><h5>PO6 — Engineer &amp; Society</h5><p>Assess societal impact of OS design choices in engineering practice.</p></div>
+    <div class="po-card"><h5>PO7 — Environment &amp; Sustainability</h5><p>Understand the environmental impact of computing resource management.</p></div>
+    <div class="po-card"><h5>PO8 — Ethics</h5><p>Apply ethical principles in system software development and data handling.</p></div>
+    <div class="po-card"><h5>PO9 — Individual &amp; Team Work</h5><p>Function effectively as individual and team member in lab exercises.</p></div>
+    <div class="po-card"><h5>PO10 — Communication</h5><p>Communicate findings through lab records, viva and written reports effectively.</p></div>
+    <div class="po-card"><h5>PO11 — Project Management</h5><p>Apply time and resource management in completing lab experiments systematically.</p></div>
+    <div class="po-card"><h5>PO12 — Life-long Learning</h5><p>Recognise the need for continuous learning in evolving OS and system programming domains.</p></div>
+  </div>
+
+  <div class="section-title" style="margin-top:24px">Program Specific Outcomes (PSOs)</div>
+  <div class="po-cards">
+    <div class="po-card" style="border-left:3px solid #7b3fbf;background:#f5f3ff">
+      <h5 style="color:#6d28d9">PSO1 — Computing Applications</h5>
+      <p>Apply fundamental and emerging computing concepts to analyse, design and develop software solutions — including OS-level programs.</p>
+    </div>
+    <div class="po-card" style="border-left:3px solid #7b3fbf;background:#f5f3ff">
+      <h5 style="color:#6d28d9">PSO2 — Industry-Ready Skills</h5>
+      <p>Use modern tools and programming languages (C, Linux) to deliver industry-standard solutions for real-world OS and systems problems.</p>
+    </div>
+  </div>
+
+  <div class="footer" style="margin-top:24px">
+    Mrs. N. Saketha Sri &nbsp;|&nbsp; Asst. Professor, Dept. of CSE-AI&ML &nbsp;|&nbsp; ANITS, Visakhapatnam &nbsp;|&nbsp; AY 2026-27
+  </div>
+</div><!-- /tab-cos -->
+
+<!-- ═══════════════════ MODAL ═══════════════════ -->
+<div class="modal-overlay" id="overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header" id="modalHeader">
+      <div class="exp-badge" id="modalWeek"></div>
+      <h3 id="modalTopic"></h3>
+      <p id="modalCO"></p>
+      <button class="modal-close" onclick="document.getElementById('overlay').classList.remove('show')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-co" id="modalCODesc"></div>
+      <div class="po-grid" id="poGrid"></div>
+    </div>
+    <div class="modal-footer">Click outside to close &nbsp;|&nbsp; Source: 23CM4212 Syllabus, R23</div>
+  </div>
+</div>
+
+<script>
+const PO_NAMES = ['PO1','PO2','PO3','PO4','PO5','PO6','PO7','PO8','PO9','PO10','PO11','PO12','PSO1','PSO2'];
+const PO_DESC = {
+  PO1:'Engineering Knowledge', PO2:'Problem Analysis', PO3:'Design/Development',
+  PO4:'Investigation', PO5:'Modern Tool Usage', PO6:'Engineer & Society',
+  PO7:'Environment', PO8:'Ethics', PO9:'Team Work',
+  PO10:'Communication', PO11:'Project Mgmt', PO12:'Life-long Learning',
+  PSO1:'Computing Applications', PSO2:'Industry-Ready Skills'
+};
+
+function show(topic, co, color, coDesc, week, ...levels) {
+  document.getElementById('modalTopic').textContent = topic;
+  document.getElementById('modalCO').textContent = co;
+  document.getElementById('modalCODesc').textContent = coDesc;
+  document.getElementById('modalWeek').textContent = week;
+  document.getElementById('modalHeader').style.background = '#' + color;
+  const grid = document.getElementById('poGrid');
+  grid.innerHTML = '';
+  PO_NAMES.forEach((po, i) => {
+    const level = levels[i] || '-';
+    if (level !== '-') {
+      const badgeClass = level==='3' ? 'badge-3' : level==='2' ? 'badge-2' : 'badge-1';
+      const badgeLabel = level==='3' ? 'High (3)' : level==='2' ? 'Medium (2)' : 'Low (1)';
+      grid.innerHTML += `<div class="po-item">
+        <div class="po-num">${po}</div>
+        <div class="po-level">${PO_DESC[po]}</div>
+        <div class="po-badge ${badgeClass}">${badgeLabel}</div>
+      </div>`;
+    }
+  });
+  document.getElementById('overlay').classList.add('show');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('overlay'))
+    document.getElementById('overlay').classList.remove('show');
+}
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
